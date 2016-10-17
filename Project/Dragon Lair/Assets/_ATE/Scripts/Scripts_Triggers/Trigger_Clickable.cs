@@ -11,6 +11,7 @@ using System.Collections.Generic;
 public class Trigger_Clickable : AteGameObject
 {
 	public EventType_UI eventsToInteract = EventType_UI.None;
+	public KeyCode interactKey = KeyCode.Mouse0;
 
 	public List<TriggeredBehaviour> behavioursOnInteract = new List<TriggeredBehaviour> ();
 
@@ -54,6 +55,8 @@ public class Trigger_Clickable : AteGameObject
 
 	private void OnInteractEvent (EventData_UI theData)
 	{
+		if (theData.theKey != interactKey)
+			return;
 		if (_curMouseOvers <= 0)
 			return;
 
@@ -86,6 +89,7 @@ public class Trigger_Clickable : AteGameObject
 		base.DrawInspector ();
 
 		eventsToInteract = (EventType_UI)EditorGUILayout.EnumPopup ("Event to Interact", eventsToInteract);
+		interactKey = (KeyCode)EditorGUILayout.EnumPopup ("Interact Key", interactKey);
 
 		EditorHelper.DrawResizableList<TriggeredBehaviour> ("Behaviours on Interact", ref behavioursOnInteract, DrawEntry_BehaviourOnInteract);
 	}

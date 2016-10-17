@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/_ATE/Resources/Resources_Scenes/Level0_Tutorial.unity
+- path: Assets/_ATE/Resources/Resources_Scenes/MainMenu.unity
   isLoaded: 1
   isActive: 1

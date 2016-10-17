@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 public class EventData_UI : EventData
 {
-	public int buttonID;
+	public KeyCode theKey;
 	public Vector3 clickedScreenCoords = new Vector3 ();
 	public Object clickedObject = null;
 
@@ -15,9 +15,9 @@ public class EventData_UI : EventData
 		
 	}
 
-	public EventData_UI (int buttonID, Vector3 clickedScreenCoords)
+	public EventData_UI (KeyCode theKey, Vector3 clickedScreenCoords)
 	{
-		this.buttonID = buttonID;
+		this.theKey = theKey;
 		this.clickedScreenCoords = clickedScreenCoords;
 	}
 

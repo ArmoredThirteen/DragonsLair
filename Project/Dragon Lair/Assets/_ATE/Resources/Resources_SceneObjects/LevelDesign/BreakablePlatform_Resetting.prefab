@@ -633,7 +633,7 @@ MonoBehaviour:
   afterResetPlayOnRequest: 1
   maxPlayResets: -1
   automaticPlayReset: 0
-  boxType: 0
+  boxType: 200
   textOrder: 100
   texts:
   - Crack!
@@ -683,7 +683,7 @@ MonoBehaviour:
   afterResetPlayOnRequest: 1
   maxPlayResets: -1
   automaticPlayReset: 1
-  boxType: 0
+  boxType: 200
 --- !u!114 &11421560
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -759,6 +759,7 @@ MonoBehaviour:
   triggeredByTypes: 64000000
   requiredToInteract: 1
   eventsToInteract: 0
+  interactKey: 323
   behavioursOnEnter:
   - {fileID: 11448044}
   behavioursOnInteract: []

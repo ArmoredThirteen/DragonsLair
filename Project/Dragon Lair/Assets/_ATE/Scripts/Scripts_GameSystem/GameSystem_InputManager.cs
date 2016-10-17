@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 
 public class GameSystem_InputManager : GameSystem
@@ -14,7 +15,9 @@ public class GameSystem_InputManager : GameSystem
 
 	#region Fields
 
-	private BasicFSM<ClickState> _fsm_clickState;
+	public List<KeyCode> keysToTrack = new List<KeyCode> (new KeyCode[] {KeyCode.Mouse0});
+
+	private List<HoldableInput> _inputs = new List<HoldableInput> ();
 
 	#endregion
 
@@ -23,7 +26,17 @@ public class GameSystem_InputManager : GameSystem
 
 	public override void Initialize ()
 	{
-		BuildClickStateFSM ();
+		_inputs.Clear ();
+
+		for (int i = 0; i < keysToTrack.Count; i++)
+		{
+			_inputs.Add (new HoldableInput (keysToTrack[i]));
+		}
+
+		for (int i = 0; i < _inputs.Count; i++)
+		{
+			_inputs[i].Initialize ();
+		}
 	}
 
 	public override void SceneInitialize ()
@@ -34,64 +47,95 @@ public class GameSystem_InputManager : GameSystem
 
 	public override void SystemUpdate ()
 	{
-		_fsm_clickState.Update ();
+		for (int i = 0; i < _inputs.Count; i++)
+		{
+			_inputs[i].Update ();
+		}
 	}
 
 	#endregion
 
 
-	//TODO: Should make an abstract class containing most of this
-	//TODO: Then have 3 instances of the class
-	//TODO: Each tied to their own mouse button or key
-	#region ClickState FSM
-
-	private void BuildClickStateFSM ()
+	/// <summary>
+	/// For keeping track of inputs the user can press/hold.
+	/// Such as mouse and keyboard buttons.
+	/// </summary>
+	private class HoldableInput
 	{
-		_fsm_clickState = new BasicFSM<ClickState> (ClickState.Up);
+		public KeyCode theKey = KeyCode.Mouse0;
 
-		_fsm_clickState.SetMainCallbacks (ClickState.Up,   FSM_Update_Up,   FSM_Enter_Up,   null);
-		_fsm_clickState.SetMainCallbacks (ClickState.Down, FSM_Update_Down, FSM_Enter_Down, null);
-		//_fsm_clickState.SetMainCallbacks (ClickState.Held, FSM_Update_Held, FSM_Enter_Held, null);
+		private BasicFSM<ClickState> _fsm_clickState;
 
-		_fsm_clickState.AddPossibleSwitch (ClickState.Up,   ClickState.Down, FSM_Switch_UpToDown);
-		_fsm_clickState.AddPossibleSwitch (ClickState.Down, ClickState.Up,   FSM_Switch_DownToUp);
-		//_fsm_clickState.AddPossibleSwitch (ClickState.Down, ClickState.Held, FSM_Switch_DownToHeld);
-		//_fsm_clickState.AddPossibleSwitch (ClickState.Held, ClickState.Up,   FSM_Switch_HeldToUp);
+
+		public HoldableInput (KeyCode theKey)
+		{
+			this.theKey = theKey;
+		}
+
+
+		public void Initialize ()
+		{
+			BuildClickStateFSM ();
+		}
+
+		public void Update ()
+		{
+			_fsm_clickState.Update ();
+		}
+
+
+		#region ClickState FSM
+
+		private void BuildClickStateFSM ()
+		{
+			_fsm_clickState = new BasicFSM<ClickState> (ClickState.Up);
+
+			_fsm_clickState.SetMainCallbacks (ClickState.Up,   FSM_Update_Up,   FSM_Enter_Up,   null);
+			_fsm_clickState.SetMainCallbacks (ClickState.Down, FSM_Update_Down, FSM_Enter_Down, null);
+			//_fsm_clickState.SetMainCallbacks (ClickState.Held, FSM_Update_Held, FSM_Enter_Held, null);
+
+			_fsm_clickState.AddPossibleSwitch (ClickState.Up,   ClickState.Down, FSM_Switch_UpToDown);
+			_fsm_clickState.AddPossibleSwitch (ClickState.Down, ClickState.Up,   FSM_Switch_DownToUp);
+			//_fsm_clickState.AddPossibleSwitch (ClickState.Down, ClickState.Held, FSM_Switch_DownToHeld);
+			//_fsm_clickState.AddPossibleSwitch (ClickState.Held, ClickState.Up,   FSM_Switch_HeldToUp);
+		}
+
+
+		private void FSM_Enter_Up (ClickState previousState)
+		{
+			EventData_UI theData = new EventData_UI (theKey, Input.mousePosition);
+			GameManager.Events.Broadcast<EventType_UI> ((int)EventType_UI.Released, theData);
+		}
+
+		private void FSM_Update_Up ()
+		{
+			//Debug.Log ("Up at " + Input.mousePosition);
+		}
+
+		private bool FSM_Switch_UpToDown ()
+		{
+			return Input.GetKeyDown (theKey);
+		}
+
+
+		private void FSM_Enter_Down (ClickState previousState)
+		{
+			EventData_UI theData = new EventData_UI (theKey, Input.mousePosition);
+			GameManager.Events.Broadcast<EventType_UI> ((int)EventType_UI.Clicked, theData);
+		}
+
+		private void FSM_Update_Down ()
+		{
+			//Debug.Log ("Down at " + Input.mousePosition);
+		}
+
+		private bool FSM_Switch_DownToUp ()
+		{
+			return Input.GetKeyUp (theKey);
+		}
+
+		#endregion
 	}
-
-
-	private void FSM_Enter_Up (ClickState previousState)
-	{
-		GameManager.Events.Broadcast<EventType_UI> ((int)EventType_UI.Released, new EventData_UI (0, Input.mousePosition));
-	}
-
-	private void FSM_Update_Up ()
-	{
-		//Debug.Log ("Up at " + Input.mousePosition);
-	}
-
-	private bool FSM_Switch_UpToDown ()
-	{
-		return Input.GetMouseButtonDown (0);
-	}
-
-
-	private void FSM_Enter_Down (ClickState previousState)
-	{
-		GameManager.Events.Broadcast<EventType_UI> ((int)EventType_UI.Clicked, new EventData_UI (0, Input.mousePosition));
-	}
-
-	private void FSM_Update_Down ()
-	{
-		//Debug.Log ("Down at " + Input.mousePosition);
-	}
-
-	private bool FSM_Switch_DownToUp ()
-	{
-		return Input.GetMouseButtonUp (0);
-	}
-
-	#endregion
 
 }
 

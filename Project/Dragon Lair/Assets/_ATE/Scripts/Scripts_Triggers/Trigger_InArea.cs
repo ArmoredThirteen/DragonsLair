@@ -18,6 +18,7 @@ public class Trigger_InArea : AteGameObject
 	/// </summary>
 	public int requiredToInteract = 1;
 	public EventType_UI eventsToInteract = EventType_UI.None;
+	public KeyCode interactKey = KeyCode.Mouse0;
 
 	public List<TriggeredBehaviour> behavioursOnEnter    = new List<TriggeredBehaviour> ();
 	public List<TriggeredBehaviour> behavioursOnInteract = new List<TriggeredBehaviour> ();
@@ -72,6 +73,8 @@ public class Trigger_InArea : AteGameObject
 
 	private void OnInteractEvent (EventData_UI theData)
 	{
+		if (theData.theKey != interactKey)
+			return;
 		if (_currentlyInTrigger.Count < requiredToInteract)
 			return;
 
@@ -137,6 +140,7 @@ public class Trigger_InArea : AteGameObject
 
 		requiredToInteract = EditorGUILayout.IntField ("Required to Interact", requiredToInteract);
 		eventsToInteract = (EventType_UI)EditorGUILayout.EnumPopup ("Event to Interact", eventsToInteract);
+		interactKey = (KeyCode)EditorGUILayout.EnumPopup ("Interact Key", interactKey);
 
 		EditorHelper.DrawResizableList<TriggeredBehaviour> ("Behaviours on Entry",    ref behavioursOnEnter,    DrawEntry_BehaviourOnEnter);
 		EditorHelper.DrawResizableList<TriggeredBehaviour> ("Behaviours on Interact", ref behavioursOnInteract, DrawEntry_BehaviourOnInteract);

@@ -345,7 +345,7 @@ MonoBehaviour:
   afterResetPlayOnRequest: 1
   maxPlayResets: -1
   automaticPlayReset: 0
-  boxType: 0
+  boxType: 200
   textOrder: 0
   texts:
   - You fell to your doom!
@@ -457,6 +457,7 @@ MonoBehaviour:
   triggeredByTypes: 64000000
   requiredToInteract: 1
   eventsToInteract: 130
+  interactKey: 323
   behavioursOnEnter:
   - {fileID: 11479440}
   behavioursOnInteract: []
