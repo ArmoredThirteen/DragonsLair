@@ -1,10 +1,9 @@
-﻿
+﻿using UnityEngine;
+using System.Collections;
+
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
-
-using UnityEngine;
-using System.Collections;
 
 
 [System.Serializable]
@@ -330,12 +329,7 @@ public abstract class TriggeredBehaviour : AteGameObject
 			DrawChildInspector ();	
 		}
 
-		if (GUI.changed)
-		{
-			EditorUtility.SetDirty (this);
-			if (!Application.isPlaying)
-				EditorApplication.MarkSceneDirty ();
-		}
+		EditorHelper.SetDirtyIfChanged (this);
 
 		EditorGUILayout.EndVertical ();
 	}

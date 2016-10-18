@@ -43,6 +43,26 @@ public static class EditorHelper
 		GUI.FocusControl ("");
 	}
 
+	/// <summary>
+	/// If GUI.changed is true, sets the target as dirty.
+	/// If target is a scene object, also marks the scene as dirty.
+	/// </summary>
+	public static void SetDirtyIfChanged (MonoBehaviour target)
+	{
+		if (!GUI.changed)
+			return;
+		
+		EditorUtility.SetDirty (target);
+
+		//	If it is a scene object and the application isn't playing
+		if (!string.IsNullOrEmpty (target.gameObject.scene.name) && !Application.isPlaying)
+		{
+			EditorApplication.MarkSceneDirty ();
+		}
+	}
+
+
+	#region Lists
 
 	public static void ResizeList<T> (int newSize, ref List<T> theList, T defaultEntry = default(T))
 	{
@@ -324,6 +344,8 @@ public static class EditorHelper
 
 		return pressed;
 	}
+
+	#endregion
 
 }
 

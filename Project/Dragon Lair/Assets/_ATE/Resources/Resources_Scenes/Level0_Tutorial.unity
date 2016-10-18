@@ -1047,6 +1047,7 @@ MonoBehaviour:
   triggeredByTypes: 64000000
   requiredToInteract: 1
   eventsToInteract: 0
+  interactKey: 323
   behavioursOnEnter:
   - {fileID: 1094323564}
   - {fileID: 344785214}
@@ -1139,7 +1140,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 404254, guid: 791d467fa8d9e7b4a834f6d505252dd4, type: 2}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 180818, guid: 791d467fa8d9e7b4a834f6d505252dd4, type: 2}
       propertyPath: m_IsActive
@@ -2442,6 +2443,7 @@ MonoBehaviour:
   triggeredByTypes: 64000000
   requiredToInteract: 1
   eventsToInteract: 0
+  interactKey: 323
   behavioursOnEnter:
   - {fileID: 802008198}
   - {fileID: 1022946752}

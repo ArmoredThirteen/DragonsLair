@@ -1,9 +1,9 @@
-﻿#if UNITY_EDITOR
+﻿using UnityEngine;
+using System.Collections;
+
+#if UNITY_EDITOR
 using UnityEditor;
 #endif
-
-using UnityEngine;
-using System.Collections;
 
 
 public class TriggeredBehaviour_ClearHudText : TriggeredBehaviour

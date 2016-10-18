@@ -1,10 +1,10 @@
-﻿#if UNITY_EDITOR
-using UnityEditor;
-#endif
-
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
+
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 
 public class TriggeredBehaviour_SceneLoad : TriggeredBehaviour

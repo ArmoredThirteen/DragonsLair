@@ -1,11 +1,10 @@
-﻿
+﻿using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
-
-using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 
 
 public class Trigger_Clickable : AteGameObject
