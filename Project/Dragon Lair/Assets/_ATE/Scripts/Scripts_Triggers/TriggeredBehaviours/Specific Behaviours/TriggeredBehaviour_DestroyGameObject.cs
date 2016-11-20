@@ -12,6 +12,8 @@ public class TriggeredBehaviour_DestroyGameObject : TriggeredBehaviour
 	//	Shown in editor with DrawInspector() at bottom.
 	#region Public Variables
 
+	public bool destroyTriggerer = false;
+
 	public GameObject theGameObject;
 
 	#endregion
@@ -56,9 +58,10 @@ public class TriggeredBehaviour_DestroyGameObject : TriggeredBehaviour
 	/// Called when parent class had a request to play.
 	/// If inactive and cancelRequestsWhileInactive is true, won't be called.
 	/// </summary>
-	protected override void OnRequestedPlaying ()
+	protected override void OnRequestedPlaying (AteGameObject triggerer)
 	{
-		
+		if (destroyTriggerer && triggerer != null)
+			theGameObject = triggerer.gameObject;
 	}
 
 	/// <summary>
@@ -101,7 +104,8 @@ public class TriggeredBehaviour_DestroyGameObject : TriggeredBehaviour
 	/// </summary>
 	protected override void OnEnteredPlaying (TriggeredState prevState)
 	{
-		Destroy (theGameObject.gameObject);
+		if (theGameObject != null)
+			Destroy (theGameObject.gameObject);
 
 		//	Called at end of this method for an instant-fire behaviour
 		RequestComplete ();
@@ -196,9 +200,14 @@ public class TriggeredBehaviour_DestroyGameObject : TriggeredBehaviour
 	/// </summary>
 	protected override void DrawChildInspector ()
 	{
-		theGameObject = EditorGUILayout.ObjectField
-			("GameObject", theGameObject, typeof (GameObject), true)
-			as GameObject;
+		destroyTriggerer = EditorGUILayout.Toggle ("Destroy Triggerer", destroyTriggerer);
+
+		if (!destroyTriggerer)
+		{
+			theGameObject = EditorGUILayout.ObjectField
+				("GameObject", theGameObject, typeof (GameObject), true)
+				as GameObject;
+		}
 	}
 
 	#endif

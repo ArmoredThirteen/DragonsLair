@@ -7,6 +7,7 @@ public class GameSystem_ResolutionManager : GameSystem
 	public int width = 960;
 	public int height = 600;
 
+
 	#region GameSystem
 
 	public override void Initialize ()

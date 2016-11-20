@@ -120,6 +120,22 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 488818}
+  - 114: {fileID: 11461650}
+  m_Layer: 0
+  m_Name: GameSystem_StatTracker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &193168
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 445692}
   - 114: {fileID: 11407730}
   m_Layer: 0
   m_Name: GameSystem_SceneLoader
@@ -209,9 +225,22 @@ Transform:
   - {fileID: 420326}
   - {fileID: 450168}
   - {fileID: 496046}
+  - {fileID: 445692}
   - {fileID: 488818}
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!4 &445692
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 193168}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 436498}
+  m_RootOrder: 7
 --- !u!4 &450168
 Transform:
   m_ObjectHideFlags: 1
@@ -247,7 +276,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 436498}
-  m_RootOrder: 7
+  m_RootOrder: 8
 --- !u!4 &496046
 Transform:
   m_ObjectHideFlags: 1
@@ -265,7 +294,7 @@ MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 184614}
+  m_GameObject: {fileID: 193168}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0d676813a4b59a249af3ef8b02244d53, type: 3}
@@ -651,6 +680,7 @@ MonoBehaviour:
   - {fileID: 11485620}
   - {fileID: 11480580}
   - {fileID: 11407730}
+  - {fileID: 11461650}
 --- !u!114 &11450648
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -662,6 +692,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc3ed4287bbf32a40ae43439de015c42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &11461650
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 184614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6751f0c21867237448ac3e5182d34b0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stats:
+  - name: Greatness
+    value: 3
 --- !u!114 &11462462
 MonoBehaviour:
   m_ObjectHideFlags: 1

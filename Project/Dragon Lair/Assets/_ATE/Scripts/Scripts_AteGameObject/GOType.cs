@@ -14,6 +14,9 @@ public enum GOType
 
 	TriggerActionBundle   = 1100,
 	SequencedActionBundle = 1110,
+
+
+	Projectile = 10500,
 }
 
 

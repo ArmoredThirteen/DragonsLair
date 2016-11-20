@@ -28,7 +28,7 @@ public class GameManager : MonoBehaviour
 
 	#region Fields
 
-	public List<GameSystem>          gameSystems = new List<GameSystem> ();
+	public List<GameSystem> gameSystems = new List<GameSystem> ();
 
 	private BasicFSM<LoadState> _fsm_loadState;
 
@@ -63,6 +63,11 @@ public class GameManager : MonoBehaviour
 	/// For adding and clearing text from Hud boxes.
 	/// </summary>
 	public static GameSystem_HudText HudText {get; private set;}
+
+	/// <summary>
+	/// For setting and modifying various universal stats.
+	/// </summary>
+	public static GameSystem_StatTracker Stats {get; private set;}
 
 	#endregion
 
@@ -261,6 +266,7 @@ public class GameManager : MonoBehaviour
 		DelayedInvoker = GetGameSystem<GameSystem_DelayedInvoker> ();
 		ObjectTracker  = GetGameSystem<GameSystem_GameObjectTracker> ();
 		HudText        = GetGameSystem<GameSystem_HudText> ();
+		Stats          = GetGameSystem<GameSystem_StatTracker> ();
 
 		//TODO: Seperate InitializeSystems and SceneInitializeSystems
 		InitializeSystems ();

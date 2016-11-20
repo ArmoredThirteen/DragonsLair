@@ -122,7 +122,7 @@ public abstract class TriggeredBehaviour : AteGameObject
 	/// Requests putting the FSM into Playing state.
 	/// Only works if FSM is in Ready state.
 	/// </summary>
-	public void RequestPlaying ()
+	public void RequestPlaying (AteGameObject triggerer)
 	{
 		if (!isActive && cancelRequestsWhileInactive)
 			return;
@@ -131,7 +131,7 @@ public abstract class TriggeredBehaviour : AteGameObject
 		{
 			_playsRequested++;
 			_requestedPlaying = true;
-			OnRequestedPlaying ();
+			OnRequestedPlaying (triggerer);
 		}
 	}
 
@@ -177,7 +177,7 @@ public abstract class TriggeredBehaviour : AteGameObject
 
 	protected abstract void OnDataReset ();
 
-	protected abstract void OnRequestedPlaying ();
+	protected abstract void OnRequestedPlaying (AteGameObject triggerer);
 	protected abstract void OnRequestedComplete ();
 	protected abstract void OnRequestedPlayReset ();
 

@@ -74,7 +74,7 @@ public class TriggeredBehaviour_ResetSequencer : TriggeredBehaviour
 	/// Called when parent class had a request to play.
 	/// If inactive and cancelRequestsWhileInactive is true, won't be called.
 	/// </summary>
-	protected override void OnRequestedPlaying ()
+	protected override void OnRequestedPlaying (AteGameObject triggerer)
 	{
 		
 	}

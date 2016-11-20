@@ -54,11 +54,12 @@ public class Trigger_InArea : AteGameObject
 	void OnTriggerEnter (Collider theCollider)
 	{
 		AteGameObject asGameObject = theCollider.gameObject.AteGameObject ();
+
 		if (asGameObject == null)
 			return;
 		if (!GameObjectIsAllowedType (asGameObject))
 			return;
-
+		
 		if (!_currentlyInTrigger.Contains (asGameObject))
 			_currentlyInTrigger.Add (asGameObject);
 		
@@ -103,7 +104,7 @@ public class Trigger_InArea : AteGameObject
 	#endregion
 
 
-	private void TriggerBehaviourList (List<TriggeredBehaviour> behaviours, AteGameObject theGameObject)
+	private void TriggerBehaviourList (List<TriggeredBehaviour> behaviours, AteGameObject triggerer)
 	{
 		if (behaviours == null)
 			return;
@@ -115,7 +116,7 @@ public class Trigger_InArea : AteGameObject
 			if (behaviours[i] == null)
 				continue;
 			
-			behaviours[i].RequestPlaying ();
+			behaviours[i].RequestPlaying (triggerer);
 		}
 	}
 

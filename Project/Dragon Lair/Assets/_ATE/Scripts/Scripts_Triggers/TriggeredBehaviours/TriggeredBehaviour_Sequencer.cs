@@ -60,6 +60,9 @@ public class TriggeredBehaviour_Sequencer : TriggeredBehaviour
 
 	#region Private Variables
 
+	//TODO: Hacky :/  For the sequences dependant on Update stuff
+	private AteGameObject _lastTriggerer = null;
+
 	/// <summary>
 	/// A list of behaviours built on Awake from the behaviourTransforms.
 	/// </summary>
@@ -124,19 +127,21 @@ public class TriggeredBehaviour_Sequencer : TriggeredBehaviour
 	/// Called when parent class had a request to play.
 	/// If inactive and cancelRequestsWhileInactive is true, won't be called.
 	/// </summary>
-	protected override void OnRequestedPlaying ()
+	protected override void OnRequestedPlaying (AteGameObject triggerer)
 	{
+		_lastTriggerer = triggerer;
+
 		switch (sequenceType)
 		{
 			case SequenceType.Simultaneous :
-				OnRequestedPlaying_Simultaneous ();
+				OnRequestedPlaying_Simultaneous (triggerer);
 				break;
 			case SequenceType.RapidInOrder :
-				OnRequestedPlaying_RapidInOrder ();
+				OnRequestedPlaying_RapidInOrder (triggerer);
 				break;
 			case SequenceType.OneAtATime :
 			case SequenceType.OneAtATime_AutomaticPlayReady :
-				OnRequestedPlaying_OneAtATime ();
+				OnRequestedPlaying_OneAtATime (triggerer);
 				break;
 		}
 	}
@@ -168,19 +173,19 @@ public class TriggeredBehaviour_Sequencer : TriggeredBehaviour
 	/// <summary>
 	/// Calls RequestPlaying() on all Ready _behaviours.
 	/// </summary>
-	private void OnRequestedPlaying_Simultaneous ()
+	private void OnRequestedPlaying_Simultaneous (AteGameObject triggerer)
 	{
 		for (int i = 0; i < _behaviours.Count; i++)
 		{
 			if (_behaviours[i].IsReady)
-				_behaviours[i].RequestPlaying ();
+				_behaviours[i].RequestPlaying (triggerer);
 		}
 	}
 
 	/// <summary>
 	/// Currently does nothing. RequestPlaying() is handled in OnUpdatePlaying_RapidInOrder().
 	/// </summary>
-	private void OnRequestedPlaying_RapidInOrder ()
+	private void OnRequestedPlaying_RapidInOrder (AteGameObject triggerer)
 	{
 		
 	}
@@ -188,13 +193,13 @@ public class TriggeredBehaviour_Sequencer : TriggeredBehaviour
 	/// <summary>
 	/// Calls RequestPlaying() on the first Ready _behaviour.
 	/// </summary>
-	private void OnRequestedPlaying_OneAtATime ()
+	private void OnRequestedPlaying_OneAtATime (AteGameObject triggerer)
 	{
 		for (int i = 0; i < _behaviours.Count; i++)
 		{
 			if (_behaviours[i].IsReady)
 			{
-				_behaviours[i].RequestPlaying ();
+				_behaviours[i].RequestPlaying (triggerer);
 				break;
 			}
 		}
@@ -305,7 +310,7 @@ public class TriggeredBehaviour_Sequencer : TriggeredBehaviour
 		TriggeredBehaviour behaviour = _behaviours[_nextActivate];
 
 		if (behaviour.IsReady)
-			behaviour.RequestPlaying ();
+			behaviour.RequestPlaying (_lastTriggerer);
 
 		_nextActivate++;
 	}
@@ -322,7 +327,7 @@ public class TriggeredBehaviour_Sequencer : TriggeredBehaviour
 		if (nextIncomplete.IsPlaying)
 			return;
 		if (nextIncomplete.IsReady)
-			nextIncomplete.RequestPlaying ();
+			nextIncomplete.RequestPlaying (_lastTriggerer);
 
 		/*for (int i = 0; i < _behaviours.Count; i++)
 		{

@@ -64,7 +64,7 @@ public class Trigger_Clickable : AteGameObject
 	}
 
 
-	private void TriggerBehaviourList (List<TriggeredBehaviour> behaviours, AteGameObject theGameObject)
+	private void TriggerBehaviourList (List<TriggeredBehaviour> behaviours, AteGameObject triggerer)
 	{
 		if (behaviours == null)
 			return;
@@ -76,7 +76,7 @@ public class Trigger_Clickable : AteGameObject
 			if (behaviours[i] == null)
 				continue;
 			
-			behaviours[i].RequestPlaying ();
+			behaviours[i].RequestPlaying (triggerer);
 		}
 	}
 
