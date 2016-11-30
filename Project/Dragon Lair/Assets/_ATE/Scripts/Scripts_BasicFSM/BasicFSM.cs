@@ -101,7 +101,7 @@ public class BasicFSM<T> where T : struct, IConvertible, IComparable
 	/// If given switchCondition is null, this does nothing.
 	/// The switchCallback can be null without problems.
 	/// </summary>
-	public void AddPossibleSwitch (T fromStateID, T toStateID, BoolCallback switchCondition, Callback<T,T> switchCallback = null)
+	public void AddPossibleSwitch (T fromStateID, T toStateID, ReturnCallback<bool> switchCondition, Callback<T,T> switchCallback = null)
 	{
 		//	No condition to utilize the switchCallback means we shouldn't even have an entry
 		if (switchCondition == null)
@@ -289,7 +289,7 @@ public class BasicFSM<T> where T : struct, IConvertible, IComparable
 		/// This should never be null, otherwise there would be no possible
 		/// way for this StateSwitch to come into effect.
 		/// </summary>
-		public BoolCallback SwitchCondition;
+		public ReturnCallback<bool> SwitchCondition;
 		
 		/// <summary>
 		/// Callback for if the state successfully switched. Called between exit and enter callbacks.

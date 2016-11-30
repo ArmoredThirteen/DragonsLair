@@ -8,6 +8,8 @@ using UnityEditor;
 
 public class ProjectileShooter : AteGameObject
 {
+	public bool isAutoFire = false;
+
 	public Projectile projectilePrefab;
 	public Transform projectileParent;
 
@@ -17,7 +19,7 @@ public class ProjectileShooter : AteGameObject
 	public float fireStartVariance = 5;
 	public float targetVariance = 5;
 
-	/// <summary> If greater than 0, will attempt to fire every delay seconds. </summary>
+	/// <summary> If isAutofiring, attempt to fire every delay seconds </summary>
 	public float autoFireDelay = 0;
 	private float _timer_autoFire = 0;
 
@@ -30,7 +32,7 @@ public class ProjectileShooter : AteGameObject
 
 	protected override void AteUpdate ()
 	{
-		if (autoFireDelay > 0)
+		if (isAutoFire)
 			AutoFire ();
 	}
 
@@ -58,15 +60,15 @@ public class ProjectileShooter : AteGameObject
 		if (newObject == null)
 			return;
 		
-		newObject.gameObject.SetPosition (Position.GetDir_RandomInCircle_UpZ (fireStartVariance));
-		newObject.MyTransform.rotation = MyTransform.rotation;
+		newObject.gameObject.SetPosition (Position.GetDir_RandomInCircle_UpY (fireStartVariance));
+		//newObject.MyTransform.rotation = MyTransform.rotation;
 		newObject.MyTransform.parent = projectileParent;
 		//Projectile asProjectile = newObject.GetComponent<Projectile> () as Projectile;
 		/*if (newObject == null)
 			return;*/
 
 		//	Roughly fire toward the target
-		newObject.Fire (projectileTarget.position.GetDir_RandomInCircle_UpZ (targetVariance));
+		newObject.Fire (projectileTarget.position.GetDir_RandomInCircle_UpY (targetVariance));
 	}
 
 

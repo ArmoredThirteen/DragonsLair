@@ -14,6 +14,7 @@ public class FollowMouse : AteGameObject
 
 	public bool followX = true;
 	public bool followY = true;
+	public bool followZ = true;
 
 
 	private bool isFollowing = true;
@@ -22,7 +23,8 @@ public class FollowMouse : AteGameObject
 
 	protected override void AteAwake ()
 	{
-		zPos = Position.z;
+		//zPos = Position.z;
+		zPos = Position.y;
 	}
 
 	protected override void AteUpdate ()
@@ -31,13 +33,19 @@ public class FollowMouse : AteGameObject
 			return;
 
 		Vector3 mousePos = theCam.ScreenToWorldPoint (Input.mousePosition);
-		mousePos = new Vector3 (
+		/*mousePos = new Vector3 (
 			(followX ? mousePos.x : Position.x),
 			(followY ? mousePos.y : Position.y),
 			zPos
+		);*/
+
+		mousePos = new Vector3 (
+			(followX ? mousePos.x : Position.x),
+			(followY ? mousePos.y : Position.y),
+			(followZ ? mousePos.z : Position.z)
 		);
 
-		transform.position = Vector2.Lerp (Position, mousePos, moveSpeed);
+		transform.position = Vector3.Lerp (Position, mousePos, moveSpeed);
 	}
 
 
@@ -56,6 +64,7 @@ public class FollowMouse : AteGameObject
 
 		followX = EditorGUILayout.Toggle ("Follow X", followX);
 		followY = EditorGUILayout.Toggle ("Follow Y", followY);
+		followZ = EditorGUILayout.Toggle ("Follow Z", followZ);
 	}
 
 	#endif
