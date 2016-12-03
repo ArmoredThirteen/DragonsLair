@@ -20,6 +20,21 @@ public class Projectile : AteGameObject
 	//private Transform target;
 
 
+	#if UNITY_EDITOR
+
+	public override void DrawInspector ()
+	{
+		base.DrawInspector ();
+
+		maxLifetime = EditorGUILayout.FloatField ("Max Lifetime", maxLifetime);
+		moveSpeed = EditorGUILayout.FloatField ("Move Speed", moveSpeed);
+
+		faceTarget = EditorGUILayout.Toggle ("Face Target", faceTarget);
+	}
+
+	#endif
+
+
 	public void Fire (Vector3 targetPos)
 	{
 		targetDirection = Position.GetDir_To (targetPos, moveSpeed);
@@ -52,20 +67,5 @@ public class Projectile : AteGameObject
 		//transform.position = Vector3.Lerp (Position, targetDirection, moveSpeed);
 		transform.position = Position + (targetDirection * Time.deltaTime);
 	}
-
-
-	#if UNITY_EDITOR
-
-	public override void DrawInspector ()
-	{
-		base.DrawInspector ();
-
-		maxLifetime = EditorGUILayout.FloatField ("Max Lifetime", maxLifetime);
-		moveSpeed = EditorGUILayout.FloatField ("Move Speed", moveSpeed);
-
-		faceTarget = EditorGUILayout.Toggle ("Face Target", faceTarget);
-	}
-
-	#endif
 
 }

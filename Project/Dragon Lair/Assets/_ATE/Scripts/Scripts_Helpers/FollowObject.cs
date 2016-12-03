@@ -14,6 +14,18 @@ public class FollowObject : AteGameObject
 	private Vector3 _lastToFollowPosition;
 
 
+	#if UNITY_EDITOR
+
+	public override void DrawInspector()
+	{
+		base.DrawInspector ();
+
+		transformToFollow = EditorGUILayout.ObjectField ("Transform to Follow", transformToFollow, typeof(Transform), true) as Transform;
+	}
+
+	#endif
+
+
 	protected override void AteAwake ()
 	{
 		StartFollowing (transformToFollow);
@@ -53,17 +65,5 @@ public class FollowObject : AteGameObject
 	{
 		Position = transformToFollow.position + followOffset;
 	}
-
-
-	#if UNITY_EDITOR
-
-	public override void DrawInspector()
-	{
-		base.DrawInspector ();
-
-		transformToFollow = EditorGUILayout.ObjectField ("Transform to Follow", transformToFollow, typeof(Transform), true) as Transform;
-	}
-
-	#endif
 
 }

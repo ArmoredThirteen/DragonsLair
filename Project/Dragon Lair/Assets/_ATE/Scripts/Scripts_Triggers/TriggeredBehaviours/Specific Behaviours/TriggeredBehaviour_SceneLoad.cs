@@ -30,6 +30,23 @@ public class TriggeredBehaviour_SceneLoad : TriggeredBehaviour
 	#endregion
 
 
+	#if UNITY_EDITOR
+
+	/// <summary>
+	/// Called by parent class for drawing specific variables at top.
+	/// Parent class should automatically check for when it is dirty.
+	/// </summary>
+	protected override void DrawChildInspector ()
+	{
+		loadType = (LoadType)EditorGUILayout.EnumPopup ("Load Type", loadType);
+
+		if (loadType == LoadType.LoadIndex)
+			sceneIndex = EditorGUILayout.IntField ("Scene Index", sceneIndex);
+	}
+
+	#endif
+
+
 	#region Awake/Start
 
 	/// <summary>
@@ -240,22 +257,5 @@ public class TriggeredBehaviour_SceneLoad : TriggeredBehaviour
 	#region Helper Methods
 
 	#endregion
-
-
-	#if UNITY_EDITOR
-
-	/// <summary>
-	/// Called by parent class for drawing specific variables at top.
-	/// Parent class should automatically check for when it is dirty.
-	/// </summary>
-	protected override void DrawChildInspector ()
-	{
-		loadType = (LoadType)EditorGUILayout.EnumPopup ("Load Type", loadType);
-
-		if (loadType == LoadType.LoadIndex)
-			sceneIndex = EditorGUILayout.IntField ("Scene Index", sceneIndex);
-	}
-
-	#endif
 
 }

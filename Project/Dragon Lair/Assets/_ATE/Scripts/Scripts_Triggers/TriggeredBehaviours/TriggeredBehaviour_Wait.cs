@@ -25,6 +25,21 @@ public class TriggeredBehaviour_Wait : TriggeredBehaviour
 	#endregion
 
 
+	#if UNITY_EDITOR
+
+	/// <summary>
+	/// Called by parent class for drawing specific variables at top.
+	/// Parent class should automatically check for when it is dirty.
+	/// </summary>
+	protected override void DrawChildInspector ()
+	{
+		minWait = EditorGUILayout.FloatField ("Min Wait", minWait);
+		maxWait = EditorGUILayout.FloatField ("Max Wait", maxWait);
+	}
+
+	#endif
+
+
 	#region Awake/Start
 
 	/// <summary>
@@ -198,20 +213,5 @@ public class TriggeredBehaviour_Wait : TriggeredBehaviour
 	#region Helper Methods
 
 	#endregion
-
-
-	#if UNITY_EDITOR
-
-	/// <summary>
-	/// Called by parent class for drawing specific variables at top.
-	/// Parent class should automatically check for when it is dirty.
-	/// </summary>
-	protected override void DrawChildInspector ()
-	{
-		minWait = EditorGUILayout.FloatField ("Min Wait", minWait);
-		maxWait = EditorGUILayout.FloatField ("Max Wait", maxWait);
-	}
-
-	#endif
 
 }

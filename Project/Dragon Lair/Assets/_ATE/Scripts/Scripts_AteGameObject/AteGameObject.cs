@@ -17,6 +17,21 @@ public abstract class AteGameObject : MonoBehaviour
 	#endregion
 
 
+	#if UNITY_EDITOR
+
+	/// <summary>
+	/// Draws the inspector.
+	/// Child classes overriding this should call base.DrawInspector() at the top.
+	/// </summary>
+	public virtual void DrawInspector ()
+	{
+		EditorGUILayout.LabelField (gameObject.name);
+		type = (GOType)EditorGUILayout.EnumPopup ("Game Object Type", type);
+	}
+
+	#endif
+
+
 	#region Properties
 
 	public int InstanceID
@@ -162,20 +177,5 @@ public abstract class AteGameObject : MonoBehaviour
 	{
 		AteUpdate ();
 	}
-
-
-	#if UNITY_EDITOR
-
-	/// <summary>
-	/// Draws the inspector.
-	/// Child classes overriding this should call base.DrawInspector() at the top.
-	/// </summary>
-	public virtual void DrawInspector ()
-	{
-		EditorGUILayout.LabelField (gameObject.name);
-		type = (GOType)EditorGUILayout.EnumPopup ("Game Object Type", type);
-	}
-
-	#endif
 
 }

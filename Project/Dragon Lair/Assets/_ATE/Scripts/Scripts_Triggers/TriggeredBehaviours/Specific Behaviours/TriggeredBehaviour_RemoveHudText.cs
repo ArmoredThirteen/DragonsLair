@@ -25,6 +25,20 @@ public class TriggeredBehaviour_RemoveHudText : TriggeredBehaviour
 	#endregion
 
 
+	#if UNITY_EDITOR
+
+	/// <summary>
+	/// Called by parent class for drawing specific variables at top.
+	/// Parent class should automatically check for when it is dirty.
+	/// </summary>
+	protected override void DrawChildInspector ()
+	{
+		boxType = (HudTextBoxType)EditorGUILayout.EnumPopup ("Box Type", boxType);
+	}
+
+	#endif
+
+
 	#region Awake/Start
 
 	/// <summary>
@@ -204,19 +218,5 @@ public class TriggeredBehaviour_RemoveHudText : TriggeredBehaviour
 	}
 
 	#endregion
-
-
-	#if UNITY_EDITOR
-
-	/// <summary>
-	/// Called by parent class for drawing specific variables at top.
-	/// Parent class should automatically check for when it is dirty.
-	/// </summary>
-	protected override void DrawChildInspector ()
-	{
-		boxType = (HudTextBoxType)EditorGUILayout.EnumPopup ("Box Type", boxType);
-	}
-
-	#endif
 
 }

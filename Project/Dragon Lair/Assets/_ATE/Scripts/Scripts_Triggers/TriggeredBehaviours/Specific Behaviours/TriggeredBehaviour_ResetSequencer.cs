@@ -35,6 +35,29 @@ public class TriggeredBehaviour_ResetSequencer : TriggeredBehaviour
 	#endregion
 
 
+	#if UNITY_EDITOR
+
+	/// <summary>
+	/// Called by parent class for drawing specific variables at top.
+	/// Parent class should automatically check for when it is dirty.
+	/// </summary>
+	protected override void DrawChildInspector ()
+	{
+		resetType = (ResetType)EditorGUILayout.EnumPopup ("Reset Type", resetType);
+		EditorHelper.DrawResizableList<TriggeredBehaviour_Sequencer>
+		("Sequencers", ref sequencers, DrawEntry_ActionBundle);
+	}
+
+	private void DrawEntry_ActionBundle (int index)
+	{
+		sequencers[index] = EditorGUILayout.ObjectField
+			(("Sequence #"+index), sequencers[index], typeof (TriggeredBehaviour_Sequencer), true)
+			as TriggeredBehaviour_Sequencer;
+	}
+
+	#endif
+
+
 	#region Awake/Start
 
 	/// <summary>
@@ -218,28 +241,5 @@ public class TriggeredBehaviour_ResetSequencer : TriggeredBehaviour
 	#region Helper Methods
 
 	#endregion
-
-
-	#if UNITY_EDITOR
-
-	/// <summary>
-	/// Called by parent class for drawing specific variables at top.
-	/// Parent class should automatically check for when it is dirty.
-	/// </summary>
-	protected override void DrawChildInspector ()
-	{
-		resetType = (ResetType)EditorGUILayout.EnumPopup ("Reset Type", resetType);
-		EditorHelper.DrawResizableList<TriggeredBehaviour_Sequencer>
-			("Sequencers", ref sequencers, DrawEntry_ActionBundle);
-	}
-
-	private void DrawEntry_ActionBundle (int index)
-	{
-		sequencers[index] = EditorGUILayout.ObjectField
-			(("Sequence #"+index), sequencers[index], typeof (TriggeredBehaviour_Sequencer), true)
-			as TriggeredBehaviour_Sequencer;
-	}
-
-	#endif
 
 }

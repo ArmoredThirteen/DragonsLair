@@ -23,9 +23,43 @@ public class ProjectileShooter : AteGameObject
 	public float autoFireDelay = 0;
 	private float _timer_autoFire = 0;
 
+	//TODO: Hacky
+	private string projectileParentName = "ProjectileContainer";
+
+
+	#if UNITY_EDITOR
+
+	public override void DrawInspector ()
+	{
+		projectilePrefab = EditorGUILayout.ObjectField
+			("Projectile Prefab", projectilePrefab, typeof (Projectile), false)
+			as Projectile;
+
+		projectileParent = EditorGUILayout.ObjectField
+			("Projectile Parent", projectileParent, typeof (Transform), true)
+			as Transform;
+
+		projectileTarget = EditorGUILayout.ObjectField
+			("Projectile Target", projectileTarget, typeof (Transform), true)
+			as Transform;
+
+		fireStartVariance = EditorGUILayout.FloatField ("Fire Start Variance", fireStartVariance);
+		targetVariance = EditorGUILayout.FloatField ("Target Variance", targetVariance);
+
+		autoFireDelay = EditorGUILayout.FloatField ("Autofire Delay", autoFireDelay);
+	}
+
+	#endif
+
 
 	protected override void AteAwake ()
 	{
+		if (projectileParent == null)
+		{
+			GameObject theObj = GameObject.Find (projectileParentName);
+			if (theObj != null)
+				projectileParent = theObj.transform;
+		}
 		if (projectileParent == null)
 			projectileParent = MyTransform;
 	}
@@ -60,7 +94,7 @@ public class ProjectileShooter : AteGameObject
 		if (newObject == null)
 			return;
 		
-		newObject.gameObject.SetPosition (Position.GetDir_RandomInCircle_UpY (fireStartVariance));
+		newObject.gameObject.SetPosition (Position.GetLoc_RandomInCircle_UpY (fireStartVariance));
 		//newObject.MyTransform.rotation = MyTransform.rotation;
 		newObject.MyTransform.parent = projectileParent;
 		//Projectile asProjectile = newObject.GetComponent<Projectile> () as Projectile;
@@ -68,32 +102,7 @@ public class ProjectileShooter : AteGameObject
 			return;*/
 
 		//	Roughly fire toward the target
-		newObject.Fire (projectileTarget.position.GetDir_RandomInCircle_UpY (targetVariance));
+		newObject.Fire (projectileTarget.position.GetLoc_RandomInCircle_UpY (targetVariance));
 	}
 
-
-
-	#if UNITY_EDITOR
-
-	public override void DrawInspector ()
-	{
-		projectilePrefab = EditorGUILayout.ObjectField
-			("Projectile Prefab", projectilePrefab, typeof (Projectile), false)
-			as Projectile;
-
-		projectileParent = EditorGUILayout.ObjectField
-			("Projectile Parent", projectileParent, typeof (Transform), true)
-			as Transform;
-
-		projectileTarget = EditorGUILayout.ObjectField
-			("Projectile Target", projectileTarget, typeof (Transform), true)
-			as Transform;
-
-		fireStartVariance = EditorGUILayout.FloatField ("Fire Start Variance", fireStartVariance);
-		targetVariance = EditorGUILayout.FloatField ("Target Variance", targetVariance);
-
-		autoFireDelay = EditorGUILayout.FloatField ("Autofire Delay", autoFireDelay);
-	}
-
-	#endif
 }

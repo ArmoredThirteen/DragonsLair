@@ -6,6 +6,7 @@ using System.Collections.Generic;
 [System.Serializable]
 public class SequencedActionBundle : AteGameObject
 {
+	//TODO: Ripe for abuse
 	public bool playing = false;
 
 	public List<SequencedAction> Actions

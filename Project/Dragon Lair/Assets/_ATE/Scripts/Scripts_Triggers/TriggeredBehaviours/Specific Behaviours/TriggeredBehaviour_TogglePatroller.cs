@@ -25,6 +25,21 @@ public class TriggeredBehaviour_TogglePatroller : TriggeredBehaviour
 	#endregion
 
 
+	#if UNITY_EDITOR
+
+	/// <summary>
+	/// Called by parent class for drawing specific variables at top.
+	/// Parent class should automatically check for when it is dirty.
+	/// </summary>
+	protected override void DrawChildInspector ()
+	{
+		patroller = EditorGUILayout.ObjectField ("Patroller", patroller, typeof(PlatformGenerator_Patrol_Direct)) as PlatformGenerator_Patrol_Direct;
+		setType = (SetType)EditorGUILayout.EnumPopup ("Set Type", setType);
+	}
+
+	#endif
+
+
 	#region Awake/Start
 
 	/// <summary>
@@ -218,20 +233,5 @@ public class TriggeredBehaviour_TogglePatroller : TriggeredBehaviour
 	#region Helper Methods
 
 	#endregion
-
-
-	#if UNITY_EDITOR
-
-	/// <summary>
-	/// Called by parent class for drawing specific variables at top.
-	/// Parent class should automatically check for when it is dirty.
-	/// </summary>
-	protected override void DrawChildInspector ()
-	{
-		patroller = EditorGUILayout.ObjectField ("Patroller", patroller, typeof(PlatformGenerator_Patrol_Direct)) as PlatformGenerator_Patrol_Direct;
-		setType = (SetType)EditorGUILayout.EnumPopup ("Set Type", setType);
-	}
-
-	#endif
 
 }

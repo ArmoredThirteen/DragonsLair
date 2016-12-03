@@ -26,6 +26,52 @@ public class Trigger_InArea : AteGameObject
 	private List<AteGameObject> _currentlyInTrigger = new List<AteGameObject> ();
 
 
+	#if UNITY_EDITOR
+
+	public override void DrawInspector ()
+	{
+		base.DrawInspector ();
+
+		EditorHelper.DrawResizableList<GOType> ("Triggered by Types", ref triggeredByTypes, DrawEntry_TriggeredByType);
+
+		requiredToInteract = EditorGUILayout.IntField ("Required to Interact", requiredToInteract);
+		eventsToInteract = (EventType_UI)EditorGUILayout.EnumPopup ("Event to Interact", eventsToInteract);
+		interactKey = (KeyCode)EditorGUILayout.EnumPopup ("Interact Key", interactKey);
+
+		EditorHelper.DrawResizableList<TriggeredBehaviour> ("Behaviours on Entry",    ref behavioursOnEnter,    DrawEntry_BehaviourOnEnter);
+		EditorHelper.DrawResizableList<TriggeredBehaviour> ("Behaviours on Interact", ref behavioursOnInteract, DrawEntry_BehaviourOnInteract);
+		EditorHelper.DrawResizableList<TriggeredBehaviour> ("Behaviours on Exit",     ref behavioursOnExit,     DrawEntry_BehaviourOnExit);
+	}
+
+	private void DrawEntry_TriggeredByType (int index)
+	{
+		triggeredByTypes[index] = (GOType)EditorGUILayout.EnumPopup ("Type", triggeredByTypes[index]);
+	}
+
+	private void DrawEntry_BehaviourOnEnter (int index)
+	{
+		behavioursOnEnter[index] = EditorGUILayout.ObjectField
+			("Behaviour", behavioursOnEnter[index], typeof (TriggeredBehaviour), true)
+			as TriggeredBehaviour;
+	}
+
+	private void DrawEntry_BehaviourOnInteract (int index)
+	{
+		behavioursOnInteract[index] = EditorGUILayout.ObjectField
+			("Behaviour", behavioursOnInteract[index], typeof (TriggeredBehaviour), true)
+			as TriggeredBehaviour;
+	}
+
+	private void DrawEntry_BehaviourOnExit (int index)
+	{
+		behavioursOnExit[index] = EditorGUILayout.ObjectField
+			("Behaviour", behavioursOnExit[index], typeof (TriggeredBehaviour), true)
+			as TriggeredBehaviour;
+	}
+
+	#endif
+
+
 	protected override void RegisterEvents ()
 	{
 		if (eventsToInteract == EventType_UI.None)
@@ -128,51 +174,5 @@ public class Trigger_InArea : AteGameObject
 		
 		return false;
 	}
-
-
-	#if UNITY_EDITOR
-
-	public override void DrawInspector ()
-	{
-		base.DrawInspector ();
-
-		EditorHelper.DrawResizableList<GOType> ("Triggered by Types", ref triggeredByTypes, DrawEntry_TriggeredByType);
-
-		requiredToInteract = EditorGUILayout.IntField ("Required to Interact", requiredToInteract);
-		eventsToInteract = (EventType_UI)EditorGUILayout.EnumPopup ("Event to Interact", eventsToInteract);
-		interactKey = (KeyCode)EditorGUILayout.EnumPopup ("Interact Key", interactKey);
-
-		EditorHelper.DrawResizableList<TriggeredBehaviour> ("Behaviours on Entry",    ref behavioursOnEnter,    DrawEntry_BehaviourOnEnter);
-		EditorHelper.DrawResizableList<TriggeredBehaviour> ("Behaviours on Interact", ref behavioursOnInteract, DrawEntry_BehaviourOnInteract);
-		EditorHelper.DrawResizableList<TriggeredBehaviour> ("Behaviours on Exit",     ref behavioursOnExit,     DrawEntry_BehaviourOnExit);
-	}
-
-	private void DrawEntry_TriggeredByType (int index)
-	{
-		triggeredByTypes[index] = (GOType)EditorGUILayout.EnumPopup ("Type", triggeredByTypes[index]);
-	}
-
-	private void DrawEntry_BehaviourOnEnter (int index)
-	{
-		behavioursOnEnter[index] = EditorGUILayout.ObjectField
-			("Behaviour", behavioursOnEnter[index], typeof (TriggeredBehaviour), true)
-			as TriggeredBehaviour;
-	}
-
-	private void DrawEntry_BehaviourOnInteract (int index)
-	{
-		behavioursOnInteract[index] = EditorGUILayout.ObjectField
-			("Behaviour", behavioursOnInteract[index], typeof (TriggeredBehaviour), true)
-			as TriggeredBehaviour;
-	}
-
-	private void DrawEntry_BehaviourOnExit (int index)
-	{
-		behavioursOnExit[index] = EditorGUILayout.ObjectField
-			("Behaviour", behavioursOnExit[index], typeof (TriggeredBehaviour), true)
-			as TriggeredBehaviour;
-	}
-
-	#endif
 
 }

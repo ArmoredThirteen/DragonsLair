@@ -75,6 +75,49 @@ public class TriggeredBehaviour_Sequencer : TriggeredBehaviour
 	#endregion
 
 
+	#if UNITY_EDITOR
+
+	/// <summary>
+	/// Called by parent class for drawing specific variables at top.
+	/// Parent class should automatically check for when it is dirty.
+	/// </summary>
+	protected override void DrawChildInspector ()
+	{
+		sequenceType = (SequenceType)EditorGUILayout.EnumPopup ("Sequence Type", sequenceType);
+		EditorHelper.DrawResizableList<Transform> ("Triggered Behaviours", ref behaviourTransforms, DrawTriggeredBehaviourEntry, null, null, null, null, false);
+	}
+
+	private void DrawTriggeredBehaviourEntry (int index)
+	{
+		TriggeredBehaviour behaviour = DrawBehaviourField (index);
+		if (behaviour == null)
+			return;
+
+		behaviour.DrawInspector ();
+	}
+
+	private TriggeredBehaviour DrawBehaviourField (int index)
+	{
+		Transform          curTransform = behaviourTransforms[index];
+		TriggeredBehaviour curBehaviour = null;
+		if (curTransform != null)
+			curBehaviour = curTransform.GetComponent<TriggeredBehaviour> () as TriggeredBehaviour;
+
+		TriggeredBehaviour newBehaviour = EditorGUILayout.ObjectField
+			("Behaviour", curBehaviour, typeof (TriggeredBehaviour), true)
+			as TriggeredBehaviour;
+
+		if (newBehaviour == null)
+			behaviourTransforms[index] = null;
+		else
+			behaviourTransforms[index] = newBehaviour.transform;
+
+		return newBehaviour;
+	}
+
+	#endif
+
+
 	#region Awake/Start
 
 	/// <summary>
@@ -394,48 +437,5 @@ public class TriggeredBehaviour_Sequencer : TriggeredBehaviour
 	}
 
 	#endregion
-
-
-	#if UNITY_EDITOR
-
-	/// <summary>
-	/// Called by parent class for drawing specific variables at top.
-	/// Parent class should automatically check for when it is dirty.
-	/// </summary>
-	protected override void DrawChildInspector ()
-	{
-		sequenceType = (SequenceType)EditorGUILayout.EnumPopup ("Sequence Type", sequenceType);
-		EditorHelper.DrawResizableList<Transform> ("Triggered Behaviours", ref behaviourTransforms, DrawTriggeredBehaviourEntry, null, null, null, null, false);
-	}
-
-	private void DrawTriggeredBehaviourEntry (int index)
-	{
-		TriggeredBehaviour behaviour = DrawBehaviourField (index);
-		if (behaviour == null)
-			return;
-		
-		behaviour.DrawInspector ();
-	}
-
-	private TriggeredBehaviour DrawBehaviourField (int index)
-	{
-		Transform          curTransform = behaviourTransforms[index];
-		TriggeredBehaviour curBehaviour = null;
-		if (curTransform != null)
-			curBehaviour = curTransform.GetComponent<TriggeredBehaviour> () as TriggeredBehaviour;
-
-		TriggeredBehaviour newBehaviour = EditorGUILayout.ObjectField
-			("Behaviour", curBehaviour, typeof (TriggeredBehaviour), true)
-			as TriggeredBehaviour;
-
-		if (newBehaviour == null)
-			behaviourTransforms[index] = null;
-		else
-			behaviourTransforms[index] = newBehaviour.transform;
-
-		return newBehaviour;
-	}
-
-	#endif
 
 }

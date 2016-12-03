@@ -16,6 +16,26 @@ public class ProjectileShooterManager : AteGameObject
 	private float _timer_fireDelay = 0;
 
 
+	#if UNITY_EDITOR
+
+	public override void DrawInspector ()
+	{
+		base.DrawInspector ();
+
+		chooserProjectileShooters.DrawIndexChooser ();
+		EditorHelper.DrawResizableList<ProjectileShooter> ("Projectile Shooters", ref projectileShooters, DrawProjectileShooter);
+	}
+
+	private void DrawProjectileShooter (int index)
+	{
+		projectileShooters[index] = EditorGUILayout.ObjectField
+			("Projectile Shooter", projectileShooters[index], typeof (ProjectileShooter), true)
+			as ProjectileShooter;
+	}
+
+	#endif
+
+
 	protected override void AteAwake ()
 	{
 		chooserProjectileShooters.Initialize ();
@@ -42,25 +62,5 @@ public class ProjectileShooterManager : AteGameObject
 		if (curShooter != null)
 			curShooter.FireProjectile ();
 	}
-
-
-	#if UNITY_EDITOR
-
-	public override void DrawInspector ()
-	{
-		base.DrawInspector ();
-
-		chooserProjectileShooters.DrawIndexChooser ();
-		EditorHelper.DrawResizableList<ProjectileShooter> ("Projectile Shooters", ref projectileShooters, DrawProjectileShooter);
-	}
-
-	private void DrawProjectileShooter (int index)
-	{
-		projectileShooters[index] = EditorGUILayout.ObjectField
-			("Projectile Shooter", projectileShooters[index], typeof (ProjectileShooter), true)
-			as ProjectileShooter;
-	}
-
-	#endif
 
 }

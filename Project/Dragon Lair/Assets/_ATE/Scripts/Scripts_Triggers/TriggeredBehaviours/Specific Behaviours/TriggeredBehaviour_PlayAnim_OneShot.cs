@@ -18,6 +18,27 @@ public class TriggeredBehaviour_PlayAnim_OneShot : TriggeredBehaviour
 	#endregion
 
 
+	#if UNITY_EDITOR
+
+	/// <summary>
+	/// Called by parent class for drawing specific variables at top.
+	/// Parent class should automatically check for when it is dirty.
+	/// </summary>
+	protected override void DrawChildInspector ()
+	{
+		EditorHelper.DrawResizableList<AnimControl_OneShot> ("OneShot Animation Controllers", ref theAnimControls, DrawEntry_AnimControl);
+	}
+
+	private void DrawEntry_AnimControl (int index)
+	{
+		theAnimControls[index] = EditorGUILayout.ObjectField
+			("AnimControl_OneShot", theAnimControls[index], typeof (AnimControl_OneShot), true)
+			as AnimControl_OneShot;
+	}
+
+	#endif
+
+
 	#region Awake/Start
 
 	/// <summary>
@@ -192,26 +213,5 @@ public class TriggeredBehaviour_PlayAnim_OneShot : TriggeredBehaviour
 	#region Helper Methods
 
 	#endregion
-
-
-	#if UNITY_EDITOR
-
-	/// <summary>
-	/// Called by parent class for drawing specific variables at top.
-	/// Parent class should automatically check for when it is dirty.
-	/// </summary>
-	protected override void DrawChildInspector ()
-	{
-		EditorHelper.DrawResizableList<AnimControl_OneShot> ("OneShot Animation Controllers", ref theAnimControls, DrawEntry_AnimControl);
-	}
-
-	private void DrawEntry_AnimControl (int index)
-	{
-		theAnimControls[index] = EditorGUILayout.ObjectField
-			("AnimControl_OneShot", theAnimControls[index], typeof (AnimControl_OneShot), true)
-			as AnimControl_OneShot;
-	}
-
-	#endif
 
 }

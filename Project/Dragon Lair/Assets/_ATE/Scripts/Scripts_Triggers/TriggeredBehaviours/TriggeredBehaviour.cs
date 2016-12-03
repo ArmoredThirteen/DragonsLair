@@ -60,21 +60,87 @@ public abstract class TriggeredBehaviour : AteGameObject
 	#endregion
 
 
-	protected override void AteAwake()
+	#if UNITY_EDITOR
+
+	protected abstract void DrawChildInspector ();
+
+	public override void DrawInspector ()
 	{
-		_startingIsActive = isActive;
-		BuildFSM ();
-		OnAwake ();
+		base.DrawInspector ();
+
+		float labelFieldWidth = 135;
+		float dataEntryWidth = 40;
+
+		EditorGUILayout.BeginVertical ();
+
+		//	Toggle which settings to show
+		DrawShowSettingsToggles (labelFieldWidth);
+
+		if (showBaseSettings)
+		{
+			DrawBaseSettings (labelFieldWidth, dataEntryWidth);
+		}
+
+		if (showChildSettings)
+		{
+			DrawChildInspector ();	
+		}
+
+		EditorHelper.SetDirtyIfChanged (this);
+
+		EditorGUILayout.EndVertical ();
 	}
 
-
-	protected override void AteUpdate ()
+	private void DrawShowSettingsToggles (float labelFieldWidth)
 	{
-		if (!isActive)
-			return;
-		
-		UpdateFSM ();
+		EditorGUILayout.BeginHorizontal ();
+		EditorGUILayout.LabelField ("Show Settings", GUILayout.Width (labelFieldWidth));
+
+		EditorGUILayout.LabelField ("Base", GUILayout.Width (40+(EditorGUI.indentLevel*10)));
+		showBaseSettings  = EditorGUILayout.Toggle (showBaseSettings, GUILayout.Width (30+(EditorGUI.indentLevel*6)));
+
+		EditorGUILayout.LabelField ("Child", GUILayout.Width (40+(EditorGUI.indentLevel*10)));
+		showChildSettings = EditorGUILayout.Toggle (showChildSettings);
+
+		EditorGUILayout.EndHorizontal ();
 	}
+
+	private void DrawBaseSettings (float labelFieldWidth, float dataEntryWidth)
+	{
+		dataEntryWidth += EditorGUI.indentLevel * 10;
+
+		EditorGUILayout.BeginHorizontal ();
+		EditorGUILayout.LabelField ("Is Active", GUILayout.Width (labelFieldWidth));
+		isActive = EditorGUILayout.Toggle (isActive);
+		EditorGUILayout.EndHorizontal ();
+
+		EditorGUILayout.BeginHorizontal ();
+		EditorGUILayout.LabelField ("No Inactive Requests", GUILayout.Width (labelFieldWidth));
+		cancelRequestsWhileInactive = EditorGUILayout.Toggle (cancelRequestsWhileInactive);
+		EditorGUILayout.EndHorizontal ();
+
+		EditorGUILayout.BeginHorizontal ();
+		EditorGUILayout.LabelField ("Play on Request", GUILayout.Width (labelFieldWidth));
+		playOnRequest = EditorGUILayout.IntField (playOnRequest, GUILayout.Width (dataEntryWidth));
+		//EditorGUILayout.EndHorizontal ();
+
+		//EditorGUILayout.BeginHorizontal ();
+		EditorGUILayout.LabelField ("post Reset", GUILayout.Width (75));
+		afterResetPlayOnRequest = EditorGUILayout.IntField (afterResetPlayOnRequest, GUILayout.Width (dataEntryWidth));
+		EditorGUILayout.EndHorizontal ();
+
+		EditorGUILayout.BeginHorizontal ();
+		EditorGUILayout.LabelField ("Max Play Resets", GUILayout.Width (labelFieldWidth));
+		maxPlayResets = EditorGUILayout.IntField (maxPlayResets, GUILayout.Width (dataEntryWidth));
+		EditorGUILayout.EndHorizontal ();
+
+		EditorGUILayout.BeginHorizontal ();
+		EditorGUILayout.LabelField ("Automatic Play Reset", GUILayout.Width (labelFieldWidth));
+		automaticPlayReset = EditorGUILayout.Toggle (automaticPlayReset);
+		EditorGUILayout.EndHorizontal ();
+	}
+
+	#endif
 
 
 	#region Properties
@@ -94,6 +160,27 @@ public abstract class TriggeredBehaviour : AteGameObject
 				return playOnRequest;
 			return afterResetPlayOnRequest;
 		}}
+
+	#endregion
+
+
+	#region AteGameObject
+
+	protected override void AteAwake()
+	{
+		_startingIsActive = isActive;
+		BuildFSM ();
+		OnAwake ();
+	}
+
+
+	protected override void AteUpdate ()
+	{
+		if (!isActive)
+			return;
+		
+		UpdateFSM ();
+	}
 
 	#endregion
 
@@ -301,88 +388,5 @@ public abstract class TriggeredBehaviour : AteGameObject
 	}
 
 	#endregion
-
-
-	#if UNITY_EDITOR
-
-	protected abstract void DrawChildInspector ();
-
-	public override void DrawInspector ()
-	{
-		base.DrawInspector ();
-
-		float labelFieldWidth = 135;
-		float dataEntryWidth = 40;
-
-		EditorGUILayout.BeginVertical ();
-
-		//	Toggle which settings to show
-		DrawShowSettingsToggles (labelFieldWidth);
-
-		if (showBaseSettings)
-		{
-			DrawBaseSettings (labelFieldWidth, dataEntryWidth);
-		}
-
-		if (showChildSettings)
-		{
-			DrawChildInspector ();	
-		}
-
-		EditorHelper.SetDirtyIfChanged (this);
-
-		EditorGUILayout.EndVertical ();
-	}
-
-	private void DrawShowSettingsToggles (float labelFieldWidth)
-	{
-		EditorGUILayout.BeginHorizontal ();
-		EditorGUILayout.LabelField ("Show Settings", GUILayout.Width (labelFieldWidth));
-
-		EditorGUILayout.LabelField ("Base", GUILayout.Width (40+(EditorGUI.indentLevel*10)));
-		showBaseSettings  = EditorGUILayout.Toggle (showBaseSettings, GUILayout.Width (30+(EditorGUI.indentLevel*6)));
-
-		EditorGUILayout.LabelField ("Child", GUILayout.Width (40+(EditorGUI.indentLevel*10)));
-		showChildSettings = EditorGUILayout.Toggle (showChildSettings);
-
-		EditorGUILayout.EndHorizontal ();
-	}
-
-	private void DrawBaseSettings (float labelFieldWidth, float dataEntryWidth)
-	{
-		dataEntryWidth += EditorGUI.indentLevel * 10;
-
-		EditorGUILayout.BeginHorizontal ();
-		EditorGUILayout.LabelField ("Is Active", GUILayout.Width (labelFieldWidth));
-		isActive = EditorGUILayout.Toggle (isActive);
-		EditorGUILayout.EndHorizontal ();
-
-		EditorGUILayout.BeginHorizontal ();
-		EditorGUILayout.LabelField ("No Inactive Requests", GUILayout.Width (labelFieldWidth));
-		cancelRequestsWhileInactive = EditorGUILayout.Toggle (cancelRequestsWhileInactive);
-		EditorGUILayout.EndHorizontal ();
-
-		EditorGUILayout.BeginHorizontal ();
-		EditorGUILayout.LabelField ("Play on Request", GUILayout.Width (labelFieldWidth));
-		playOnRequest = EditorGUILayout.IntField (playOnRequest, GUILayout.Width (dataEntryWidth));
-		//EditorGUILayout.EndHorizontal ();
-
-		//EditorGUILayout.BeginHorizontal ();
-		EditorGUILayout.LabelField ("post Reset", GUILayout.Width (75));
-		afterResetPlayOnRequest = EditorGUILayout.IntField (afterResetPlayOnRequest, GUILayout.Width (dataEntryWidth));
-		EditorGUILayout.EndHorizontal ();
-
-		EditorGUILayout.BeginHorizontal ();
-		EditorGUILayout.LabelField ("Max Play Resets", GUILayout.Width (labelFieldWidth));
-		maxPlayResets = EditorGUILayout.IntField (maxPlayResets, GUILayout.Width (dataEntryWidth));
-		EditorGUILayout.EndHorizontal ();
-
-		EditorGUILayout.BeginHorizontal ();
-		EditorGUILayout.LabelField ("Automatic Play Reset", GUILayout.Width (labelFieldWidth));
-		automaticPlayReset = EditorGUILayout.Toggle (automaticPlayReset);
-		EditorGUILayout.EndHorizontal ();
-	}
-
-	#endif
 
 }

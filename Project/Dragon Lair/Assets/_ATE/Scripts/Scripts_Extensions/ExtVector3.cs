@@ -67,7 +67,7 @@ public static class ExtVector3
 	/// <summary>
 	/// Returns the Vector offset by a random amount, along the y/z axis.
 	/// </summary>
-	public static Vector3 GetDir_RandomInCircle_UpX (this Vector3 arg, float magnitude = 1)
+	public static Vector3 GetLoc_RandomInCircle_UpX (this Vector3 arg, float magnitude = 1)
 	{
 		Vector2 randVect = Random.insideUnitCircle.normalized * magnitude;
 		return new Vector3 (arg.x+0, arg.y+randVect.x, arg.z+randVect.y);
@@ -76,7 +76,7 @@ public static class ExtVector3
 	/// <summary>
 	/// Returns the Vector offset by a random amount, along the x/z axis.
 	/// </summary>
-	public static Vector3 GetDir_RandomInCircle_UpY (this Vector3 arg, float magnitude = 1)
+	public static Vector3 GetLoc_RandomInCircle_UpY (this Vector3 arg, float magnitude = 1)
 	{
 		Vector2 randVect = Random.insideUnitCircle.normalized * magnitude;
 		return new Vector3 (arg.x+randVect.x, arg.y+0, arg.z+randVect.y);
@@ -85,7 +85,7 @@ public static class ExtVector3
 	/// <summary>
 	/// Returns the Vector offset by a random amount, along the x/y axis.
 	/// </summary>
-	public static Vector3 GetDir_RandomInCircle_UpZ (this Vector3 arg, float magnitude = 1)
+	public static Vector3 GetLoc_RandomInCircle_UpZ (this Vector3 arg, float magnitude = 1)
 	{
 		Vector2 randVect = Random.insideUnitCircle.normalized * magnitude;
 		return new Vector3 (arg.x+randVect.x, arg.y+randVect.y, arg.z+0);

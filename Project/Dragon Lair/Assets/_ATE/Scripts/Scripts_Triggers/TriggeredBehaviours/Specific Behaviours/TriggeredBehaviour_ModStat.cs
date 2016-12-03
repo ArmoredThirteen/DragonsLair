@@ -19,6 +19,25 @@ public class TriggeredBehaviour_ModStat : TriggeredBehaviour
 	#endregion
 
 
+	#if UNITY_EDITOR
+
+	/// <summary>
+	/// Called by parent class for drawing specific variables at top.
+	/// Parent class should automatically check for when it is dirty.
+	/// </summary>
+	protected override void DrawChildInspector ()
+	{
+		/*public string statName = "";
+		public GameSystem_StatTracker.ModType modType = GameSystem_StatTracker.ModType.Add;
+		public float modValue = 1;*/
+		statName = EditorGUILayout.TextField ("Stat Name", statName);
+		modType = (GameSystem_StatTracker.ModType)EditorGUILayout.EnumPopup ("Mod Type", modType);
+		modValue = EditorGUILayout.FloatField ("Mod Value", modValue);
+	}
+
+	#endif
+
+
 	#region Awake/Start
 
 	/// <summary>
@@ -187,24 +206,5 @@ public class TriggeredBehaviour_ModStat : TriggeredBehaviour
 	#region Helper Methods
 
 	#endregion
-
-
-	#if UNITY_EDITOR
-
-	/// <summary>
-	/// Called by parent class for drawing specific variables at top.
-	/// Parent class should automatically check for when it is dirty.
-	/// </summary>
-	protected override void DrawChildInspector ()
-	{
-		/*public string statName = "";
-		public GameSystem_StatTracker.ModType modType = GameSystem_StatTracker.ModType.Add;
-		public float modValue = 1;*/
-		statName = EditorGUILayout.TextField ("Stat Name", statName);
-		modType = (GameSystem_StatTracker.ModType)EditorGUILayout.EnumPopup ("Mod Type", modType);
-		modValue = EditorGUILayout.FloatField ("Mod Value", modValue);
-	}
-
-	#endif
 
 }

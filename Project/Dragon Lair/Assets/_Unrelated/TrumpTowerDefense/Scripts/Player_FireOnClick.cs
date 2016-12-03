@@ -1,18 +1,46 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
 
 public class Player_FireOnClick : AteGameObject
 {
-	public float fireSpeed = 1;
+	public float fireDelay = 1;
 	public ProjectileShooter defaultShooter;
 
-	private bool isMousePressed = false;
+	private bool _isMousePressed = false;
 
+	private float _timer_lastShot;
+
+
+	#if UNITY_EDITOR
+
+	public override void DrawInspector ()
+	{
+		base.DrawInspector ();
+
+		fireDelay = EditorGUILayout.FloatField ("Fire Speed", fireDelay);
+
+		defaultShooter = EditorGUILayout.ObjectField
+			("Default Shooter", defaultShooter, typeof(ProjectileShooter), true)
+			as ProjectileShooter;
+	}
+
+	#endif
+
+
+	protected override void AteAwake ()
+	{
+		_timer_lastShot = fireDelay;
+	}
 
 	protected override void AteUpdate ()
 	{
-		
+		_timer_lastShot += Time.deltaTime;
+		AttemptFiring ();
 	}
 
 
@@ -31,12 +59,26 @@ public class Player_FireOnClick : AteGameObject
 
 	private void OnMouseClicked (EventData_UI data)
 	{
-		isMousePressed = true;
+		_isMousePressed = true;
+		AttemptFiring ();
 	}
 
 	private void OnMouseReleased (EventData_UI data)
 	{
-		isMousePressed = false;
+		_isMousePressed = false;
+	}
+
+
+	private void AttemptFiring ()
+	{
+		if (!_isMousePressed)
+			return;
+		if (_timer_lastShot < fireDelay)
+			return;
+
+		defaultShooter.FireProjectile ();
+
+		_timer_lastShot = 0;
 	}
 
 }

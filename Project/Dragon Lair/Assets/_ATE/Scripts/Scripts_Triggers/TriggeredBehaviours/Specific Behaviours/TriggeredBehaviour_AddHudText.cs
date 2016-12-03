@@ -32,6 +32,37 @@ public class TriggeredBehaviour_AddHudText : TriggeredBehaviour
 	#endregion
 
 
+	#if UNITY_EDITOR
+
+	/// <summary>
+	/// Called by parent class for drawing specific variables at top.
+	/// Parent class should automatically check for when it is dirty.
+	/// </summary>
+	protected override void DrawChildInspector ()
+	{
+		boxType = (HudTextBoxType)EditorGUILayout.EnumPopup ("Box Type", boxType);
+		textOrder = (TextOrder)EditorGUILayout.EnumPopup ("Text Order", textOrder);
+
+		EditorHelper.DrawResizableList<string> ("Texts", ref texts, DrawEntry_Text);
+		EditorHelper.DrawResizableList<TriggeredBehaviour_RemoveHudText>
+		("Send Removal IDs", ref sendTextIDsForRemoval, DrawEntry_SendForRemoval);
+	}
+
+	private void DrawEntry_Text (int index)
+	{
+		texts[index] = EditorGUILayout.TextField (("Text #"+index), texts[index]);
+	}
+
+	private void DrawEntry_SendForRemoval (int index)
+	{
+		sendTextIDsForRemoval[index] = EditorGUILayout.ObjectField
+			("Send ID to", sendTextIDsForRemoval[index], typeof (TriggeredBehaviour_RemoveHudText), true)
+			as TriggeredBehaviour_RemoveHudText;
+	}
+
+	#endif
+
+
 	#region Awake/Start
 
 	/// <summary>
@@ -237,36 +268,5 @@ public class TriggeredBehaviour_AddHudText : TriggeredBehaviour
 	}
 
 	#endregion
-
-
-	#if UNITY_EDITOR
-
-	/// <summary>
-	/// Called by parent class for drawing specific variables at top.
-	/// Parent class should automatically check for when it is dirty.
-	/// </summary>
-	protected override void DrawChildInspector ()
-	{
-		boxType = (HudTextBoxType)EditorGUILayout.EnumPopup ("Box Type", boxType);
-		textOrder = (TextOrder)EditorGUILayout.EnumPopup ("Text Order", textOrder);
-
-		EditorHelper.DrawResizableList<string> ("Texts", ref texts, DrawEntry_Text);
-		EditorHelper.DrawResizableList<TriggeredBehaviour_RemoveHudText>
-		("Send Removal IDs", ref sendTextIDsForRemoval, DrawEntry_SendForRemoval);
-	}
-
-	private void DrawEntry_Text (int index)
-	{
-		texts[index] = EditorGUILayout.TextField (("Text #"+index), texts[index]);
-	}
-
-	private void DrawEntry_SendForRemoval (int index)
-	{
-		sendTextIDsForRemoval[index] = EditorGUILayout.ObjectField
-			("Send ID to", sendTextIDsForRemoval[index], typeof (TriggeredBehaviour_RemoveHudText), true)
-			as TriggeredBehaviour_RemoveHudText;
-	}
-
-	#endif
 
 }

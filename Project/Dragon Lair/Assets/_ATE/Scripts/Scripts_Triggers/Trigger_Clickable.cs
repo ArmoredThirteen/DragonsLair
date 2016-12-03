@@ -18,6 +18,28 @@ public class Trigger_Clickable : AteGameObject
 	private int _curMouseOvers = 0;
 
 
+	#if UNITY_EDITOR
+
+	public override void DrawInspector ()
+	{
+		base.DrawInspector ();
+
+		eventsToInteract = (EventType_UI)EditorGUILayout.EnumPopup ("Event to Interact", eventsToInteract);
+		interactKey = (KeyCode)EditorGUILayout.EnumPopup ("Interact Key", interactKey);
+
+		EditorHelper.DrawResizableList<TriggeredBehaviour> ("Behaviours on Interact", ref behavioursOnInteract, DrawEntry_BehaviourOnInteract);
+	}
+
+	private void DrawEntry_BehaviourOnInteract (int index)
+	{
+		behavioursOnInteract[index] = EditorGUILayout.ObjectField
+			("Behaviour", behavioursOnInteract[index], typeof (TriggeredBehaviour), true)
+			as TriggeredBehaviour;
+	}
+
+	#endif
+
+
 	protected override void AteUpdate ()
 	{
 
@@ -79,27 +101,5 @@ public class Trigger_Clickable : AteGameObject
 			behaviours[i].RequestPlaying (triggerer);
 		}
 	}
-
-
-	#if UNITY_EDITOR
-
-	public override void DrawInspector ()
-	{
-		base.DrawInspector ();
-
-		eventsToInteract = (EventType_UI)EditorGUILayout.EnumPopup ("Event to Interact", eventsToInteract);
-		interactKey = (KeyCode)EditorGUILayout.EnumPopup ("Interact Key", interactKey);
-
-		EditorHelper.DrawResizableList<TriggeredBehaviour> ("Behaviours on Interact", ref behavioursOnInteract, DrawEntry_BehaviourOnInteract);
-	}
-
-	private void DrawEntry_BehaviourOnInteract (int index)
-	{
-		behavioursOnInteract[index] = EditorGUILayout.ObjectField
-			("Behaviour", behavioursOnInteract[index], typeof (TriggeredBehaviour), true)
-			as TriggeredBehaviour;
-	}
-
-	#endif
 
 }

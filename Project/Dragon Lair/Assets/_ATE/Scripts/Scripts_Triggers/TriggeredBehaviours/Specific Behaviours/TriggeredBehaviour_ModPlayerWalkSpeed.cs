@@ -25,6 +25,23 @@ public class TriggeredBehaviour_ModPlayerWalkSpeed : TriggeredBehaviour
 	#endregion
 
 
+	#if UNITY_EDITOR
+
+	/// <summary>
+	/// Called by parent class for drawing specific variables at top.
+	/// Parent class should automatically check for when it is dirty.
+	/// </summary>
+	protected override void DrawChildInspector ()
+	{
+		modType = (ModType)EditorGUILayout.EnumPopup ("Mod Type", modType);
+
+		if (modType == ModType.Set)
+			setWalkSpeed = EditorGUILayout.FloatField ("Set Walk Speed", setWalkSpeed);
+	}
+
+	#endif
+
+
 	#region Awake/Start
 
 	/// <summary>
@@ -216,22 +233,5 @@ public class TriggeredBehaviour_ModPlayerWalkSpeed : TriggeredBehaviour
 	#region Helper Methods
 
 	#endregion
-
-
-	#if UNITY_EDITOR
-
-	/// <summary>
-	/// Called by parent class for drawing specific variables at top.
-	/// Parent class should automatically check for when it is dirty.
-	/// </summary>
-	protected override void DrawChildInspector ()
-	{
-		modType = (ModType)EditorGUILayout.EnumPopup ("Mod Type", modType);
-
-		if (modType == ModType.Set)
-			setWalkSpeed = EditorGUILayout.FloatField ("Set Walk Speed", setWalkSpeed);
-	}
-
-	#endif
 
 }

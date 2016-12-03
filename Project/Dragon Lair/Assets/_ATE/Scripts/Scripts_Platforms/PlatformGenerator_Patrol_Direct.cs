@@ -22,6 +22,25 @@ public class PlatformGenerator_Patrol_Direct : AteGameObject
 
 	private float _timeSinceStart = 0;
 
+
+	#if UNITY_EDITOR
+
+	public override void DrawInspector()
+	{
+		base.DrawInspector ();
+
+		isPatrolling = EditorGUILayout.Toggle ("Is Patrolling", isPatrolling);
+
+		platformIsPrefab = EditorGUILayout.Toggle ("Platform is Prefab", platformIsPrefab);
+		platformObject = EditorGUILayout.ObjectField ("Platform Object", platformObject, typeof(GameObject), true) as GameObject;
+		platformParent = EditorGUILayout.ObjectField ("Platform Parent", platformParent, typeof(Transform), true) as Transform;
+
+		endNode = EditorGUILayout.ObjectField ("Platform Parent", endNode, typeof(Transform), true) as Transform;
+		platformSpeed = EditorGUILayout.FloatField ("Platform Speed", platformSpeed);
+	}
+
+	#endif
+
 	
 	protected override void AteStart ()
 	{
@@ -83,22 +102,4 @@ public class PlatformGenerator_Patrol_Direct : AteGameObject
 		isPatrolling = false;
 	}
 
-
-	#if UNITY_EDITOR
-
-	public override void DrawInspector()
-	{
-		base.DrawInspector ();
-
-		isPatrolling = EditorGUILayout.Toggle ("Is Patrolling", isPatrolling);
-
-		platformIsPrefab = EditorGUILayout.Toggle ("Platform is Prefab", platformIsPrefab);
-		platformObject = EditorGUILayout.ObjectField ("Platform Object", platformObject, typeof(GameObject), true) as GameObject;
-		platformParent = EditorGUILayout.ObjectField ("Platform Parent", platformParent, typeof(Transform), true) as Transform;
-
-		endNode = EditorGUILayout.ObjectField ("Platform Parent", endNode, typeof(Transform), true) as Transform;
-		platformSpeed = EditorGUILayout.FloatField ("Platform Speed", platformSpeed);
-	}
-
-	#endif
 }
