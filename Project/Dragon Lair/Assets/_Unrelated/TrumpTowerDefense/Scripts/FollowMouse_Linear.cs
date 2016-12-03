@@ -58,7 +58,7 @@ public class FollowMouse_Linear : AteGameObject
 			(followZ ? mousePos.z : Position.z)
 		);
 
-		Position = Vector3.Lerp (Position, mousePos, moveSpeed);
+		Position = Vector3.Lerp (Position, mousePos, moveSpeed * Time.deltaTime);
 	}
 
 }

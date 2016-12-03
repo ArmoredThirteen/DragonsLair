@@ -16,7 +16,7 @@ using UnityEngine;
 public class EventSystem<EventType, EventDataType>	where EventType:		struct, IConvertible, IComparable
 													where EventDataType:	EventData
 {
-	private Dictionary<EventType, Delegate> _eventTable = new Dictionary<EventType, Delegate> ();
+	private Dictionary<int, Delegate> _eventTable = new Dictionary<int, Delegate> ();
 
 
 	/// <summary>
@@ -30,29 +30,33 @@ public class EventSystem<EventType, EventDataType>	where EventType:		struct, ICo
 		//		For now it is really just here to ensure that
 		//	people only try and register things from IEventUsers.
 
+		int eventInt = Convert.ToInt32 (eventType);
+
 		//	Add key if unexisting
-		if (!_eventTable.ContainsKey (eventType))
+		if (!_eventTable.ContainsKey (eventInt))
 		{
-			_eventTable.Add (eventType, null);
+			_eventTable.Add (eventInt, null);
 		}
 
 		//	And then add to our delegate
-		_eventTable[eventType] = (Callback<EventDataType>)_eventTable[eventType] + callback;
+		_eventTable[eventInt] = (Callback<EventDataType>)_eventTable[eventInt] + callback;
 	}
 
 
 	public void Unregister (EventType eventType, Callback<EventDataType> callback)
 	{
+		int eventInt = Convert.ToInt32 (eventType);
+
 		//	We have no key, so nothing to unregister from
-		if (!_eventTable.ContainsKey (eventType))
+		if (!_eventTable.ContainsKey (eventInt))
 			return;
 
-		_eventTable[eventType] = (Callback<EventDataType>)_eventTable[eventType] - callback;
+		_eventTable[eventInt] = (Callback<EventDataType>)_eventTable[eventInt] - callback;
 
 		//	Remove key if unused
-		if (_eventTable[eventType] == null)
+		if (_eventTable[eventInt] == null)
 		{
-			_eventTable.Remove (eventType);
+			_eventTable.Remove (eventInt);
 		}
 	}
 
@@ -65,7 +69,9 @@ public class EventSystem<EventType, EventDataType>	where EventType:		struct, ICo
 
 	public void Broadcast (EventType eventType, EventDataType eventData, GameObject sender = null)
 	{
-		if (!_eventTable.ContainsKey (eventType))
+		int eventInt = Convert.ToInt32 (eventType);
+
+		if (!_eventTable.ContainsKey (eventInt))
 			return;
 
 		//	Add in our automatic event data
@@ -83,7 +89,7 @@ public class EventSystem<EventType, EventDataType>	where EventType:		struct, ICo
 
 		//	Find and call the delegate
 		Delegate d;
-		if (_eventTable.TryGetValue (eventType, out d))
+		if (_eventTable.TryGetValue (eventInt, out d))
 		{
 			Callback<EventDataType> callback = d as Callback<EventDataType>;
 			

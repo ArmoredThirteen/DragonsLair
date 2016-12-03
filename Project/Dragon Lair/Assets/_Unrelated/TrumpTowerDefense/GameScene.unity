@@ -849,6 +849,8 @@ GameObject:
   - 124: {fileID: 758217560}
   - 92: {fileID: 758217559}
   - 81: {fileID: 758217558}
+  - 114: {fileID: 758217563}
+  - 114: {fileID: 758217564}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -923,6 +925,38 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
+--- !u!114 &758217563
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 758217557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 517a7b15a3096854ba173fc608be657d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 0
+  theCam: {fileID: 758217561}
+  panImmediately: 1
+  panDuration: 25
+  panTarget: {fileID: 156566997}
+--- !u!114 &758217564
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 758217557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44f1b179c6658ee44976ccda01b100b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 0
+  theCam: {fileID: 758217561}
+  resizeImmediately: 1
+  resizeDuration: 15
+  targetSize: 45
 --- !u!4 &790685915 stripped
 Transform:
   m_PrefabParentObject: {fileID: 432480, guid: fd427f7a3def30845b7d57bc4131f982, type: 2}

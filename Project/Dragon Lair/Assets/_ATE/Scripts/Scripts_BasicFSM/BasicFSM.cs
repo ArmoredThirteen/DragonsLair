@@ -13,7 +13,7 @@ public class BasicFSM<T> where T : struct, IConvertible, IComparable
 	#region Fields
 	
 	private T _curStateID;
-	private Dictionary<T,State> _ourStates = new Dictionary<T, State> ();
+	private Dictionary<T, State> _ourStates = new Dictionary<T, State> ();
 	
 	#endregion
 
@@ -269,7 +269,7 @@ public class BasicFSM<T> where T : struct, IConvertible, IComparable
 		public Callback<T> Exit;
 		
 		/// <summary> Possible states to switch to, and their success and checking callbacks. </summary>
-		public Dictionary<T,StateSwitch> possibleSwitches = new Dictionary<T, StateSwitch> ();
+		public Dictionary<T, StateSwitch> possibleSwitches = new Dictionary<T, StateSwitch> ();
 	}
 	
 	#endregion
