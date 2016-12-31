@@ -28,6 +28,7 @@ public class GameSystem_EventManager : GameSystem
 
 	public override void SceneInitialize (){}
 	public override void SystemUpdate (){}
+	public override void SystemLateUpdate (){}
 
 	#endregion
 

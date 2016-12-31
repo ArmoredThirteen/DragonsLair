@@ -9,6 +9,7 @@ public class GameSystem_DeathManager : GameSystem
 	public override void Initialize (){}
 	public override void SceneInitialize (){}
 	public override void SystemUpdate (){}
+	public override void SystemLateUpdate (){}
 
 	#endregion
 

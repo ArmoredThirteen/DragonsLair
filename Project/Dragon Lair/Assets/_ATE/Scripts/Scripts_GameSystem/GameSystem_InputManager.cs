@@ -53,6 +53,8 @@ public class GameSystem_InputManager : GameSystem
 		}
 	}
 
+	public override void SystemLateUpdate (){}
+
 	#endregion
 
 

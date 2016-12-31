@@ -9,6 +9,9 @@ public enum EventType_Updates
 	UpdateTwo = 2,
 	//UpdateThree = 3,
 
-	//HourTick = 100,
+	LateUpdateOne = 100,
+	LateUpdateTwo = 101,
+
+	//HourTick = 1000,
 }
 

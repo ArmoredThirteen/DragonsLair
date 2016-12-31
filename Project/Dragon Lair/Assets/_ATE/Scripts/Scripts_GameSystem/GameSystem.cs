@@ -9,6 +9,7 @@ public abstract class GameSystem : MonoBehaviour
 	public override void Initialize (){}
 	public override void SceneInitialize (){}
 	public override void SystemUpdate (){}
+	public override void SystemLateUpdate (){}
 	*/
 	/// <summary>
 	/// Called by the GameManager at the start of the game.
@@ -28,6 +29,15 @@ public abstract class GameSystem : MonoBehaviour
 	/// calls are made is UNRELIABLE.
 	/// </summary>
 	public abstract void SystemUpdate ();
+
+	/// <summary>
+	/// Called by the GameManager when it late updates.
+	/// So only the GM is using Unity's LateUpdate(),
+	/// which has performance issues.
+	/// Assume the order in which the individual SystemLateUpdate()
+	/// calls are made is UNRELIABLE.
+	/// </summary>
+	public abstract void SystemLateUpdate ();
 
 }
 

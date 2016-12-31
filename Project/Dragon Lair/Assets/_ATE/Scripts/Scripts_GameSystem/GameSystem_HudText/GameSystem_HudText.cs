@@ -23,6 +23,7 @@ public class GameSystem_HudText : GameSystem
 
 	public override void SceneInitialize (){}
 	public override void SystemUpdate (){}
+	public override void SystemLateUpdate (){}
 
 
 	void OnGUI ()

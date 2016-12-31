@@ -25,6 +25,8 @@ public class GameSystem_DelayedInvoker : GameSystem
 		InvokeCallbacks (Time.time, ref _noPauseCallbacks);
 	}
 
+	public override void SystemLateUpdate (){}
+
 	#endregion
 
 

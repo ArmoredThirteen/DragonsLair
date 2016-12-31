@@ -130,6 +130,8 @@ public abstract class AteGameObject : MonoBehaviour
 	protected virtual void AteAwake (){}
 	protected virtual void AteStart (){}
 
+	protected virtual void AteLateUpdate (){}
+
 	protected virtual void RegisterEvents (){}
 	protected virtual void UnregisterEvents (){}
 
@@ -140,13 +142,22 @@ public abstract class AteGameObject : MonoBehaviour
 
 	private void BaseRegisterEvents ()
 	{
-		GameManager.Events.Register<EventType_Updates, EventData_Updates> ((int)EventType_Updates.UpdateOne, ManagedUpdateOne);
+		GameManager.Events.Register<EventType_Updates, EventData_Updates>
+			((int)EventType_Updates.UpdateOne, ManagedUpdateOne);
+		GameManager.Events.Register<EventType_Updates, EventData_Updates>
+			((int)EventType_Updates.LateUpdateOne, ManagedLateUpdateOne);
+
+
 		RegisterEvents ();
 	}
 
 	private void BaseUnregisterEvents ()
 	{
-		GameManager.Events.Unregister<EventType_Updates, EventData_Updates> ((int)EventType_Updates.UpdateOne, ManagedUpdateOne);
+		GameManager.Events.Unregister<EventType_Updates, EventData_Updates>
+			((int)EventType_Updates.UpdateOne, ManagedUpdateOne);
+		GameManager.Events.Unregister<EventType_Updates, EventData_Updates>
+			((int)EventType_Updates.LateUpdateOne, ManagedLateUpdateOne);
+
 		UnregisterEvents ();
 	}
 
@@ -176,6 +187,14 @@ public abstract class AteGameObject : MonoBehaviour
 	private void ManagedUpdateOne (EventData_Updates eventData)
 	{
 		AteUpdate ();
+	}
+
+	/// <summary>
+	/// Registered LateUpdate Event, controlled by the UpdatesBroadcaster.
+	/// </summary>
+	private void ManagedLateUpdateOne (EventData_Updates eventData)
+	{
+		AteLateUpdate ();
 	}
 
 }

@@ -17,6 +17,7 @@ public class GameSystem_ResolutionManager : GameSystem
 
 	public override void SceneInitialize (){}
 	public override void SystemUpdate (){}
+	public override void SystemLateUpdate (){}
 
 	#endregion
 

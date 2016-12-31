@@ -36,6 +36,8 @@ public class GameSystem_GameObjectTracker : GameSystem
 		//Debug.Log ("Tile Count: " + GetAteGameObjects<Tile> (GOType.Tile).Count);
 	}
 
+	public override void SystemLateUpdate (){}
+
 	#endregion
 
 

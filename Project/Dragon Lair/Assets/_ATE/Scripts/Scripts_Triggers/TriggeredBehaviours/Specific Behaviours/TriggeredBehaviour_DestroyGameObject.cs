@@ -8,13 +8,20 @@ using UnityEditor;
 
 public class TriggeredBehaviour_DestroyGameObject : TriggeredBehaviour
 {
+	public enum DestroyType
+	{
+		Target    = 0,
+		Self      = 50,
+		Triggerer = 100,
+	}
+
 	//	Variables for designers.
 	//	Shown in editor with DrawInspector() at bottom.
 	#region Public Variables
 
-	public bool destroyTriggerer = false;
+	public DestroyType destroyType = DestroyType.Target;
 
-	public GameObject theGameObject;
+	public GameObject targetGameObject;
 
 	#endregion
 
@@ -27,14 +34,37 @@ public class TriggeredBehaviour_DestroyGameObject : TriggeredBehaviour
 	/// </summary>
 	protected override void DrawChildInspector ()
 	{
-		destroyTriggerer = EditorGUILayout.Toggle ("Destroy Triggerer", destroyTriggerer);
+		destroyType = (DestroyType)EditorGUILayout.EnumPopup ("Destroy Type", destroyType);
 
-		if (!destroyTriggerer)
+		switch (destroyType)
 		{
-			theGameObject = EditorGUILayout.ObjectField
-				("GameObject", theGameObject, typeof (GameObject), true)
-				as GameObject;
+			case DestroyType.Target :
+				DrawDestroyType_Target ();
+				break;
+			case DestroyType.Self :
+				DrawDestroyType_Self ();
+				break;
+			case DestroyType.Triggerer :
+				DrawDestroyType_Triggerer ();
+				break;
 		}
+	}
+
+	private void DrawDestroyType_Target ()
+	{
+		targetGameObject = EditorGUILayout.ObjectField
+			("Target", targetGameObject, typeof (GameObject), true)
+			as GameObject;
+	}
+
+	private void DrawDestroyType_Self ()
+	{
+
+	}
+
+	private void DrawDestroyType_Triggerer ()
+	{
+
 	}
 
 	#endif
@@ -81,8 +111,18 @@ public class TriggeredBehaviour_DestroyGameObject : TriggeredBehaviour
 	/// </summary>
 	protected override void OnRequestedPlaying (AteGameObject triggerer)
 	{
-		if (destroyTriggerer && triggerer != null)
-			theGameObject = triggerer.gameObject;
+		switch (destroyType)
+		{
+			case DestroyType.Target :
+				//	Target should be set by designer already
+				break;
+			case DestroyType.Self :
+				targetGameObject = gameObject;
+				break;
+			case DestroyType.Triggerer :
+				targetGameObject = triggerer == null ? null : triggerer.gameObject;
+				break;
+		}
 	}
 
 	/// <summary>
@@ -125,11 +165,16 @@ public class TriggeredBehaviour_DestroyGameObject : TriggeredBehaviour
 	/// </summary>
 	protected override void OnEnteredPlaying (TriggeredState prevState)
 	{
-		if (theGameObject != null)
-			Destroy (theGameObject.gameObject);
+		if (targetGameObject == null)
+			return;
 
 		//	Called at end of this method for an instant-fire behaviour
 		RequestComplete ();
+
+		//	Normally code goes BEFORE RequestComplete()
+		//	But because this can destroy itself, the RequestComplete()
+		//		is called above to maintain anything relying on it.
+		Destroy (targetGameObject.gameObject);
 	}
 
 	/// <summary>

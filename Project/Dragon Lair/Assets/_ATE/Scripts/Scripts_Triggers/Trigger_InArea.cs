@@ -97,6 +97,11 @@ public class Trigger_InArea : AteGameObject
 
 	#region Trigger Entered
 
+	public void ManualOnTriggerEnter (Collider theCollider)
+	{
+		OnTriggerEnter (theCollider);
+	}
+
 	void OnTriggerEnter (Collider theCollider)
 	{
 		AteGameObject asGameObject = theCollider.gameObject.AteGameObject ();
@@ -132,6 +137,11 @@ public class Trigger_InArea : AteGameObject
 
 
 	#region Trigger Exited
+
+	public void ManualOnTriggerExit (Collider theCollider)
+	{
+		OnTriggerExit (theCollider);
+	}
 
 	void OnTriggerExit (Collider theCollider)
 	{

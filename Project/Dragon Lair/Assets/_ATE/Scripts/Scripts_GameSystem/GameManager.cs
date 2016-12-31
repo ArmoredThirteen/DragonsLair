@@ -135,6 +135,22 @@ public class GameManager : MonoBehaviour
 		_fsm_loadState.Update (false);
 	}
 
+	/// <summary>
+	/// Like Update(), calls all the GameSystem.SystemLateUpdate()
+	/// methods. Does not go through any fsms, though, and instead
+	/// calls on each system directly.
+	/// </summary>
+	void LateUpdate ()
+	{
+		if (!Instance.completedLoad)
+			return;
+		
+		for (int i = 0; i < Instance.gameSystems.Count; i++)
+		{
+			Instance.gameSystems[i].SystemLateUpdate ();
+		}
+	}
+
 	#endregion
 
 

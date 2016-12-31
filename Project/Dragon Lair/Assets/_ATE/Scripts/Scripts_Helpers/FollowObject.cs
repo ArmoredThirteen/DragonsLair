@@ -16,7 +16,7 @@ public class FollowObject : AteGameObject
 
 	#if UNITY_EDITOR
 
-	public override void DrawInspector()
+	public override void DrawInspector ()
 	{
 		base.DrawInspector ();
 

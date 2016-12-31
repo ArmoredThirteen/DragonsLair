@@ -62,9 +62,33 @@ public static class EditorHelper
 	}
 
 
+	//	Shamelessly stolen from user 'dbc':
+	//	http://www.stackoverflow.com/questions/25404237/how-to-get-enum-type-by-specifying-its-name-in-string
+	/// <summary>
+	/// Inefficient, don't use constantly!
+	/// Using enumName, finds an existing Type.
+	/// Returns null if none are found.
+	/// </summary>
+	public static System.Type GetEnumType (string enumName)
+	{
+		//	? Finds all the enums in the assembly ?
+		foreach (System.Reflection.Assembly assembly in System.AppDomain.CurrentDomain.GetAssemblies ())
+		{
+			System.Type type = assembly.GetType (enumName);
+
+			if (type == null)
+				continue;
+			if (type.IsEnum)
+				return type;
+		}
+
+		return null;
+	}
+
+
 	#region Lists
 
-	public static void ResizeList<T> (int newSize, ref List<T> theList, T defaultEntry = default(T))
+	/*public static void ResizeList<T> (int newSize, ref List<T> theList, T defaultEntry = default(T))
 	{
 		int curSize = theList.Count;
 
@@ -84,7 +108,91 @@ public static class EditorHelper
 				theList.Add (defaultEntry);
 			}
 		}
+	}*/
+
+
+	/*public static bool DrawPairedResizableList<T,Y> (
+		string title,
+		ref List<T> parentList,
+		ref List<Y> pairedList,
+		Callback<int> DrawEntryCallback)
+	{
+		return DrawPairedResizableList<T,Y> (title, ref parentList, ref pairedList, DrawEntryCallback, null, null, null, null);
 	}
+
+	//TODO: Make it not a direct copy/paste and something more easily extendible
+	//TODO: Make it not a direct copy/paste and something more easily extendible
+	//TODO: Make it not a direct copy/paste and something more easily extendible
+	public static bool DrawPairedResizableList<T,Y> (
+		string title,
+		ref List<T> parentList,
+		ref List<Y> pairedList,
+		Callback<int> DrawEntryCallback,
+		Callback<int> AddCallback,
+		Callback<int> DelCallback,
+		Callback<int> MoveUpCallback,
+		Callback<int> MoveDownCallback,
+		bool horizontalButtons = true
+	)
+	{
+		EditorGUILayout.Space ();
+		//	If list changed from 0 to 1, don't draw list stuff until next time
+		bool modButtonPressed = DrawListHeader (title, ref theList, AddCallback);
+		if (modButtonPressed)
+			return true;
+		EditorGUILayout.Space ();
+
+		EditorGUI.indentLevel++;
+		EditorGUILayout.BeginVertical ();
+		for (int i = 0; i < theList.Count; i++)
+		{
+			//	Begin 'indent' spacing for buttons
+			EditorGUILayout.BeginHorizontal ();
+			GUILayout.Space (20*EditorGUI.indentLevel);
+
+			if (!horizontalButtons)
+			{
+				EditorGUI.indentLevel--;
+				EditorGUILayout.BeginHorizontal ();
+			}
+
+			//	Draw vertical or horizontal buttons
+			if (!horizontalButtons)
+				EditorGUILayout.BeginVertical ();
+			modButtonPressed = DrawListEntryButtons<T>
+				(ref theList, i, AddCallback, DelCallback, MoveUpCallback, MoveDownCallback, horizontalButtons);
+			if (!horizontalButtons)
+				EditorGUILayout.EndVertical ();
+
+			//	End 'indent' spacing
+			EditorGUILayout.EndHorizontal ();
+
+			//	If no buttons were pressed, draw the entry data
+			if (!modButtonPressed)
+				DrawListEntry<T> (ref theList, i , DrawEntryCallback);
+
+			if (!horizontalButtons)
+			{
+				EditorGUI.indentLevel++;
+				EditorGUILayout.EndHorizontal ();
+			}
+
+			EditorGUILayout.Space ();
+
+			if (modButtonPressed)
+				break;
+		}
+		EditorGUILayout.EndVertical ();
+		EditorGUI.indentLevel--;
+
+		GUI.backgroundColor = DefaultGUIColor;
+
+		//	To prevent previously selected, modified entry data appearing in the wrong entry
+		if (modButtonPressed)
+			UnfocusControl ();
+
+		return modButtonPressed;
+	}*/
 
 
 	/// <summary>
@@ -95,9 +203,9 @@ public static class EditorHelper
 	public static bool DrawResizableList<T> (
 		string title,
 		ref List<T> theList,
-		Callback<int> drawEntryCallback)
+		Callback<int> DrawEntryCallback)
 	{
-		return DrawResizableList<T> (title, ref theList, drawEntryCallback, null, null, null, null);
+		return DrawResizableList<T> (title, ref theList, DrawEntryCallback, null, null, null, null);
 	}
 
 	/// <summary>
@@ -185,6 +293,7 @@ public static class EditorHelper
 		
 		return modButtonPressed;
 	}
+
 
 	/// <summary>
 	/// Draws the list header. Returns true if list was 0 and an entry was added.

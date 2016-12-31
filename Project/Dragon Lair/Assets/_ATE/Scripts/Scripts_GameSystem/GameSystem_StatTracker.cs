@@ -31,6 +31,7 @@ public class GameSystem_StatTracker : GameSystem
 	public override void Initialize (){}
 	public override void SceneInitialize (){}
 	public override void SystemUpdate (){}
+	public override void SystemLateUpdate (){}
 
 	#endregion
 

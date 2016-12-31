@@ -16,6 +16,7 @@ public class GameSystem_SceneLoader : GameSystem
 	}
 
 	public override void SystemUpdate (){}
+	public override void SystemLateUpdate (){}
 
 	#endregion
 
