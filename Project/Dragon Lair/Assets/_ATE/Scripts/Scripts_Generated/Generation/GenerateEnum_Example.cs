@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using ScriptGeneration;
 
 
 public class GenerateEnum_Example : MonoBehaviour

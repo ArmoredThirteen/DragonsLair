@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/_Unrelated/TrumpTowerDefense/GameScene.unity
+- path: Assets/_Unrelated/SimpleBug/GameScene.unity
   isLoaded: 1
   isActive: 1

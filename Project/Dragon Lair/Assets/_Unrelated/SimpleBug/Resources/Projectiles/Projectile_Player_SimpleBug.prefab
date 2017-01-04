@@ -80,7 +80,7 @@ GameObject:
   - 114: {fileID: 11412364}
   - 136: {fileID: 13605654}
   m_Layer: 0
-  m_Name: Projectile_PlayerBug
+  m_Name: Projectile_Player_SimpleBug
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -189,7 +189,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 2100000, guid: 8a32fc6c2a69ef44a9c76772fa0b8e9d, type: 2}
+  - {fileID: 2100000, guid: 70c8b556c1f17e94e9622bb52e1c137b, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1

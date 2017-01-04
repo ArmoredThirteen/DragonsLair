@@ -282,7 +282,7 @@ Prefab:
     - target: {fileID: 11410350, guid: fd427f7a3def30845b7d57bc4131f982, type: 2}
       propertyPath: projectilePrefab
       value: 
-      objectReference: {fileID: 11477018, guid: f350e0dda744bd245b979032c5955cb3,
+      objectReference: {fileID: 11477018, guid: cf09afe9adadcf344b11bf278ba0d93c,
         type: 2}
     - target: {fileID: 11410350, guid: fd427f7a3def30845b7d57bc4131f982, type: 2}
       propertyPath: targetVariance
@@ -444,7 +444,7 @@ Prefab:
     - target: {fileID: 11410350, guid: fd427f7a3def30845b7d57bc4131f982, type: 2}
       propertyPath: projectilePrefab
       value: 
-      objectReference: {fileID: 11477018, guid: f350e0dda744bd245b979032c5955cb3,
+      objectReference: {fileID: 11477018, guid: cf09afe9adadcf344b11bf278ba0d93c,
         type: 2}
     - target: {fileID: 11410350, guid: fd427f7a3def30845b7d57bc4131f982, type: 2}
       propertyPath: targetVariance
@@ -583,7 +583,7 @@ Prefab:
     - target: {fileID: 11410350, guid: fd427f7a3def30845b7d57bc4131f982, type: 2}
       propertyPath: projectilePrefab
       value: 
-      objectReference: {fileID: 11477018, guid: f350e0dda744bd245b979032c5955cb3,
+      objectReference: {fileID: 11477018, guid: 99081475248ef2444a80a5acce51de7c,
         type: 2}
     - target: {fileID: 11410350, guid: fd427f7a3def30845b7d57bc4131f982, type: 2}
       propertyPath: targetVariance
@@ -1061,7 +1061,7 @@ Prefab:
     - target: {fileID: 11410350, guid: fd427f7a3def30845b7d57bc4131f982, type: 2}
       propertyPath: projectilePrefab
       value: 
-      objectReference: {fileID: 11477018, guid: f350e0dda744bd245b979032c5955cb3,
+      objectReference: {fileID: 11477018, guid: cf09afe9adadcf344b11bf278ba0d93c,
         type: 2}
     - target: {fileID: 11410350, guid: fd427f7a3def30845b7d57bc4131f982, type: 2}
       propertyPath: targetVariance
@@ -1165,7 +1165,7 @@ Prefab:
     - target: {fileID: 11410350, guid: fd427f7a3def30845b7d57bc4131f982, type: 2}
       propertyPath: projectilePrefab
       value: 
-      objectReference: {fileID: 11477018, guid: f350e0dda744bd245b979032c5955cb3,
+      objectReference: {fileID: 11477018, guid: cf09afe9adadcf344b11bf278ba0d93c,
         type: 2}
     - target: {fileID: 11410350, guid: fd427f7a3def30845b7d57bc4131f982, type: 2}
       propertyPath: targetVariance
@@ -1255,7 +1255,7 @@ Prefab:
     - target: {fileID: 11410350, guid: fd427f7a3def30845b7d57bc4131f982, type: 2}
       propertyPath: projectilePrefab
       value: 
-      objectReference: {fileID: 11477018, guid: f350e0dda744bd245b979032c5955cb3,
+      objectReference: {fileID: 11477018, guid: cf09afe9adadcf344b11bf278ba0d93c,
         type: 2}
     - target: {fileID: 11410350, guid: fd427f7a3def30845b7d57bc4131f982, type: 2}
       propertyPath: targetVariance
@@ -1461,7 +1461,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 0
   isAutoFire: 0
-  projectilePrefab: {fileID: 11497968, guid: 3ffdfeac26e3d094bae81a025eed973b, type: 2}
+  projectilePrefab: {fileID: 11497968, guid: 2471333771e686b4fb78fd49e0cdcb24, type: 2}
   projectileParent: {fileID: 0}
   projectileTarget: {fileID: 2114772476}
   fireStartVariance: 0
