@@ -68,8 +68,11 @@ namespace ScriptGeneration
 		/// Script is located at theData.enumPath.
 		/// After generating the script it recompiles (by calling AssetDatabse.Refresh()).
 		/// </summary>
-		public static void Generate (GenerateEnum_Data theData)
+		public static void Generate (GenerateEnum_Data theData, bool forceIDtoInOrder = false)
 		{
+			if (Application.isPlaying)
+				return;
+			
 			string fullPath = theData.enumPath + theData.enumType + ".cs";
 
 			using (StreamWriter writer = new StreamWriter (fullPath))
@@ -78,7 +81,8 @@ namespace ScriptGeneration
 
 				for (int i = 0; i < theData.enumValues.Count; i++)
 				{
-					WriteEnumValue (writer, theData.enumValues[i]);
+					int id = forceIDtoInOrder ? i : theData.enumValues[i].enumID;
+					WriteEnumValue (writer, theData.enumValues[i].enumName, id);
 				}
 
 				WriteFooter (writer, theData);
@@ -100,9 +104,9 @@ namespace ScriptGeneration
 			writer.WriteLine ("}");
 		}
 
-		private static void WriteEnumValue (StreamWriter writer, GenerateEnum_Data.SingleEnum_Data enumData)
+		private static void WriteEnumValue (StreamWriter writer, string enumName, int enumID)
 		{
-			string enumLine = "\t" + enumData.enumName + " = " + enumData.enumID + ",";
+			string enumLine = "\t" + enumName + " = " + enumID + ",";
 			writer.WriteLine (enumLine);
 		}
 

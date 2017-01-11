@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using ScriptGeneration;
 
 
 public class GameSystem_StatTracker : GameSystem
@@ -9,9 +10,10 @@ public class GameSystem_StatTracker : GameSystem
 	//TODO: Make it abstract with custom inspectors and things
 	//		So the value can be an int, float, or whatever
 	[System.Serializable]
-	public class Stat
+	public class StatData
 	{
-		public string name = "Stat";
+		public TrackedStatType id = TrackedStatType.None;
+
 		public float value = 0;
 	}
 
@@ -23,7 +25,9 @@ public class GameSystem_StatTracker : GameSystem
 	}
 
 
-	public List<Stat> stats = new List<Stat> ();
+	public GenerateEnum_Data enumData = new GenerateEnum_Data ();
+
+	public List<StatData> stats = new List<StatData> ();
 
 
 	#region GameSystem
@@ -40,9 +44,9 @@ public class GameSystem_StatTracker : GameSystem
 	/// Gets the stat value.
 	/// If no stat exists, returns float.MinValue.
 	/// </summary>
-	public float GetStatValue (string name)
+	public float GetStatValue (TrackedStatType statType)
 	{
-		Stat theStat = GetStat (name);
+		StatData theStat = GetStat (statType);
 		if (theStat == null)
 			return float.MinValue;
 		
@@ -53,11 +57,11 @@ public class GameSystem_StatTracker : GameSystem
 	/// Returns the stat matching the given string.
 	/// Returns null if no stat matches.
 	/// </summary>
-	public Stat GetStat (string name)
+	public StatData GetStat (TrackedStatType statType)
 	{
 		for (int i = 0; i < stats.Count; i++)
 		{
-			if (stats[i].name.Equals (name))
+			if (stats[i].id.Equals (statType))
 				return stats[i];
 		}
 
@@ -69,13 +73,13 @@ public class GameSystem_StatTracker : GameSystem
 	//		displaying a given stat.
 	#region ModStats
 
-	public void ModStat (string name, ModType modType, float value)
+	public void ModStat (TrackedStatType statType, ModType modType, float value)
 	{
-		Stat theStat = GetStat (name);
+		StatData theStat = GetStat (statType);
 		if (theStat == null)
 		{
 			#if UNITY_EDITOR
-			Debug.LogError ("StatTracker.ModStat() could not find stat with given name: " + name);
+			Debug.LogError ("StatTracker.ModStat() could not find stat with given name: " + statType.ToString ());
 			#endif
 			return;
 		}

@@ -218,12 +218,13 @@ public static class EditorHelper
 	/// If horizontalButtons is true, the buttons will be on the top horizontally.
 	/// If it is false, the buttons will be to the left vertically, with data to the right.
 	/// 
-	/// If add/del/swapCallback(s) are null, they'll use normal data-only modifications.
-	/// For things like adding/removing children objects, have non-null add/del/swap callbacks.
-	/// Non-null callbacks are used in place of data-only modifications.
-	/// Default addCallback functionality:  theList.Insert (index+1, default(T));
-	/// Default delCallback functionality:  theList.RemoveAt (index);
-	/// Default swapCallback functionality: theList.Swap (index, index +/- 1);
+	/// AddCallback performs default adding functionality then calls AddCallback,
+	/// with an index of where the new entry was added to.
+	/// Del/SwapCallbacks call their callbacks, with an index of which entry will be modified,
+	/// then performs default functionality.
+	/// Default add functionality:  theList.Insert (index+1, default(T));
+	/// Default del functionality:  theList.RemoveAt (index);
+	/// Default swap functionality: theList.Swap (index, index +/- 1);
 	/// </summary>
 	public static bool DrawResizableList<T> (
 		string title,
@@ -236,6 +237,7 @@ public static class EditorHelper
 		bool horizontalButtons = true)
 	{
 		EditorGUILayout.Space ();
+
 		//	If list changed from 0 to 1, don't draw list stuff until next time
 		bool modButtonPressed = DrawListHeader (title, ref theList, AddCallback);
 		if (modButtonPressed)
@@ -298,7 +300,7 @@ public static class EditorHelper
 	/// <summary>
 	/// Draws the list header. Returns true if list was 0 and an entry was added.
 	/// </summary>
-	private static bool DrawListHeader<T> (string title, ref List<T> theList, Callback<int> OverrideCallback)
+	private static bool DrawListHeader<T> (string title, ref List<T> theList, Callback<int> AddCallback)
 	{
 		bool pressed = false;
 		EditorGUILayout.BeginVertical ();
@@ -315,10 +317,10 @@ public static class EditorHelper
 			{
 				pressed = true;
 
-				if (OverrideCallback != null)
-					OverrideCallback (0);
-				else
-					theList.Add (default(T));
+				theList.Add (default(T));
+
+				if (AddCallback != null)
+					AddCallback (0);
 			}
 			
 			GUI.color = DefaultGUIColor;
@@ -382,7 +384,7 @@ public static class EditorHelper
 		return false;
 	}
 
-	private static bool ListAddButton<T> (ref List<T> theList, int index, Callback<int> OverridePress)
+	private static bool ListAddButton<T> (ref List<T> theList, int index, Callback<int> AddCallback)
 	{
 		bool pressed = false;
 
@@ -391,17 +393,17 @@ public static class EditorHelper
 		{
 			pressed = true;
 
-			if (OverridePress != null)
-				OverridePress (index);
-			else
-				theList.Insert (index+1, default(T));
+			theList.Insert (index+1, default(T));
+
+			if (AddCallback != null)
+				AddCallback (index+1);
 		}
 
 		GUI.color = DefaultGUIColor;
 		return pressed;
 	}
 
-	private static bool ListDelButton<T> (ref List<T> theList, int index, Callback<int> OverridePress)
+	private static bool ListDelButton<T> (ref List<T> theList, int index, Callback<int> DelCallback)
 	{
 		bool pressed = false;
 
@@ -410,17 +412,17 @@ public static class EditorHelper
 		{
 			pressed = true;
 
-			if (OverridePress != null)
-				OverridePress (index);
-			else
-				theList.RemoveAt (index);
+			if (DelCallback != null)
+				DelCallback (index);
+
+			theList.RemoveAt (index);
 		}
 
 		GUI.color = DefaultGUIColor;
 		return pressed;
 	}
 
-	private static bool ListMoveUpButton<T> (ref List<T> theList, int index, Callback<int> OverridePress)
+	private static bool ListMoveUpButton<T> (ref List<T> theList, int index, Callback<int> MoveUpCallback)
 	{
 		bool pressed = false;
 
@@ -428,16 +430,16 @@ public static class EditorHelper
 		{
 			pressed = true;
 
-			if (OverridePress != null)
-				OverridePress (index);
-			else
-				theList.Swap (index, index-1);
+			if (MoveUpCallback != null)
+				MoveUpCallback (index);
+
+			theList.Swap (index, index-1);
 		}
 
 		return pressed;
 	}
 
-	private static bool ListMoveDownButton<T> (ref List<T> theList, int index, Callback<int> OverridePress)
+	private static bool ListMoveDownButton<T> (ref List<T> theList, int index, Callback<int> MoveDownCallback)
 	{
 		bool pressed = false;
 
@@ -445,10 +447,10 @@ public static class EditorHelper
 		{
 			pressed = true;
 
-			if (OverridePress != null)
-				OverridePress (index);
-			else
-				theList.Swap (index, index+1);
+			if (MoveDownCallback != null)
+				MoveDownCallback (index);
+
+			theList.Swap (index, index+1);
 		}
 
 		return pressed;

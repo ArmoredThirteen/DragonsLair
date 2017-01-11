@@ -12,7 +12,7 @@ public class TriggeredBehaviour_ModStat : TriggeredBehaviour
 	//	Shown in editor with DrawInspector() at bottom.
 	#region Public Variables
 
-	public string statName = "";
+	public TrackedStatType statID = TrackedStatType.None;
 	public GameSystem_StatTracker.ModType modType = GameSystem_StatTracker.ModType.Add;
 	public float modValue = 1;
 
@@ -30,7 +30,7 @@ public class TriggeredBehaviour_ModStat : TriggeredBehaviour
 		/*public string statName = "";
 		public GameSystem_StatTracker.ModType modType = GameSystem_StatTracker.ModType.Add;
 		public float modValue = 1;*/
-		statName = EditorGUILayout.TextField ("Stat Name", statName);
+		statID = (TrackedStatType)EditorGUILayout.EnumPopup ("Stat ID", statID);
 		modType = (GameSystem_StatTracker.ModType)EditorGUILayout.EnumPopup ("Mod Type", modType);
 		modValue = EditorGUILayout.FloatField ("Mod Value", modValue);
 	}
@@ -122,7 +122,7 @@ public class TriggeredBehaviour_ModStat : TriggeredBehaviour
 	/// </summary>
 	protected override void OnEnteredPlaying (TriggeredState prevState)
 	{
-		GameManager.Stats.ModStat (statName, modType, modValue);
+		GameManager.Stats.ModStat (statID, modType, modValue);
 		//	Called at end of this method for an instant-fire behaviour
 		RequestComplete ();
 	}

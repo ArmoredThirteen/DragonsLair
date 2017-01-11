@@ -46,19 +46,37 @@
 		public List<SingleEnum_Data> enumValues = new List<SingleEnum_Data> ();
 
 
+		/// <summary>
+		/// Hackily delays the automatic generation by one draw call.
+		/// Used to avoid null when adding a value while using AutomaticGeneration.
+		/// </summary>
+		private bool _generateNextDraw = false;
+
+
 		#if UNITY_EDITOR
 
-		public void DrawInspector ()
+		public void DrawInspector (bool automaticGeneration = false)
 		{
-			DrawInspector (null, null, null, null, null);
+			DrawInspector (null, false, null, null, null, null, automaticGeneration);
 		}
 
-		public void DrawInspector (Callback<int> drawCallback)
+		public void DrawInspector (Callback<int> drawCallback, bool drawCallbackReplacesDefault = false, bool automaticGeneration = false)
 		{
-			DrawInspector (drawCallback, null, null, null, null);
+			DrawInspector (drawCallback, drawCallbackReplacesDefault, null, null, null, null, automaticGeneration);
 		}
 
-		public void DrawInspector (Callback<int> drawCallback, Callback<int> addCallback, Callback<int> delCallback, Callback<int> moveUpCallback, Callback<int> moveDownCallback)
+		/// <summary>
+		/// Draws the data for generating a single enum's entries.
+		/// If drawCallback is null, the default draw method is used.
+		/// If drawCallback is not null, the default draw method may or may not be called.
+		/// If drawCallbackReplacesDefault is true, the default is not called,
+		/// otherwise the default is called and then the given callback is.
+		/// </summary>
+		public void DrawInspector (
+			Callback<int> drawCallback,   bool drawCallbackReplacesDefault,
+			Callback<int> addCallback,    Callback<int> delCallback,
+			Callback<int> moveUpCallback, Callback<int> moveDownCallback,
+			bool automaticGeneration = false)
 		{
 			showData = EditorGUILayout.Toggle ("Show "+enumType, showData);
 			if (!showData)
@@ -69,20 +87,43 @@
 
 			EditorGUILayout.BeginHorizontal ();
 
-			if (Application.isPlaying)
-				EditorGUILayout.LabelField ("Generation disabled while playing.");
-			else
-				DrawButton_Generate ();
+			if (!automaticGeneration)
+			{
+				if (Application.isPlaying)
+					EditorGUILayout.LabelField ("Generation disabled while playing.");
+				else
+					DrawButton_Generate ();
+			}
 
 			DrawButton_LoadExisting ();
 			EditorGUILayout.Space ();
 
 			EditorGUILayout.EndHorizontal ();
 
-			if (drawCallback == null)
-				drawCallback = DrawSingleEnum;
-			
-			EditorHelper.DrawResizableList<SingleEnum_Data> ("Enum Values", ref enumValues, drawCallback, addCallback, delCallback, moveUpCallback, moveDownCallback);
+			Callback<int> defaultDrawCallback = DrawEnumName;
+			if (!automaticGeneration)
+				defaultDrawCallback += DrawEnumID;
+
+			Callback<int> actualDrawCallback = defaultDrawCallback;
+			if (drawCallback != null)
+			{
+				if (drawCallbackReplacesDefault)
+					actualDrawCallback = drawCallback;
+				else
+					actualDrawCallback += drawCallback;
+			}
+
+			if (_generateNextDraw)
+			{
+				GenerateEnum.Generate (this, true);
+				_generateNextDraw = false;
+			}
+
+			bool modded = EditorHelper.DrawResizableList<SingleEnum_Data> ("Enum Values", ref enumValues, actualDrawCallback, addCallback, delCallback, moveUpCallback, moveDownCallback);
+			if (modded && automaticGeneration)
+			{
+				_generateNextDraw = true;
+			}
 		}
 
 		private void DrawButton_Generate ()
@@ -103,9 +144,15 @@
 			EditorHelper.UnfocusControl ();
 		}
 
-		private void DrawSingleEnum (int index)
+		private void DrawEnumName (int index)
 		{
 			enumValues[index].enumName = EditorGUILayout.TextField ("Name",  enumValues[index].enumName);
+			//enumValues[index].enumID   = EditorGUILayout.IntField  ("ID",    enumValues[index].enumID);
+		}
+
+		private void DrawEnumID (int index)
+		{
+			//enumValues[index].enumName = EditorGUILayout.TextField ("Name",  enumValues[index].enumName);
 			enumValues[index].enumID   = EditorGUILayout.IntField  ("ID",    enumValues[index].enumID);
 		}
 
