@@ -55,14 +55,21 @@
 
 		#if UNITY_EDITOR
 
-		public void DrawInspector (bool automaticGeneration = false)
+		public enum DrawSettings
 		{
-			DrawInspector (null, false, null, null, null, null, automaticGeneration);
+			AutomaticGeneration,
+			DrawPath,
+			DrawType,
 		}
 
-		public void DrawInspector (Callback<int> drawCallback, bool drawCallbackReplacesDefault = false, bool automaticGeneration = false)
+		public void DrawInspector (params DrawSettings[] settings)
 		{
-			DrawInspector (drawCallback, drawCallbackReplacesDefault, null, null, null, null, automaticGeneration);
+			DrawInspector (null, false, null, null, null, null, settings);
+		}
+
+		public void DrawInspector (Callback<int> drawCallback, bool drawCallbackReplacesDefault = false, params DrawSettings[] settings)
+		{
+			DrawInspector (drawCallback, drawCallbackReplacesDefault, null, null, null, null, settings);
 		}
 
 		/// <summary>
@@ -76,14 +83,22 @@
 			Callback<int> drawCallback,   bool drawCallbackReplacesDefault,
 			Callback<int> addCallback,    Callback<int> delCallback,
 			Callback<int> moveUpCallback, Callback<int> moveDownCallback,
-			bool automaticGeneration = false)
+			params DrawSettings[] settings)
 		{
-			showData = EditorGUILayout.Toggle ("Show "+enumType, showData);
+			//	Turn settings into bools
+			List<DrawSettings> listSettings = new List<DrawSettings> (settings);
+			bool automaticGeneration = listSettings.Contains (DrawSettings.AutomaticGeneration);
+			bool drawPath = listSettings.Contains (DrawSettings.DrawPath);
+			bool drawType = listSettings.Contains (DrawSettings.DrawType);
+
+			showData = EditorGUILayout.Toggle ("Show "+enumType+" Data", showData);
 			if (!showData)
 				return;
 
-			enumPath = EditorGUILayout.TextField ("Path", enumPath);
-			enumType = EditorGUILayout.TextField ("Type", enumType);
+			if (drawPath)
+				enumPath = EditorGUILayout.TextField ("Path", enumPath);
+			if (drawType)
+				enumType = EditorGUILayout.TextField ("Type", enumType);
 
 			EditorGUILayout.BeginHorizontal ();
 

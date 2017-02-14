@@ -79,10 +79,22 @@ namespace ScriptGeneration
 			{
 				WriteHeader (writer, theData);
 
+				List<int> usedIDs = new List<int> ();
+
 				for (int i = 0; i < theData.enumValues.Count; i++)
 				{
 					int id = forceIDtoInOrder ? i : theData.enumValues[i].enumID;
-					WriteEnumValue (writer, theData.enumValues[i].enumName, id);
+					string name = theData.enumValues[i].enumName;
+
+					if (usedIDs.Contains (id))
+					{
+						Debug.LogError ("Enum generation has duplicate ID!" +
+							"\r\nSkipping enum name/id: " + theData.enumValues[i].enumName + " / " + id);
+						continue;
+					}
+
+					WriteEnumValue (writer, name, id);
+					usedIDs.Add (id);
 				}
 
 				WriteFooter (writer, theData);

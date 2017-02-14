@@ -703,9 +703,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6751f0c21867237448ac3e5182d34b0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enumData:
+    showData: 0
+    enumPath: Assets/_Ate/Scripts/Scripts_Generated/Generated_Enums/
+    enumType: TrackedStatType
+    enumValues:
+    - enumName: None
+      enumID: 0
+    - enumName: Greatness
+      enumID: 10
+    - enumName: Mistakes
+      enumID: 100
   stats:
-  - name: Greatness
-    value: 3
+  - id: 0
+    value: 0
+  - id: 10
+    value: 0
+  - id: 100
+    value: 0
 --- !u!114 &11462462
 MonoBehaviour:
   m_ObjectHideFlags: 1

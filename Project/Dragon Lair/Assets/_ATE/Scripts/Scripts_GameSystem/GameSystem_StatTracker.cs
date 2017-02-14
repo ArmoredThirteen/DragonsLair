@@ -15,6 +15,19 @@ public class GameSystem_StatTracker : GameSystem
 		public TrackedStatType id = TrackedStatType.None;
 
 		public float value = 0;
+
+
+		public StatData ()
+		{
+			this.id = TrackedStatType.None;
+			this.value = 0;
+		}
+
+		public StatData (TrackedStatType id, float value)
+		{
+			this.id = id;
+			this.value = value;
+		}
 	}
 
 	public enum ModType

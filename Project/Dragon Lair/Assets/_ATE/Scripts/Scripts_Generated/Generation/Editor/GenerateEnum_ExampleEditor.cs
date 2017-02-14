@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.Collections;
+using ScriptGeneration;
 
 
 [CustomEditor (typeof(GenerateEnum_Example))]
@@ -15,7 +16,9 @@ public class GenerateEnum_ExampleEditor : Editor
 		if (_targ == null)
 			return;
 
-		_targ.enumData.DrawInspector ();
+		_targ.enumData.DrawInspector (
+			GenerateEnum_Data.DrawSettings.DrawPath,
+			GenerateEnum_Data.DrawSettings.DrawType);
 
 		EditorHelper.SetDirtyIfChanged (_targ);
 	}

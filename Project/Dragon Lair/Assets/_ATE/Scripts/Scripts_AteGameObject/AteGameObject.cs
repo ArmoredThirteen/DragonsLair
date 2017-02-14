@@ -36,6 +36,11 @@ public abstract class AteGameObject : MonoBehaviour
 
 	public int InstanceID
 	{
+		get { return this.GetInstanceID (); }
+	}
+
+	public int GOInstanceID
+	{
 		get { return gameObject.GetInstanceID (); }
 	}
 

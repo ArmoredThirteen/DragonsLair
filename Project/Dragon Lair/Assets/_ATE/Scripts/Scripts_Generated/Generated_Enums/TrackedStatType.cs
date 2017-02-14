@@ -2,5 +2,6 @@
 public enum TrackedStatType
 {
 	None = 0,
-	Default = 1,
+	Greatness = 10,
+	Mistakes = 100,
 }
