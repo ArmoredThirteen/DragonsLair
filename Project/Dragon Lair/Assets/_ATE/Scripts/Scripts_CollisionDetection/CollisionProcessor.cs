@@ -37,9 +37,6 @@ namespace CollisionSystem
 		/// </summary>
 		public VectorAxis upAxis = VectorAxis.Y;
 
-		//TODO: TEMPORARY-> Testing only
-		public List<Collider_Circle> testColliders = new List<Collider_Circle> ();
-
 		#endregion
 
 
@@ -73,25 +70,14 @@ namespace CollisionSystem
 
 		#region AteGameObject
 
-		protected override void AteStart ()
-		{
-			for (int i = 0; i < testColliders.Count; i++)
-			{
-				if (testColliders[i] == null)
-					continue;
-
-				RegisterCollider (testColliders[i]);
-			}
-		}
-
 		protected override void AteUpdate ()
 		{
-			List<CollisionDetails> details = FindCollisionDetails ();
+			/*List<CollisionDetails> details = FindCollisionDetails ();
 
 			for (int i = 0; i < details.Count; i++)
 			{
 				DebugLog.Simple ("Col One: ", details[i].colOne.name, "Col Two: ", details[i].colTwo.name);
-			}
+			}*/
 		}
 
 		#endregion

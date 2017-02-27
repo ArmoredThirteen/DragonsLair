@@ -408,6 +408,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
+  flattenAxisIn3D: 0
   radius: 1
 --- !u!4 &275169918
 Transform:
@@ -450,6 +451,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
+  flattenAxisIn3D: 0
   radius: 1
 --- !u!4 &306691138
 Transform:
@@ -638,32 +640,13 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 469441425}
-  - 114: {fileID: 469441424}
   m_Layer: 0
-  m_Name: Processor
+  m_Name: TestColliders
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &469441424
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 469441423}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 390587a4479c40a4c93127f4c8e3ddc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  type: 0
-  maxCheckDistance: 50
-  upAxis: 1
-  testColliders:
-  - {fileID: 306691137}
-  - {fileID: 2003875727}
-  - {fileID: 275169917}
 --- !u!4 &469441425
 Transform:
   m_ObjectHideFlags: 0
@@ -2059,6 +2042,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
+  flattenAxisIn3D: 0
   radius: 1
 --- !u!4 &2003875728
 Transform:
@@ -2137,7 +2121,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 436498, guid: ee99bf8d3c35129448f9e7b90d090bd2, type: 2}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ee99bf8d3c35129448f9e7b90d090bd2, type: 2}

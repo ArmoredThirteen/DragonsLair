@@ -11,14 +11,13 @@ namespace CollisionSystem
 	
 
 	/// <summary>
-	/// A 2D circle collider.
+	/// A 3D sphere collider.
 	/// </summary>
-	public class Collider_Circle : Collider
+	public class Collider_Sphere : Collider
 	{
 
 		#region Public Variables
 
-		public bool flattenAxisIn3D = false;
 		public float radius = 1;
 
 		#endregion
@@ -35,7 +34,7 @@ namespace CollisionSystem
 		{
 			base.DrawInspector ();
 
-			flattenAxisIn3D = EditorGUILayout.Toggle ("Flatten Axis in 3D", flattenAxisIn3D);
+			//zeroUpAxis = EditorGUILayout.Toggle ("Zero Up Axis", zeroUpAxis);
 			radius = EditorGUILayout.FloatField ("Radius", radius);
 		}
 

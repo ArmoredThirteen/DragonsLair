@@ -38,15 +38,42 @@ namespace CollisionSystem
 
 		#region AteGameObject
 
+		protected override void AteStart ()
+		{
+			RegisterCollider ();
+		}
+
 		protected override void AteUpdate ()
 		{
 			
+		}
+
+		//	Not actually from AteGameObject, will hopefully be eventually though
+		void OnDestroy ()
+		{
+			UnregisterCollider ();
 		}
 
 		#endregion
 
 
 		#region Public Methods
+
+		public void RegisterCollider ()
+		{
+			EventData_Collision theData = new EventData_Collision ();
+			theData.ColliderOne = this;
+			Debug.Log ("Blah");
+			GameManager.Events.Broadcast<EventType_Collision> ((int)EventType_Collision.RegisterCollider, theData);
+		}
+
+		public void UnregisterCollider ()
+		{
+			EventData_Collision theData = new EventData_Collision ();
+			theData.ColliderOne = this;
+
+			GameManager.Events.Broadcast<EventType_Collision> ((int)EventType_Collision.UnregisterCollider, theData);
+		}
 
 		/// <summary>
 		/// Returns the world position with any modifications, such as offset.
@@ -58,7 +85,44 @@ namespace CollisionSystem
 		/// Returns CollisionDetails about any detected collision.
 		/// Returns null if no collision was detected.
 		/// </summary>
-		public abstract CollisionDetails CheckCollision (CheckCollisionSettings settings, Collider other);
+		//public abstract CollisionDetails CheckCollision (CheckCollisionSettings settings, Collider other);
+		public CollisionDetails CheckCollision (CheckCollisionSettings settings, Collider other)
+		{
+			if (other == null)
+				return null;
+
+			Collider_Circle thisCircle  = this as Collider_Circle;
+			Collider_Sphere thisSphere  = this as Collider_Sphere;
+
+			Collider_Circle otherCircle = other as Collider_Circle;
+			Collider_Sphere otherSphere = other as Collider_Sphere;
+
+			//TODO: Hairy hairy hairy
+			if (thisCircle != null)
+			{
+				if (otherCircle != null)
+				{
+					return CheckCollisionMethods.CheckCollision (settings, thisCircle, otherCircle);
+				}
+				else if (otherSphere != null)
+				{
+					return CheckCollisionMethods.CheckCollision (settings, thisCircle, otherSphere);
+				}
+			}
+			else if (thisSphere != null)
+			{
+				if (otherCircle != null)
+				{
+					return CheckCollisionMethods.CheckCollision (settings, thisSphere, otherCircle);
+				}
+				else if (otherSphere != null)
+				{
+					return CheckCollisionMethods.CheckCollision (settings, thisSphere, otherSphere);
+				}
+			}
+
+			return null;
+		}
 
 
 		/// <summary>

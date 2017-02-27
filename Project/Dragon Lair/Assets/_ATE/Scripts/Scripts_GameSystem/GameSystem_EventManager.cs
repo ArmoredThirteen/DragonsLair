@@ -8,10 +8,12 @@ public class GameSystem_EventManager : GameSystem
 {
 	#region Event Systems
 
-	private EventSystem<EventType_Updates, EventData_Updates>   _updateEventSystem   = new EventSystem<EventType_Updates,  EventData_Updates> ();
-	private EventSystem<EventType_UI, EventData_UI>             _uiEventSystem       = new EventSystem<EventType_UI,       EventData_UI> ();
-	private EventSystem<EventType_Gameplay, EventData_Gameplay> _gameplayEventSystem = new EventSystem<EventType_Gameplay, EventData_Gameplay> ();
-	private EventSystem<EventType_Trigger, EventData_Trigger>   _triggerEventSystem  = new EventSystem<EventType_Trigger,  EventData_Trigger> ();
+	private EventSystem<EventType_Updates, EventData_Updates>   _updateEventSystem    = new EventSystem<EventType_Updates,  EventData_Updates> ();
+	private EventSystem<EventType_UI, EventData_UI>             _uiEventSystem        = new EventSystem<EventType_UI,       EventData_UI> ();
+	private EventSystem<EventType_Gameplay, EventData_Gameplay> _gameplayEventSystem  = new EventSystem<EventType_Gameplay, EventData_Gameplay> ();
+
+	private EventSystem<EventType_Trigger, EventData_Trigger>     _triggerEventSystem   = new EventSystem<EventType_Trigger,   EventData_Trigger> ();
+	private EventSystem<EventType_Collision, EventData_Collision> _collisionEventSystem = new EventSystem<EventType_Collision, EventData_Collision> ();
 
 	#endregion
 
@@ -20,10 +22,12 @@ public class GameSystem_EventManager : GameSystem
 
 	public override void Initialize ()
 	{
-		_updateEventSystem   = new EventSystem<EventType_Updates,  EventData_Updates> ();
-		_uiEventSystem       = new EventSystem<EventType_UI,       EventData_UI> ();
-		_gameplayEventSystem = new EventSystem<EventType_Gameplay, EventData_Gameplay> ();
-		_triggerEventSystem  = new EventSystem<EventType_Trigger,  EventData_Trigger> ();
+		_updateEventSystem    = new EventSystem<EventType_Updates,  EventData_Updates> ();
+		_uiEventSystem        = new EventSystem<EventType_UI,       EventData_UI> ();
+		_gameplayEventSystem  = new EventSystem<EventType_Gameplay, EventData_Gameplay> ();
+
+		_triggerEventSystem   = new EventSystem<EventType_Trigger,   EventData_Trigger> ();
+		_collisionEventSystem = new EventSystem<EventType_Collision, EventData_Collision> ();
 	}
 
 	public override void SceneInitialize (){}
@@ -55,6 +59,9 @@ public class GameSystem_EventManager : GameSystem
 
 		else if (typeof(EType) == typeof(EventType_Trigger))
 			_triggerEventSystem.Register ((EventType_Trigger)eventType, (callback as Callback<EventData_Trigger>));
+
+		else if (typeof(EType) == typeof(EventType_Collision))
+			_collisionEventSystem.Register ((EventType_Collision)eventType, (callback as Callback<EventData_Collision>));
 	}
 
 
@@ -75,6 +82,9 @@ public class GameSystem_EventManager : GameSystem
 
 		else if (typeof(EType) == typeof(EventType_Trigger))
 			_triggerEventSystem.Unregister ((EventType_Trigger)eventType, (callback as Callback<EventData_Trigger>));
+
+		else if (typeof(EType) == typeof(EventType_Collision))
+			_collisionEventSystem.Unregister ((EventType_Collision)eventType, (callback as Callback<EventData_Collision>));
 	}
 
 
@@ -95,6 +105,9 @@ public class GameSystem_EventManager : GameSystem
 
 		else if (typeof(EType) == typeof(EventType_Trigger))
 			_triggerEventSystem.Broadcast ((EventType_Trigger)eventType, (eventData as EventData_Trigger), sender);
+
+		else if (typeof(EType) == typeof(EventType_Collision))
+			_collisionEventSystem.Broadcast ((EventType_Collision)eventType, (eventData as EventData_Collision), sender);
 	}
 	
 
@@ -103,7 +116,9 @@ public class GameSystem_EventManager : GameSystem
 		_updateEventSystem   = new EventSystem<EventType_Updates,  EventData_Updates> ();
 		_uiEventSystem       = new EventSystem<EventType_UI,       EventData_UI> ();
 		_gameplayEventSystem = new EventSystem<EventType_Gameplay, EventData_Gameplay> ();
-		_triggerEventSystem  = new EventSystem<EventType_Trigger,  EventData_Trigger> ();
+
+		_triggerEventSystem   = new EventSystem<EventType_Trigger,   EventData_Trigger> ();
+		_collisionEventSystem = new EventSystem<EventType_Collision, EventData_Collision> ();
 	}
 
 }
