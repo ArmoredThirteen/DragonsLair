@@ -2,22 +2,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using CollisionSystem;
-using Collider = CollisionSystem.Collider;
+using Collider = CollisionSystem.AteCollider;
 
 
 public class EventData_Collision : EventData
 {
-	private Collider _colOne;
-	private Collider _colTwo;
+	private AteCollider _colOne;
+	private AteCollider _colTwo;
 
 
-	public Collider ColliderOne
+	public AteCollider ColliderOne
 	{
 		get {return _colOne;}
 		set {_colOne = value;}
 	}
 
-	public Collider ColliderTwo
+	public AteCollider ColliderTwo
 	{
 		get {return _colTwo;}
 		set {_colTwo = value;}

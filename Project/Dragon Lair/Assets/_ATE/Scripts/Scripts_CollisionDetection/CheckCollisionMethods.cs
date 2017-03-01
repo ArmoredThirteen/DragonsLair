@@ -19,12 +19,12 @@ namespace CollisionSystem
 	public static class CheckCollisionMethods
 	{
 		
-		public static CollisionDetails CheckCollision (CheckCollisionSettings settings, Pair<Collider_Circle,Collider_Circle> colPair)
+		public static CollisionDetails CheckCollision (CheckCollisionSettings settings, Pair<AteCollider_Circle,AteCollider_Circle> colPair)
 		{
 			return CheckCollision (settings, colPair.v1, colPair.v2);
 		}
 
-		public static CollisionDetails CheckCollision (CheckCollisionSettings settings, Collider_Circle colOne, Collider_Circle colTwo)
+		public static CollisionDetails CheckCollision (CheckCollisionSettings settings, AteCollider_Circle colOne, AteCollider_Circle colTwo)
 		{
 			Vector3 colOnePos = colOne.GetPosition ();
 			Vector3 colTwoPos = colTwo.GetPosition ();
@@ -41,10 +41,10 @@ namespace CollisionSystem
 				(settings.upAxis == VectorAxis.Y) ? 0 : colTwoPos.y,
 				(settings.upAxis == VectorAxis.Z) ? 0 : colTwoPos.z);
 
-			float distance = Vector3.Distance (colTwoPos, colOnePos);
-			float totalRadius = colOne.radius + colTwo.radius;
+			float sqrDistance = colOnePos.SqrDistanceTo (colTwoPos);
+			float totalSqrRadius = (colOne.radius+colTwo.radius) * (colOne.radius+colTwo.radius);
 
-			if (distance > totalRadius)
+			if (sqrDistance > totalSqrRadius)
 				return null;
 
 			CollisionDetails details = new CollisionDetails (colOne, colTwo);
@@ -52,20 +52,20 @@ namespace CollisionSystem
 		}
 
 
-		public static CollisionDetails CheckCollision (CheckCollisionSettings settings, Pair<Collider_Sphere,Collider_Sphere> colPair)
+		public static CollisionDetails CheckCollision (CheckCollisionSettings settings, Pair<AteCollider_Sphere,AteCollider_Sphere> colPair)
 		{
 			return CheckCollision (settings, colPair.v1, colPair.v2);
 		}
 
-		public static CollisionDetails CheckCollision (CheckCollisionSettings settings, Collider_Sphere colOne, Collider_Sphere colTwo)
+		public static CollisionDetails CheckCollision (CheckCollisionSettings settings, AteCollider_Sphere colOne, AteCollider_Sphere colTwo)
 		{
 			Vector3 colOnePos = colOne.GetPosition ();
 			Vector3 colTwoPos = colTwo.GetPosition ();
 
-			float distance = Vector3.Distance (colTwoPos, colOnePos);
-			float totalRadius = colOne.radius + colTwo.radius;
+			float sqrDistance = colOnePos.SqrDistanceTo (colTwoPos);
+			float totalSqrRadius = (colOne.radius+colTwo.radius) * (colOne.radius+colTwo.radius);
 
-			if (distance > totalRadius)
+			if (sqrDistance > totalSqrRadius)
 				return null;
 
 			CollisionDetails details = new CollisionDetails (colOne, colTwo);
@@ -73,22 +73,22 @@ namespace CollisionSystem
 		}
 
 
-		public static CollisionDetails CheckCollision (CheckCollisionSettings settings, Pair<Collider_Circle,Collider_Sphere> colPair)
+		public static CollisionDetails CheckCollision (CheckCollisionSettings settings, Pair<AteCollider_Circle,AteCollider_Sphere> colPair)
 		{
 			return CheckCollision (settings, colPair.v1, colPair.v2);
 		}
 
-		public static CollisionDetails CheckCollision (CheckCollisionSettings settings, Pair<Collider_Sphere,Collider_Circle> colPair)
+		public static CollisionDetails CheckCollision (CheckCollisionSettings settings, Pair<AteCollider_Sphere,AteCollider_Circle> colPair)
 		{
 			return CheckCollision (settings, colPair.v1, colPair.v2);
 		}
 
-		public static CollisionDetails CheckCollision (CheckCollisionSettings settings, Collider_Circle colOne, Collider_Sphere colTwo)
+		public static CollisionDetails CheckCollision (CheckCollisionSettings settings, AteCollider_Circle colOne, AteCollider_Sphere colTwo)
 		{
 			return CheckCollision (settings, colTwo, colOne);
 		}
 
-		public static CollisionDetails CheckCollision (CheckCollisionSettings settings, Collider_Sphere colOne, Collider_Circle colTwo)
+		public static CollisionDetails CheckCollision (CheckCollisionSettings settings, AteCollider_Sphere colOne, AteCollider_Circle colTwo)
 		{
 			Vector3 colOnePos = colOne.GetPosition ();
 			Vector3 colTwoPos = colTwo.GetPosition ();
@@ -109,10 +109,10 @@ namespace CollisionSystem
 				(settings.upAxis == VectorAxis.Y) ? 0 : colTwoPos.y,
 				(settings.upAxis == VectorAxis.Z) ? 0 : colTwoPos.z);
 
-			float distance = Vector3.Distance (colTwoPos, colOnePos);
-			float totalRadius = colOne.radius + colTwo.radius;
+			float sqrDistance = colOnePos.SqrDistanceTo (colTwoPos);
+			float totalSqrRadius = (colOne.radius+colTwo.radius) * (colOne.radius+colTwo.radius);
 
-			if (distance > totalRadius)
+			if (sqrDistance > totalSqrRadius)
 				return null;
 
 			CollisionDetails details = new CollisionDetails (colOne, colTwo);

@@ -45,12 +45,12 @@ namespace CollisionSystem
 		/// <summary>
 		/// All Colliders registered with the processor.
 		/// </summary>
-		private List<Collider> _colliders = new List<Collider> ();
+		private List<AteCollider> _colliders = new List<AteCollider> ();
 
 		/// <summary>
 		/// Pairs of all possible collisions between Colliders.
 		/// </summary>
-		private List<Pair<Collider,Collider>> _colliderPairs = new List<Pair<Collider, Collider>> ();
+		private List<Pair<AteCollider,AteCollider>> _colliderPairs = new List<Pair<AteCollider, AteCollider>> ();
 
 		#endregion
 
@@ -106,7 +106,7 @@ namespace CollisionSystem
 		/// <summary>
 		/// Adds theCol to the list of registered colliders and collider pairs.
 		/// </summary>
-		public void RegisterCollider (Collider theCol)
+		public void RegisterCollider (AteCollider theCol)
 		{
 			if (theCol == null)
 				return;
@@ -120,7 +120,7 @@ namespace CollisionSystem
 		/// <summary>
 		/// Using list of registered colliders, registers new pairs.
 		/// </summary>
-		public void RegisterColliderPairs (Collider theCol)
+		public void RegisterColliderPairs (AteCollider theCol)
 		{
 			if (theCol == null)
 				return;
@@ -132,14 +132,14 @@ namespace CollisionSystem
 				if (_colliders[i] == theCol)
 					continue;
 
-				_colliderPairs.Add (new Pair<Collider, Collider> (theCol, _colliders[i]));
+				_colliderPairs.Add (new Pair<AteCollider, AteCollider> (theCol, _colliders[i]));
 			}
 		}
 
 		/// <summary>
 		/// Removes all instances of theCol from the list of registered colliders and collider pairs.
 		/// </summary>
-		public void UnregisterCollider (Collider theCol)
+		public void UnregisterCollider (AteCollider theCol)
 		{
 			if (!_colliders.Contains (theCol))
 				return;
@@ -159,7 +159,7 @@ namespace CollisionSystem
 		/// Using list of registered pairs, removes any referencing given Collider.
 		/// Can be given null, which will remove any pairs containing a null.
 		/// </summary>
-		private void UnregisterColliderPairs (Collider theCol)
+		private void UnregisterColliderPairs (AteCollider theCol)
 		{
 			for (int i = _colliderPairs.Count-1; i >= 0; i--)
 			{
@@ -173,14 +173,14 @@ namespace CollisionSystem
 		/// <summary>
 		/// Returns true if either Collider in the given pair matches the given Collider.
 		/// </summary>
-		private bool ColliderPairContainsCollider (Pair<Collider,Collider> thePair, Collider theCol)
+		private bool ColliderPairContainsCollider (Pair<AteCollider,AteCollider> thePair, AteCollider theCol)
 		{
 			return (theCol == thePair.v1) || (theCol == thePair.v2);
 		}
 
 
 		/// <summary>
-		/// Checks registered collider pairs for collisions.
+		/// Checks registered collider pairs for active collisions.
 		/// Cleans the registered colliders and collider pairs of null values before running.
 		/// </summary>
 		public List<CollisionDetails> FindCollisionDetails ()
@@ -193,11 +193,13 @@ namespace CollisionSystem
 			CheckCollisionSettings settings = new CheckCollisionSettings (maxCheckDistance, upAxis);
 			//TODO: Eventually add #if UnityEditor for changing settings in editor but caching settings in game
 
+			float sqrMaxCheckDistance = maxCheckDistance * maxCheckDistance;
+
 			for (int i = 0; i < _colliderPairs.Count; i++)
 			{
 				//	Skip if they're too far away to compare
-				float distance = Vector3.Distance (_colliderPairs[i].v1.GetPosition (), _colliderPairs[i].v2.GetPosition ());
-				if (distance > maxCheckDistance)
+				float distance = _colliderPairs[i].v1.GetPosition ().SqrDistanceTo (_colliderPairs[i].v2.GetPosition ());
+				if (distance > sqrMaxCheckDistance)
 					continue;
 
 				CollisionDetails details = _colliderPairs[i].v1.CheckCollision (settings, _colliderPairs[i].v2);

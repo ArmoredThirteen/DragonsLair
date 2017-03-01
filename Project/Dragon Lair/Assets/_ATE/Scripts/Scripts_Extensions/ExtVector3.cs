@@ -4,6 +4,25 @@ using System.Collections;
 
 public static class ExtVector3
 {
+	#region Distance
+
+	public static float SqrDistanceTo (this Vector3 val, Vector3 target)
+	{
+		return (val-target).sqrMagnitude;
+	}
+
+	/// <summary>
+	/// Returns true if given vectors are further apart than distance.
+	/// Squares the distance and compares against val.SqrDistance(target).
+	/// </summary>
+	/*public static bool IsTargFurtherThanDist (this Vector3 val, Vector3 target, float distance)
+	{
+		return (distance*distance) > val.SqrDistanceTo (target);
+	}*/
+
+	#endregion
+
+
 	#region Changed Value Hooks
 
 	public static Vector3 xOf (this Vector3 val, float x)

@@ -97,24 +97,35 @@ public class Trigger_InArea : AteGameObject
 
 	#region Trigger Entered
 
-	public void ManualOnTriggerEnter (Collider theCollider)
+	private void AttemptEnterTriggers (AteGameObject triggerer)
 	{
-		OnTriggerEnter (theCollider);
+		if (!GameObjectIsAllowedType (triggerer))
+			return;
+
+		if (!_currentlyInTrigger.Contains (triggerer))
+			_currentlyInTrigger.Add (triggerer);
+
+		TriggerBehaviourList (behavioursOnEnter, triggerer);
+	}
+
+	public void ManualEnterArea (AteGameObject triggerer)
+	{
+		AttemptEnterTriggers (triggerer);
 	}
 
 	void OnTriggerEnter (Collider theCollider)
 	{
-		AteGameObject asGameObject = theCollider.gameObject.AteGameObject ();
+		AteGameObject triggerer = theCollider.gameObject.AteGameObject ();
 
-		if (asGameObject == null)
+		if (triggerer == null)
 			return;
-		if (!GameObjectIsAllowedType (asGameObject))
-			return;
+
+		AttemptEnterTriggers (triggerer);
+	}
+
+	private void OnAteCollisionBegan (EventData_Collision eventData)
+	{
 		
-		if (!_currentlyInTrigger.Contains (asGameObject))
-			_currentlyInTrigger.Add (asGameObject);
-		
-		TriggerBehaviourList (behavioursOnEnter, asGameObject);
 	}
 
 	#endregion
@@ -138,23 +149,34 @@ public class Trigger_InArea : AteGameObject
 
 	#region Trigger Exited
 
-	public void ManualOnTriggerExit (Collider theCollider)
+	private void AttemptExitTriggers (AteGameObject triggerer)
 	{
-		OnTriggerExit (theCollider);
+		if (!GameObjectIsAllowedType (triggerer))
+			return;
+
+		if (_currentlyInTrigger.Contains (triggerer))
+			_currentlyInTrigger.Remove (triggerer);
+
+		TriggerBehaviourList (behavioursOnExit, triggerer);
+	}
+
+	public void ManualExitArea (AteGameObject triggerer)
+	{
+		AttemptExitTriggers (triggerer);
 	}
 
 	void OnTriggerExit (Collider theCollider)
 	{
-		AteGameObject asGameObject = theCollider.gameObject.AteGameObject ();
-		if (asGameObject == null)
+		AteGameObject triggerer = theCollider.gameObject.AteGameObject ();
+		if (triggerer == null)
 			return;
-		if (!GameObjectIsAllowedType (asGameObject))
-			return;
+
+		AttemptExitTriggers (triggerer);
+	}
+
+	private void AteOnCollisionEnded (EventData_Collision eventData)
+	{
 		
-		if (_currentlyInTrigger.Contains (asGameObject))
-			_currentlyInTrigger.Remove (asGameObject);
-		
-		TriggerBehaviourList (behavioursOnExit, asGameObject);
 	}
 
 	#endregion

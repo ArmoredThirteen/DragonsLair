@@ -9,6 +9,8 @@ public enum EventType_Collision
 	UnregisterCollider = 150,
 	RequestColliderRegistration = 500,
 
-	Collision = 1000,
+	CollisionBegan     = 1000,
+	CollisionContinued = 1100,
+	CollisionEnded     = 1200,
 }
 

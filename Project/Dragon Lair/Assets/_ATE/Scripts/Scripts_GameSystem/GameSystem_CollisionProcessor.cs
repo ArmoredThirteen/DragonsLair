@@ -1,4 +1,8 @@
-﻿using UnityEngine;
+﻿//#define DebugBegan
+//#define DebugContinued
+//#define DebugEnded
+
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using CollisionSystem;
@@ -8,6 +12,8 @@ public class GameSystem_CollisionProcessor : GameSystem
 {
 
 	public CollisionProcessor processor;
+
+	private List<CollisionDetails> _lastDetails = new List<CollisionDetails> ();
 
 
 	#region GameSystem
@@ -20,8 +26,7 @@ public class GameSystem_CollisionProcessor : GameSystem
 
 	public override void SceneInitialize ()
 	{
-		//GameManager.Events.Register<EventType_Collision, EventData_Collision> ((int)EventType_Collision.RegisterCollider,   OnRegisterCollider);
-		//GameManager.Events.Register<EventType_Collision, EventData_Collision> ((int)EventType_Collision.UnregisterCollider, OnUnregisterCollider);
+		_lastDetails.Clear ();
 	}
 
 	public override void SystemUpdate ()
@@ -30,14 +35,44 @@ public class GameSystem_CollisionProcessor : GameSystem
 
 		for (int i = 0; i < details.Count; i++)
 		{
-			DebugLog.Simple ("Col One: ", details[i].colOne.name, "Col Two: ", details[i].colTwo.name);
-
 			EventData_Collision theData = new EventData_Collision ();
 			theData.ColliderOne = details[i].colOne;
 			theData.ColliderTwo = details[i].colTwo;
 
-			GameManager.Events.Broadcast<EventType_Collision> ((int)EventType_Collision.Collision, theData);
+			if (_lastDetails.Contains (details[i]))
+			{
+				#if DebugContinued
+				DebugLog.Simple ("Collision Continued\r\nCol One: ", details[i].colOne.name, "Col Two: ", details[i].colTwo.name);
+				#endif
+				GameManager.Events.Broadcast<EventType_Collision> ((int)EventType_Collision.CollisionContinued, theData);
+
+				//	Remove from _lastDetails so next area can go over the remaining ones and declare them ended
+				_lastDetails.Remove (details[i]);
+			}
+			else
+			{
+				#if DebugBegan
+				DebugLog.Simple ("<color=green>Collision Began</color>\r\nCol One: ", details[i].colOne.name, "Col Two: ", details[i].colTwo.name);
+				#endif
+				GameManager.Events.Broadcast<EventType_Collision> ((int)EventType_Collision.CollisionBegan, theData);
+			}
 		}
+
+		//	In previous area any matching collisions were removed from _lastDetails.
+		//	So the remaining members were in collisions last frame but not this one, and have ended.
+		for (int i = 0; i < _lastDetails.Count; i++)
+		{
+			EventData_Collision theData = new EventData_Collision ();
+			theData.ColliderOne = _lastDetails[i].colOne;
+			theData.ColliderTwo = _lastDetails[i].colTwo;
+
+			#if DebugEnded
+			DebugLog.Simple ("<color=red>Collision Ended</color>\r\nCol One: ", _lastDetails[i].colOne.name, "Col Two: ", _lastDetails[i].colTwo.name);
+			#endif
+			GameManager.Events.Broadcast<EventType_Collision> ((int)EventType_Collision.CollisionEnded, theData);
+		}
+
+		_lastDetails = details;
 	}
 
 	public override void SystemLateUpdate (){}
@@ -63,7 +98,7 @@ public class GameSystem_CollisionProcessor : GameSystem
 			#endif
 			return;
 		}
-		Debug.Log (theData.ColliderOne.name);
+
 		processor.RegisterCollider (theData.ColliderOne);
 	}
 
