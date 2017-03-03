@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 
 public static class ExtGameObject
@@ -42,6 +43,38 @@ public static class ExtGameObject
 	public static void SetPosition_Offset (this GameObject arg, Vector3 offset)
 	{
 		arg.transform.position += offset;
+	}
+
+	/// <summary>
+	/// Gets the children as GameObjects, does not include itself.
+	/// </summary>
+	public static List<GameObject> GetChildrenGameObjects (this GameObject arg)
+	{
+		List<GameObject> children = new List<GameObject> ();
+
+		int childCount = arg.transform.childCount;
+		for (int i = 0; i < childCount; i++)
+		{
+			children.Add (arg.transform.GetChild (i).gameObject);
+		}
+
+		return children;
+	}
+
+	/// <summary>
+	/// Gets the children as Transforms, does not include itself.
+	/// </summary>
+	public static List<Transform> GetChildrenTransforms (this GameObject arg)
+	{
+		List<Transform> children = new List<Transform> ();
+
+		int childCount = arg.transform.childCount;
+		for (int i = 0; i < childCount; i++)
+		{
+			children.Add (arg.transform.GetChild (i));
+		}
+
+		return children;
 	}
 
 	#endregion

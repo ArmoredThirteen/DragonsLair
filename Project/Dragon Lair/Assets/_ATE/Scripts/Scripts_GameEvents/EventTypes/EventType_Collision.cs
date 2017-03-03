@@ -12,5 +12,9 @@ public enum EventType_Collision
 	CollisionBegan     = 1000,
 	CollisionContinued = 1100,
 	CollisionEnded     = 1200,
+
+	AreaCollisionBegan     = 3000,
+	//AreaCollisionContinued = 3100,
+	AreaCollisionEnded     = 3200,
 }
 
