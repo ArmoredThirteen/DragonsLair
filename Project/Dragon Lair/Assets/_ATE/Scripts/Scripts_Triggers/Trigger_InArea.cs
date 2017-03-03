@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using CollisionSystem;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -9,14 +10,25 @@ using UnityEditor;
 
 public class Trigger_InArea : AteGameObject
 {
+	public enum AreaType
+	{
+		UnityTriggers = 100,
+		//AteCollider = 200,
+		CollisionArea = 300,
+	}
+
 	public List<GOType> triggeredByTypes = new List<GOType> ();
 
-	/// <summary>
-	/// How many objects of type GOType must
-	/// be in trigger to be interacted with.
-	/// </summary>
+	public AreaType areaType = AreaType.CollisionArea;
+	//public AteCollider ateCollider;
+	public CollisionArea collisionArea;
+
+
+	/// <summary> How many objects of type GOType must be in trigger to be interacted with. </summary>
 	public int requiredToInteract = 1;
+	/// <summary> Which UI events count as interactions. </summary>
 	public EventType_UI eventsToInteract = EventType_UI.None;
+	/// <summary> When interaction events fire, checks if the event is from this key. </summary>
 	public KeyCode interactKey = KeyCode.Mouse0;
 
 	public List<TriggeredBehaviour> behavioursOnEnter    = new List<TriggeredBehaviour> ();
@@ -32,7 +44,20 @@ public class Trigger_InArea : AteGameObject
 	{
 		base.DrawInspector ();
 
-		EditorHelper.DrawResizableList<GOType> ("Triggered by Types", ref triggeredByTypes, DrawEntry_TriggeredByType);
+		EditorHelper.DrawResizableList<GOType> ("Triggered by Specific Types", ref triggeredByTypes, DrawEntry_TriggeredByType);
+		if (triggeredByTypes.Count <= 0)
+			EditorGUILayout.LabelField ("Leave empty to be triggered by all types.");
+		
+		EditorGUILayout.Space ();
+		EditorGUILayout.Space ();
+
+		areaType = (AreaType)EditorGUILayout.EnumPopup ("Triggered Using Area Type", areaType);
+		if (areaType.Equals (AreaType.CollisionArea))
+		{
+			EditorGUI.indentLevel++;
+			collisionArea = EditorGUILayout.ObjectField ("Collision Area", collisionArea, typeof(CollisionArea), true) as CollisionArea;
+			EditorGUI.indentLevel--;
+		}
 
 		requiredToInteract = EditorGUILayout.IntField ("Required to Interact", requiredToInteract);
 		eventsToInteract = (EventType_UI)EditorGUILayout.EnumPopup ("Event to Interact", eventsToInteract);
@@ -72,20 +97,28 @@ public class Trigger_InArea : AteGameObject
 	#endif
 
 
+	#region AteGameObject
+
 	protected override void RegisterEvents ()
 	{
-		if (eventsToInteract == EventType_UI.None)
-			return;
-		
-		GameManager.Events.Register<EventType_UI, EventData_UI> ((int)eventsToInteract, OnInteractEvent);
+		if (eventsToInteract != EventType_UI.None)
+			GameManager.Events.Register<EventType_UI, EventData_UI> ((int)eventsToInteract, OnInteractEvent);
+
+		GameManager.Events.Register<EventType_Collision, EventData_Collision>
+			((int)EventType_Collision.AreaCollisionBegan, OnAteCollisionBegan);
+		GameManager.Events.Register<EventType_Collision, EventData_Collision>
+			((int)EventType_Collision.AreaCollisionEnded, OnAteCollisionEnded);
 	}
 
 	protected override void UnregisterEvents()
 	{
-		if (eventsToInteract == EventType_UI.None)
-			return;
-		
-		GameManager.Events.Unregister<EventType_UI, EventData_UI> ((int)eventsToInteract, OnInteractEvent);
+		if (eventsToInteract != EventType_UI.None)
+			GameManager.Events.Unregister<EventType_UI, EventData_UI> ((int)eventsToInteract, OnInteractEvent);
+
+		GameManager.Events.Unregister<EventType_Collision, EventData_Collision>
+			((int)EventType_Collision.AreaCollisionBegan, OnAteCollisionBegan);
+		GameManager.Events.Unregister<EventType_Collision, EventData_Collision>
+			((int)EventType_Collision.AreaCollisionEnded, OnAteCollisionEnded);
 	}
 
 
@@ -93,6 +126,8 @@ public class Trigger_InArea : AteGameObject
 	{
 		
 	}
+
+	#endregion
 
 
 	#region Trigger Entered
@@ -108,6 +143,7 @@ public class Trigger_InArea : AteGameObject
 		TriggerBehaviourList (behavioursOnEnter, triggerer);
 	}
 
+
 	public void ManualEnterArea (AteGameObject triggerer)
 	{
 		AttemptEnterTriggers (triggerer);
@@ -115,8 +151,10 @@ public class Trigger_InArea : AteGameObject
 
 	void OnTriggerEnter (Collider theCollider)
 	{
-		AteGameObject triggerer = theCollider.gameObject.AteGameObject ();
+		if (areaType != AreaType.UnityTriggers)
+			return;
 
+		AteGameObject triggerer = theCollider.gameObject.AteGameObject ();
 		if (triggerer == null)
 			return;
 
@@ -125,7 +163,21 @@ public class Trigger_InArea : AteGameObject
 
 	private void OnAteCollisionBegan (EventData_Collision eventData)
 	{
-		
+		if (areaType != AreaType.CollisionArea)
+			return;
+
+		if (collisionArea == null)
+			return;
+		if (eventData.FullCollisionArea == null)
+			return;
+		if (collisionArea.InstanceID != eventData.FullCollisionArea.InstanceID)
+			return;
+
+		AteGameObject triggerer = eventData.HittingCollider.gameObject.AteGameObject ();
+		if (triggerer == null)
+			return;
+
+		AttemptEnterTriggers (triggerer);
 	}
 
 	#endregion
@@ -160,6 +212,7 @@ public class Trigger_InArea : AteGameObject
 		TriggerBehaviourList (behavioursOnExit, triggerer);
 	}
 
+
 	public void ManualExitArea (AteGameObject triggerer)
 	{
 		AttemptExitTriggers (triggerer);
@@ -167,6 +220,9 @@ public class Trigger_InArea : AteGameObject
 
 	void OnTriggerExit (Collider theCollider)
 	{
+		if (areaType != AreaType.UnityTriggers)
+			return;
+
 		AteGameObject triggerer = theCollider.gameObject.AteGameObject ();
 		if (triggerer == null)
 			return;
@@ -174,9 +230,23 @@ public class Trigger_InArea : AteGameObject
 		AttemptExitTriggers (triggerer);
 	}
 
-	private void AteOnCollisionEnded (EventData_Collision eventData)
+	private void OnAteCollisionEnded (EventData_Collision eventData)
 	{
-		
+		if (areaType != AreaType.CollisionArea)
+			return;
+
+		if (collisionArea == null)
+			return;
+		if (eventData.FullCollisionArea == null)
+			return;
+		if (collisionArea.InstanceID != eventData.FullCollisionArea.InstanceID)
+			return;
+
+		AteGameObject triggerer = eventData.HittingCollider.gameObject.AteGameObject ();
+		if (triggerer == null)
+			return;
+
+		AttemptExitTriggers (triggerer);
 	}
 
 	#endregion
@@ -201,6 +271,12 @@ public class Trigger_InArea : AteGameObject
 
 	private bool GameObjectIsAllowedType (AteGameObject theGameObject)
 	{
+		//TODO: This is a bit hacky and specific, will be confusing for designers.
+		if (triggeredByTypes == null)
+			return true;
+		if (triggeredByTypes.Count <= 0)
+			return true;
+		
 		if (triggeredByTypes.Contains (theGameObject.type))
 			return true;
 		
