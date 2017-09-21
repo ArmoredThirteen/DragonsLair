@@ -28,6 +28,22 @@ public static class ExtGameObject
 	#endregion
 
 
+	#region Utility
+
+	#if UNITY_EDITOR
+	/// <summary>
+	/// Returns name+GameObjectID.
+	/// Only usable in Editor.
+	/// </summary>
+	public static string name_ID (this GameObject arg)
+	{
+		return string.Concat (arg.name, arg.GetInstanceID ());
+	}
+	#endif
+
+	#endregion
+
+
 	#region Data Getters Setters
 
 	public static Vector3 GetPosition (this GameObject arg)

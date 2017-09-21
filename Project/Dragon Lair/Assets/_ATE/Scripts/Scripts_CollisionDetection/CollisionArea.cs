@@ -85,6 +85,16 @@ namespace CollisionSystem
 		#endif
 
 
+		#region GameObject
+
+		private void OnDestroy ()
+		{
+			//TODO: Send event notifying things of our destruction
+		}
+
+		#endregion
+
+
 		#region AteGameObject
 
 		protected override void RegisterEvents ()

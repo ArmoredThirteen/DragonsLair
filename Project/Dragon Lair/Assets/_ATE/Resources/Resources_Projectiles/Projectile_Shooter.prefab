@@ -10,7 +10,7 @@ GameObject:
   - 4: {fileID: 432480}
   - 114: {fileID: 11410350}
   m_Layer: 0
-  m_Name: ProjectileShooter
+  m_Name: Projectile_Shooter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -40,9 +40,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
+  isAutoFire: 0
   projectilePrefab: {fileID: 11477018, guid: f350e0dda744bd245b979032c5955cb3, type: 2}
   projectileParent: {fileID: 0}
   projectileTarget: {fileID: 0}
+  fireStartVariance: 5
   targetVariance: 5
   autoFireDelay: 2
 --- !u!1001 &100100000

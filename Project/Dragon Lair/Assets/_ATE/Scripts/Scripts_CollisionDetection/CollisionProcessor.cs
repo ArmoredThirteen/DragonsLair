@@ -37,6 +37,17 @@ namespace CollisionSystem
 		/// </summary>
 		public VectorAxis upAxis = VectorAxis.Y;
 
+
+		/// <summary>
+		/// If true, draw circles around 2d circle colliders.
+		/// </summary>
+		public bool drawCircleColliders = true;
+
+		/// <summary>
+		/// If true, draw spheres around 2d sphere colliders.
+		/// </summary>
+		public bool drawSphereColliders = true;
+
 		#endregion
 
 
@@ -117,6 +128,7 @@ namespace CollisionSystem
 			RegisterColliderPairs (theCol);
 		}
 
+		//TODO: This way of doing things is memory inefficient. High complexity.
 		/// <summary>
 		/// Using list of registered colliders, registers new pairs.
 		/// </summary>
@@ -215,6 +227,49 @@ namespace CollisionSystem
 
 
 		#region Private Methods
+
+		#endregion
+
+
+		#region Drawing Gizmos
+
+		#if UNITY_EDITOR
+
+		private void OnDrawGizmos ()
+		{
+			Color startColor = UnityEditor.Handles.color;
+			UnityEditor.Handles.color = Color.green;
+
+			if (drawCircleColliders)
+			{
+				OnDrawCircles ();
+			}
+
+			if (drawSphereColliders)
+			{
+				OnDrawSpheres ();
+			}
+
+			UnityEditor.Handles.color = startColor;
+		}
+
+		private void OnDrawCircles ()
+		{
+			AteCollider_Circle[] colliders =
+				FindObjectsOfType (typeof (AteCollider_Circle)) as AteCollider_Circle[];
+
+			for (int i = 0; i < colliders.Length; i++)
+			{
+				UnityEditor.Handles.DrawWireDisc (colliders[i].transform.position, Vector3.up, colliders[i].radius);
+			}
+		}
+
+		private void OnDrawSpheres ()
+		{
+			
+		}
+
+		#endif
 
 		#endregion
 

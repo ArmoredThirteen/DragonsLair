@@ -38,6 +38,21 @@ public class Trigger_InArea : AteGameObject
 	private List<AteGameObject> _currentlyInTrigger = new List<AteGameObject> ();
 
 
+	private bool AreEnterBehavioursEmpty
+	{
+		get {return behavioursOnEnter.Count == 0;}
+	}
+
+	private bool AreInteractBehavioursEmpty
+	{
+		get {return behavioursOnInteract.Count == 0;}
+	}
+
+	private bool AreExitBehavioursEmpty
+	{
+		get {return behavioursOnExit.Count == 0;}
+	}
+
 	#if UNITY_EDITOR
 
 	public override void DrawInspector ()
@@ -146,11 +161,17 @@ public class Trigger_InArea : AteGameObject
 
 	public void ManualEnterArea (AteGameObject triggerer)
 	{
+		if (AreEnterBehavioursEmpty)
+			return;
+		
 		AttemptEnterTriggers (triggerer);
 	}
 
 	void OnTriggerEnter (Collider theCollider)
 	{
+		if (AreEnterBehavioursEmpty)
+			return;
+
 		if (areaType != AreaType.UnityTriggers)
 			return;
 
@@ -163,6 +184,9 @@ public class Trigger_InArea : AteGameObject
 
 	private void OnAteCollisionBegan (EventData_Collision eventData)
 	{
+		if (AreEnterBehavioursEmpty)
+			return;
+
 		if (areaType != AreaType.CollisionArea)
 			return;
 
@@ -187,6 +211,12 @@ public class Trigger_InArea : AteGameObject
 
 	private void OnInteractEvent (EventData_UI theData)
 	{
+		if (AreInteractBehavioursEmpty)
+			return;
+
+		if (behavioursOnInteract.Count == 0)
+			return;
+
 		if (theData.theKey != interactKey)
 			return;
 		if (_currentlyInTrigger.Count < requiredToInteract)
@@ -203,6 +233,12 @@ public class Trigger_InArea : AteGameObject
 
 	private void AttemptExitTriggers (AteGameObject triggerer)
 	{
+		if (AreExitBehavioursEmpty)
+			return;
+
+		if (behavioursOnExit.Count == 0)
+			return;
+
 		if (!GameObjectIsAllowedType (triggerer))
 			return;
 
@@ -215,11 +251,17 @@ public class Trigger_InArea : AteGameObject
 
 	public void ManualExitArea (AteGameObject triggerer)
 	{
+		if (AreExitBehavioursEmpty)
+			return;
+
 		AttemptExitTriggers (triggerer);
 	}
 
 	void OnTriggerExit (Collider theCollider)
 	{
+		if (AreExitBehavioursEmpty)
+			return;
+
 		if (areaType != AreaType.UnityTriggers)
 			return;
 
@@ -232,6 +274,9 @@ public class Trigger_InArea : AteGameObject
 
 	private void OnAteCollisionEnded (EventData_Collision eventData)
 	{
+		if (AreExitBehavioursEmpty)
+			return;
+
 		if (areaType != AreaType.CollisionArea)
 			return;
 

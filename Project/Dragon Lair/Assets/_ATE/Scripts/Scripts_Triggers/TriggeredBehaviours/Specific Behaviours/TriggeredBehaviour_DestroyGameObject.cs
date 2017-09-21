@@ -111,6 +111,9 @@ public class TriggeredBehaviour_DestroyGameObject : TriggeredBehaviour
 	/// </summary>
 	protected override void OnRequestedPlaying (AteGameObject triggerer)
 	{
+		//TODO: HACK way to switch targets
+		//TODO: HACK way to switch targets
+		//TODO: HACK way to switch targets
 		switch (destroyType)
 		{
 			case DestroyType.Target :
@@ -166,7 +169,10 @@ public class TriggeredBehaviour_DestroyGameObject : TriggeredBehaviour
 	protected override void OnEnteredPlaying (TriggeredState prevState)
 	{
 		if (targetGameObject == null)
+		{
+			//Debug.Log ("targetGameObject is Null");
 			return;
+		}
 
 		//	Called at end of this method for an instant-fire behaviour
 		RequestComplete ();
@@ -174,6 +180,8 @@ public class TriggeredBehaviour_DestroyGameObject : TriggeredBehaviour
 		//	Normally code goes BEFORE RequestComplete()
 		//	But because this can destroy itself, the RequestComplete()
 		//		is called above to maintain anything relying on it.
+
+		//Debug.Log ("Destroying: " + targetGameObject.name_ID ());
 		Destroy (targetGameObject.gameObject);
 	}
 
