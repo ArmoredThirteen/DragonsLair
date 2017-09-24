@@ -49,6 +49,9 @@ public static class EditorHelper
 	/// </summary>
 	public static void SetDirtyIfChanged (MonoBehaviour target)
 	{
+		//	Can happen if target destroys itself because of inspector scripts
+		if (target == null)
+			return;
 		if (!GUI.changed)
 			return;
 		
