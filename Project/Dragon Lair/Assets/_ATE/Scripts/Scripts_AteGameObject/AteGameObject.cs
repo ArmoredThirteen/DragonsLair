@@ -9,7 +9,7 @@ using UnityEditor;
 
 public abstract class AteGameObject : MonoBehaviour
 {
-
+	//test
 	#region Fields
 
 	public GOType type = GOType.None;
