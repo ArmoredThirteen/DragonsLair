@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 
 [System.Serializable]
-public class SequencedActionBundle : AteGameObject
+public class SequencedActionBundle : AteComponent
 {
 	//TODO: Ripe for abuse
 	public bool playing = false;

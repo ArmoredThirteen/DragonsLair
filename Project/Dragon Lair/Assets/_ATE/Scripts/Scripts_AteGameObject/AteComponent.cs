@@ -35,6 +35,8 @@ public abstract class AteComponent : MonoBehaviour
 		if (_myObject == null)
 			_myObject = gameObject.GetComponent<AteObject> () as AteObject;
 
+		if (_myObject == null)
+			return;
 		if (_myObject.CanRemoveComponents ())
 			DrawRemoveOption ();
 	}
@@ -92,6 +94,7 @@ public abstract class AteComponent : MonoBehaviour
 	public Vector3 Position
 	{
 		get { return MyObject.Position; }
+		set { MyObject.Position = value; }
 	}
 
 	/// <summary>
@@ -101,6 +104,7 @@ public abstract class AteComponent : MonoBehaviour
 	public Vector3 LocalPosition
 	{
 		get { return MyObject.LocalPosition; }
+		set { MyObject.LocalPosition = value; }
 	}
 
 	/// <summary>
@@ -110,6 +114,7 @@ public abstract class AteComponent : MonoBehaviour
 	public Quaternion Rotation
 	{
 		get { return MyObject.Rotation; }
+		set { MyObject.Rotation = value; }
 	}
 
 	/// <summary>
@@ -119,6 +124,7 @@ public abstract class AteComponent : MonoBehaviour
 	public Quaternion LocalRotation
 	{
 		get { return MyObject.LocalRotation; }
+		set { MyObject.LocalRotation = value; }
 	}
 
 	#endregion

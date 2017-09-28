@@ -2,7 +2,7 @@
 using System.Collections;
 
 
-public class Example_DelayedInvokationUser : AteGameObject
+public class Example_DelayedInvokationUser : AteComponent
 {
 	
 	protected override void AteStart ()

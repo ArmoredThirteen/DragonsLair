@@ -6,7 +6,7 @@ using UnityEditor;
 #endif
 
 
-public class ControlPosition : AteGameObject
+public class ControlPosition : AteComponent
 {
 	public enum ControlType
 	{

@@ -6,7 +6,7 @@ using UnityEditor;
 #endif
 
 
-public class ProjectileShooter : AteGameObject
+public class ProjectileShooter : AteComponent
 {
 	public bool isAutoFire = false;
 

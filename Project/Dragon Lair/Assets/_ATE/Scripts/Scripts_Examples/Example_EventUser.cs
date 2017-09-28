@@ -2,7 +2,7 @@
 using System.Collections;
 
 
-public class Example_EventUser : AteGameObject
+public class Example_EventUser : AteComponent
 {
 	
 	protected override void RegisterEvents ()

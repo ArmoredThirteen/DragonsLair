@@ -109,7 +109,7 @@ public class TriggeredBehaviour_DestroyGameObject : TriggeredBehaviour
 	/// Called when parent class had a request to play.
 	/// If inactive and cancelRequestsWhileInactive is true, won't be called.
 	/// </summary>
-	protected override void OnRequestedPlaying (AteGameObject triggerer)
+	protected override void OnRequestedPlaying (AteObject triggerer)
 	{
 		//TODO: HACK way to switch targets
 		//TODO: HACK way to switch targets

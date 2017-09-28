@@ -236,7 +236,7 @@ public sealed class AteObject : MonoBehaviour
 	/// </summary>
 	private void RegisterTracking ()
 	{
-		//GameManager.ObjectTracker.RegisterAteGameObject (this);
+		GameManager.ObjectTracker.RegisterAteGameObject (this);
 	}
 
 	/// <summary>
@@ -244,7 +244,7 @@ public sealed class AteObject : MonoBehaviour
 	/// </summary>
 	private void UnregisterTracking ()
 	{
-		//GameManager.ObjectTracker.UnregisterAteGameObject (this);
+		GameManager.ObjectTracker.UnregisterAteGameObject (this);
 	}
 
 	#endregion

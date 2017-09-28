@@ -8,6 +8,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 472946}
+  - 114: {fileID: 11453918}
   - 114: {fileID: 11413130}
   m_Layer: 0
   m_Name: 'Action: Wait'
@@ -24,6 +25,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 403844}
+  - 114: {fileID: 11441174}
   - 114: {fileID: 11461368}
   m_Layer: 0
   m_Name: 'Action: AddHudText'
@@ -40,6 +42,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 435430}
+  - 114: {fileID: 11420746}
   - 114: {fileID: 11421786}
   m_Layer: 0
   m_Name: 'Action: SceneReload'
@@ -56,6 +59,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 473410}
+  - 114: {fileID: 11429792}
   - 114: {fileID: 11416250}
   m_Layer: 0
   m_Name: OnExit_RemoveDefaultText
@@ -72,6 +76,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 490334}
+  - 114: {fileID: 11416190}
   - 114: {fileID: 11468884}
   m_Layer: 0
   m_Name: 'Action: RemoveHudText'
@@ -88,6 +93,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 410580}
+  - 114: {fileID: 11427968}
   - 114: {fileID: 11486816}
   m_Layer: 0
   m_Name: OnInteract_SceneReload
@@ -104,6 +110,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 481150}
+  - 114: {fileID: 11482448}
   - 114: {fileID: 11404854}
   m_Layer: 0
   m_Name: OnEnter_AddDefaultText
@@ -123,7 +130,6 @@ GameObject:
   - 33: {fileID: 3330230}
   - 65: {fileID: 6508404}
   - 23: {fileID: 2345998}
-  - 114: {fileID: 11496030}
   m_Layer: 0
   m_Name: Trigger_SceneReloadOnClick
   m_TagString: Untagged
@@ -290,7 +296,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 141711d5b6b84d84aa3fc7d4dfc0a3b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
+  _myObject: {fileID: 11482448}
   showBaseSettings: 1
   showChildSettings: 1
   isActive: 1
@@ -313,7 +319,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bd61bb08c4b15145932923d2319e241, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
+  _myObject: {fileID: 11453918}
   showBaseSettings: 1
   showChildSettings: 1
   isActive: 1
@@ -324,6 +330,20 @@ MonoBehaviour:
   automaticPlayReset: 1
   minWait: 1
   maxWait: 2
+--- !u!114 &11416190
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 168108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82f931430d776a6409f3837e69bbbdc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 0
+  components:
+  - {fileID: 11468884}
 --- !u!114 &11416250
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -335,7 +355,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 141711d5b6b84d84aa3fc7d4dfc0a3b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
+  _myObject: {fileID: 11429792}
   showBaseSettings: 1
   showChildSettings: 1
   isActive: 1
@@ -347,6 +367,20 @@ MonoBehaviour:
   behaviourTransforms:
   - {fileID: 490334}
   sequenceType: 0
+--- !u!114 &11420746
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 153248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82f931430d776a6409f3837e69bbbdc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 0
+  components:
+  - {fileID: 11421786}
 --- !u!114 &11421786
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -358,7 +392,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f45d91453a3ba714e92e16884dc62173, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
+  _myObject: {fileID: 11420746}
   showBaseSettings: 1
   showChildSettings: 1
   isActive: 1
@@ -369,6 +403,62 @@ MonoBehaviour:
   automaticPlayReset: 1
   loadType: 0
   sceneIndex: 0
+--- !u!114 &11427968
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 169244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82f931430d776a6409f3837e69bbbdc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 0
+  components:
+  - {fileID: 11486816}
+--- !u!114 &11429792
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 160774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82f931430d776a6409f3837e69bbbdc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 0
+  components:
+  - {fileID: 11416250}
+--- !u!114 &11441174
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 144326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82f931430d776a6409f3837e69bbbdc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 0
+  components:
+  - {fileID: 11461368}
+--- !u!114 &11453918
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 111824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82f931430d776a6409f3837e69bbbdc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 0
+  components:
+  - {fileID: 11413130}
 --- !u!114 &11461368
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -380,7 +470,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9dd8b4a88d95cc4da59b8ecb752d536, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
+  _myObject: {fileID: 11441174}
   showBaseSettings: 1
   showChildSettings: 1
   isActive: 1
@@ -406,7 +496,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7c392168088ee04c8a299b81de7baea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
+  _myObject: {fileID: 11416190}
   showBaseSettings: 1
   showChildSettings: 1
   isActive: 1
@@ -416,6 +506,20 @@ MonoBehaviour:
   maxPlayResets: -1
   automaticPlayReset: 1
   boxType: 0
+--- !u!114 &11482448
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 189848}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82f931430d776a6409f3837e69bbbdc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 0
+  components:
+  - {fileID: 11404854}
 --- !u!114 &11486816
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -427,7 +531,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 141711d5b6b84d84aa3fc7d4dfc0a3b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
+  _myObject: {fileID: 11427968}
   showBaseSettings: 1
   showChildSettings: 1
   isActive: 1
@@ -440,30 +544,6 @@ MonoBehaviour:
   - {fileID: 472946}
   - {fileID: 435430}
   sequenceType: 3
---- !u!114 &11496030
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 199136}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9eb42020f0510994289543a57b61b927, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  type: 1000
-  triggeredByTypes: 64000000
-  requiredToInteract: 1
-  eventsToInteract: 130
-  actionsOnEnter: []
-  actionsOnInteract: []
-  actionsOnExit: []
-  behavioursOnEnter:
-  - {fileID: 11404854}
-  behavioursOnInteract:
-  - {fileID: 11486816}
-  behavioursOnExit:
-  - {fileID: 11416250}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

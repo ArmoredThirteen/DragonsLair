@@ -25,6 +25,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 449376}
+  - 114: {fileID: 11463520}
   - 114: {fileID: 11477018}
   - 54: {fileID: 5450494}
   - 65: {fileID: 6548372}
@@ -162,6 +163,20 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &11463520
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 110004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82f931430d776a6409f3837e69bbbdc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 200
+  components:
+  - {fileID: 11477018}
 --- !u!114 &11477018
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -173,7 +188,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29376edd57b19e547b02c55af882ba0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 200
+  _myObject: {fileID: 11463520}
   maxLifetime: 60
   moveSpeed: 2
   faceTarget: 1
@@ -188,7 +203,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7efd83d93a9b054d916debffee545d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
+  _myObject: {fileID: 0}
   controlX:
     control: 0
     setWorldVal: 0

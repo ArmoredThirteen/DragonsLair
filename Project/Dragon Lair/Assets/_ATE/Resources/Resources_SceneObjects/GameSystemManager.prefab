@@ -8,6 +8,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 433740}
+  - 114: {fileID: 11470026}
   - 114: {fileID: 11474440}
   - 114: {fileID: 11477626}
   m_Layer: 0
@@ -763,6 +764,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1fc5b86413cdec44a6c96c277d1e621, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &11470026
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 117916}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82f931430d776a6409f3837e69bbbdc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 0
+  components:
+  - {fileID: 11474440}
 --- !u!114 &11474440
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -774,9 +789,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 390587a4479c40a4c93127f4c8e3ddc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
+  _myObject: {fileID: 11470026}
   maxCheckDistance: 50
   upAxis: 1
+  drawCircleColliders: 1
+  drawSphereColliders: 1
 --- !u!114 &11477626
 MonoBehaviour:
   m_ObjectHideFlags: 1

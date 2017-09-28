@@ -8,6 +8,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 449000}
+  - 114: {fileID: 11492806}
   - 114: {fileID: 11407074}
   m_Layer: 0
   m_Name: Sequencer_OnEnemyEnter
@@ -24,6 +25,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 421948}
+  - 114: {fileID: 11430992}
   - 114: {fileID: 11426464}
   m_Layer: 0
   m_Name: DestroySelf
@@ -75,6 +77,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 470570}
+  - 114: {fileID: 11465128}
   - 114: {fileID: 11497968}
   - 54: {fileID: 5435878}
   - 114: {fileID: 11412364}
@@ -94,6 +97,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 480936}
+  - 114: {fileID: 11403948}
   - 114: {fileID: 11432844}
   m_Layer: 0
   m_Name: DestroyTriggerer
@@ -239,6 +243,20 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &11403948
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 192486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82f931430d776a6409f3837e69bbbdc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 0
+  components:
+  - {fileID: 11432844}
 --- !u!114 &11407074
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -250,7 +268,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 141711d5b6b84d84aa3fc7d4dfc0a3b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
+  _myObject: {fileID: 11492806}
   showBaseSettings: 1
   showChildSettings: 1
   isActive: 1
@@ -274,8 +292,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8058bb89709e2e4cb3c7c11cad69dd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 10500
+  _myObject: {fileID: 11465128}
   triggeredByTypes: c8000000
+  areaType: 300
+  collisionArea: {fileID: 0}
   requiredToInteract: 1
   eventsToInteract: 0
   interactKey: 323
@@ -294,7 +314,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4f5e17631fee6a44afe7f8fbc673a83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
+  _myObject: {fileID: 11430992}
   showBaseSettings: 0
   showChildSettings: 1
   isActive: 1
@@ -305,6 +325,20 @@ MonoBehaviour:
   automaticPlayReset: 1
   destroyType: 0
   targetGameObject: {fileID: 179058}
+--- !u!114 &11430992
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 151810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82f931430d776a6409f3837e69bbbdc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 0
+  components:
+  - {fileID: 11426464}
 --- !u!114 &11432844
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -316,7 +350,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4f5e17631fee6a44afe7f8fbc673a83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
+  _myObject: {fileID: 11403948}
   showBaseSettings: 0
   showChildSettings: 1
   isActive: 1
@@ -338,7 +372,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7efd83d93a9b054d916debffee545d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
+  _myObject: {fileID: 0}
   controlX:
     control: 0
     setWorldVal: 0
@@ -354,6 +388,35 @@ MonoBehaviour:
     setWorldVal: 0
     localFollowTarget: {fileID: 0}
     localFollowOffset: 0
+--- !u!114 &11465128
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 179058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82f931430d776a6409f3837e69bbbdc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 10500
+  components:
+  - {fileID: 11497968}
+  - {fileID: 11412364}
+--- !u!114 &11492806
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 128492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82f931430d776a6409f3837e69bbbdc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 0
+  components:
+  - {fileID: 11407074}
 --- !u!114 &11497968
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -365,7 +428,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29376edd57b19e547b02c55af882ba0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 10500
+  _myObject: {fileID: 11465128}
   maxLifetime: 60
   moveSpeed: 1
   faceTarget: 1

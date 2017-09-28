@@ -22,7 +22,7 @@ namespace CollisionSystem
 	/// <summary>
 	/// Detects collisions among given sets of colliders.
 	/// </summary>
-	public class CollisionProcessor : AteGameObject
+	public class CollisionProcessor : AteComponent
 	{
 		
 		#region Public Variables

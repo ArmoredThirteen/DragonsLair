@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/_ATE/Resources/Resources_Scenes/Scenes_SimpleBug/SimpleBug.unity
+- path: Assets/_ATE/Resources/Resources_Scenes/Level1_Entrance.unity
   isLoaded: 1
   isActive: 1

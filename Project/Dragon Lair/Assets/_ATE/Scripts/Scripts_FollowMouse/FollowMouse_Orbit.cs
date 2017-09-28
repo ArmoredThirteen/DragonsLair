@@ -12,7 +12,7 @@ using UnityEditor;
 //TODO: Most of this class needs better optimization and seperation of powers.
 //TODO: 
 //TODO: 
-public class FollowMouse_Orbit : AteGameObject
+public class FollowMouse_Orbit : AteComponent
 {
 	public enum FacingType
 	{

@@ -8,6 +8,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 404254}
+  - 114: {fileID: 11470156}
   - 114: {fileID: 11421956}
   - 143: {fileID: 14376942}
   - 114: {fileID: 11403480}
@@ -361,7 +362,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32c5251cc09813e4c913adab74b2f30b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _myObject: {fileID: 11470156}
+--- !u!114 &11470156
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 180818}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82f931430d776a6409f3837e69bbbdc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   type: 100
+  components:
+  - {fileID: 11421956}
 --- !u!143 &14376942
 CharacterController:
   m_ObjectHideFlags: 1

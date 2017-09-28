@@ -7,7 +7,7 @@ using UnityEditor;
 #endif
 
 
-public class Trigger_Clickable : AteGameObject
+public class Trigger_Clickable : AteComponent
 {
 	public EventType_UI eventsToInteract = EventType_UI.None;
 	public KeyCode interactKey = KeyCode.Mouse0;
@@ -86,7 +86,7 @@ public class Trigger_Clickable : AteGameObject
 	}
 
 
-	private void TriggerBehaviourList (List<TriggeredBehaviour> behaviours, AteGameObject triggerer)
+	private void TriggerBehaviourList (List<TriggeredBehaviour> behaviours, AteObject triggerer)
 	{
 		if (behaviours == null)
 			return;

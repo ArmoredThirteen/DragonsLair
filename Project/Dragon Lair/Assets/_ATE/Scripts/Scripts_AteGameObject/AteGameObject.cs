@@ -9,7 +9,6 @@ using UnityEditor;
 
 public abstract class AteGameObject : MonoBehaviour
 {
-	//test
 	#region Fields
 
 	public GOType type = GOType.None;
@@ -172,7 +171,7 @@ public abstract class AteGameObject : MonoBehaviour
 	/// </summary>
 	private void BaseRegisterTracking ()
 	{
-		GameManager.ObjectTracker.RegisterAteGameObject (this);
+		//GameManager.ObjectTracker.RegisterAteGameObject (this);
 	}
 
 	/// <summary>
@@ -180,7 +179,7 @@ public abstract class AteGameObject : MonoBehaviour
 	/// </summary>
 	private void BaseUnregisterTracking ()
 	{
-		GameManager.ObjectTracker.UnregisterAteGameObject (this);
+		//GameManager.ObjectTracker.UnregisterAteGameObject (this);
 	}
 
 	#endregion

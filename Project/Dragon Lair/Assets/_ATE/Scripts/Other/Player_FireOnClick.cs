@@ -6,7 +6,7 @@ using UnityEditor;
 #endif
 
 
-public class Player_FireOnClick : AteGameObject
+public class Player_FireOnClick : AteComponent
 {
 	public float fireDelay = 1;
 	public ProjectileShooter defaultShooter;

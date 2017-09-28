@@ -6,7 +6,7 @@ using UnityEditor;
 #endif
 
 
-public class FollowObject : AteGameObject
+public class FollowObject : AteComponent
 {
 	public Transform transformToFollow;
 	public Vector3 followOffset;

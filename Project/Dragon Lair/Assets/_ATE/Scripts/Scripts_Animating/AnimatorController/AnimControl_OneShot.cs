@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class AnimControl_OneShot : AteGameObject
+public class AnimControl_OneShot : AteComponent
 {
 	private string _animName = "Playing";
 
