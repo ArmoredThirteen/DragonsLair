@@ -3,7 +3,7 @@ using System.Collections;
 using UnityStandardAssets.Characters.FirstPerson;
 
 
-public class PlayerGameObject : AteGameObject
+public class PlayerGameObject : AteComponent
 {
 	private FirstPersonController _firstPersonController;
 	private float _start_walkSpeed;

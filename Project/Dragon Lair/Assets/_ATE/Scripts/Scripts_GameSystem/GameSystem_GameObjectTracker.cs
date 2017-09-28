@@ -7,7 +7,7 @@ public class GameSystem_GameObjectTracker : GameSystem
 {
 	#region Field
 
-	private Dictionary<GOType, List<AteGameObject>> _registeredAteGameObjects = new Dictionary<GOType, List<AteGameObject>> ();
+	private Dictionary<GOType, List<AteObject>> _registeredAteObjects = new Dictionary<GOType, List<AteObject>> ();
 
 	#endregion
 
@@ -19,13 +19,13 @@ public class GameSystem_GameObjectTracker : GameSystem
 	public override void SceneInitialize ()
 	{
 		//TODO: Something more official, this seems bug-prone
-		_registeredAteGameObjects = new Dictionary<GOType, List<AteGameObject>> ();
+		_registeredAteObjects = new Dictionary<GOType, List<AteObject>> ();
 	}
 
 
 	public override void SystemUpdate ()
 	{
-		/*foreach (KeyValuePair<GOType, List<AteGameObject>> entry in _registeredAteGameObjects)
+		/*foreach (KeyValuePair<GOType, List<AteGameObject>> entry in _registeredAteObjects)
 		{
 			Debug.Log ("Key: " + entry.Key.ToString () + " ||| Count: " + entry.Value.Count);
 		}*/
@@ -43,36 +43,36 @@ public class GameSystem_GameObjectTracker : GameSystem
 
 	#region Game Object Registration
 
-	public void RegisterAteGameObject (AteGameObject theObject)
+	public void RegisterAteGameObject (AteObject theObject)
 	{
 		if (theObject == null)
 			return;
 
 		//	Add key if necessary
-		if (!_registeredAteGameObjects.ContainsKey (theObject.type))
-			_registeredAteGameObjects.Add (theObject.type, new List<AteGameObject> ());
+		if (!_registeredAteObjects.ContainsKey (theObject.type))
+			_registeredAteObjects.Add (theObject.type, new List<AteObject> ());
 
 		//	Add object if necessary
-		if (!_registeredAteGameObjects[theObject.type].Contains (theObject))
-			_registeredAteGameObjects[theObject.type].Add (theObject);
+		if (!_registeredAteObjects[theObject.type].Contains (theObject))
+			_registeredAteObjects[theObject.type].Add (theObject);
 	}
 
-	public void UnregisterAteGameObject (AteGameObject theObject)
+	public void UnregisterAteGameObject (AteObject theObject)
 	{
 		if (theObject == null)
 			return;
 
 		//	Check if key exists
-		if (!_registeredAteGameObjects.ContainsKey (theObject.type))
+		if (!_registeredAteObjects.ContainsKey (theObject.type))
 			return;
 
 		//	Remove object if necessary
-		if (_registeredAteGameObjects[theObject.type].Contains (theObject))
-			_registeredAteGameObjects[theObject.type].Remove (theObject);
+		if (_registeredAteObjects[theObject.type].Contains (theObject))
+			_registeredAteObjects[theObject.type].Remove (theObject);
 
 		//	Remove key if necessary
-		if (_registeredAteGameObjects[theObject.type].Count <= 0)
-			_registeredAteGameObjects.Remove (theObject.type);
+		if (_registeredAteObjects[theObject.type].Count <= 0)
+			_registeredAteObjects.Remove (theObject.type);
 	}
 
 	#endregion
@@ -81,16 +81,16 @@ public class GameSystem_GameObjectTracker : GameSystem
 	/// <summary>
 	/// Returns a list of all registered AteGameObjects that match given GOType.
 	/// </summary>
-	public List<AteGameObject> GetAteGameObjects (GOType theType)
+	public List<AteObject> GetAteGameObjects (GOType theType)
 	{
-		List<AteGameObject> theObjects = new List<AteGameObject> ();
+		List<AteObject> theObjects = new List<AteObject> ();
 
-		if (!_registeredAteGameObjects.ContainsKey (theType))
+		if (!_registeredAteObjects.ContainsKey (theType))
 			return theObjects;
 
-		for (int i = 0; i < _registeredAteGameObjects[theType].Count; i++)
+		for (int i = 0; i < _registeredAteObjects[theType].Count; i++)
 		{
-			theObjects.Add (_registeredAteGameObjects[theType][i]);
+			theObjects.Add (_registeredAteObjects[theType][i]);
 		}
 
 		return theObjects;
@@ -100,16 +100,16 @@ public class GameSystem_GameObjectTracker : GameSystem
 	/// Returns a list of all registered AteGameObjects that match given GOType.
 	/// Results are limited to classes matching given class type.
 	/// </summary>
-	public List<T> GetAteGameObjects<T> (GOType theType) where T : AteGameObject
+	public List<T> GetAteGameObjects<T> (GOType theType) where T : AteComponent
 	{
 		List<T> theObjects = new List<T> ();
 
-		if (!_registeredAteGameObjects.ContainsKey (theType))
+		if (!_registeredAteObjects.ContainsKey (theType))
 			return theObjects;
 
-		for (int i = 0; i < _registeredAteGameObjects[theType].Count; i++)
+		for (int i = 0; i < _registeredAteObjects[theType].Count; i++)
 		{
-			T curObject = _registeredAteGameObjects[theType][i] as T;
+			T curObject = _registeredAteObjects[theType][i] as T;
 			if (curObject != null)
 				theObjects.Add (curObject);
 		}

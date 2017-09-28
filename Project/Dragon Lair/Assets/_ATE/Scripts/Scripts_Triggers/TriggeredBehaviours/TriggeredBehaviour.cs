@@ -7,7 +7,7 @@ using UnityEditor;
 
 
 [System.Serializable]
-public abstract class TriggeredBehaviour : AteGameObject
+public abstract class TriggeredBehaviour : AteComponent
 {
 	public enum TriggeredState
 	{
@@ -209,7 +209,7 @@ public abstract class TriggeredBehaviour : AteGameObject
 	/// Requests putting the FSM into Playing state.
 	/// Only works if FSM is in Ready state.
 	/// </summary>
-	public void RequestPlaying (AteGameObject triggerer)
+	public void RequestPlaying (AteObject triggerer)
 	{
 		if (!isActive && cancelRequestsWhileInactive)
 			return;
@@ -264,7 +264,7 @@ public abstract class TriggeredBehaviour : AteGameObject
 
 	protected abstract void OnDataReset ();
 
-	protected abstract void OnRequestedPlaying (AteGameObject triggerer);
+	protected abstract void OnRequestedPlaying (AteObject triggerer);
 	protected abstract void OnRequestedComplete ();
 	protected abstract void OnRequestedPlayReset ();
 

@@ -8,7 +8,7 @@ using UnityEditor;
 #endif
 
 
-public class Trigger_InArea : AteGameObject
+public class Trigger_InArea : AteComponent
 {
 	public enum AreaType
 	{
@@ -35,7 +35,7 @@ public class Trigger_InArea : AteGameObject
 	public List<TriggeredBehaviour> behavioursOnInteract = new List<TriggeredBehaviour> ();
 	public List<TriggeredBehaviour> behavioursOnExit     = new List<TriggeredBehaviour> ();
 
-	private List<AteGameObject> _currentlyInTrigger = new List<AteGameObject> ();
+	private List<AteObject> _currentlyInTrigger = new List<AteObject> ();
 
 
 	private bool AreEnterBehavioursEmpty
@@ -147,7 +147,7 @@ public class Trigger_InArea : AteGameObject
 
 	#region Trigger Entered
 
-	private void AttemptEnterTriggers (AteGameObject triggerer)
+	private void AttemptEnterTriggers (AteObject triggerer)
 	{
 		if (!GameObjectIsAllowedType (triggerer))
 			return;
@@ -159,7 +159,7 @@ public class Trigger_InArea : AteGameObject
 	}
 
 
-	public void ManualEnterArea (AteGameObject triggerer)
+	public void ManualEnterArea (AteObject triggerer)
 	{
 		if (AreEnterBehavioursEmpty)
 			return;
@@ -175,7 +175,7 @@ public class Trigger_InArea : AteGameObject
 		if (areaType != AreaType.UnityTriggers)
 			return;
 
-		AteGameObject triggerer = theCollider.gameObject.AteGameObject ();
+		AteObject triggerer = theCollider.gameObject.AteGameObject ();
 		if (triggerer == null)
 			return;
 
@@ -197,7 +197,7 @@ public class Trigger_InArea : AteGameObject
 		if (collisionArea.InstanceID != eventData.FullCollisionArea.InstanceID)
 			return;
 
-		AteGameObject triggerer = eventData.HittingCollider.gameObject.AteGameObject ();
+		AteObject triggerer = eventData.HittingCollider.gameObject.AteGameObject ();
 		if (triggerer == null)
 			return;
 
@@ -231,7 +231,7 @@ public class Trigger_InArea : AteGameObject
 
 	#region Trigger Exited
 
-	private void AttemptExitTriggers (AteGameObject triggerer)
+	private void AttemptExitTriggers (AteObject triggerer)
 	{
 		if (AreExitBehavioursEmpty)
 			return;
@@ -249,7 +249,7 @@ public class Trigger_InArea : AteGameObject
 	}
 
 
-	public void ManualExitArea (AteGameObject triggerer)
+	public void ManualExitArea (AteObject triggerer)
 	{
 		if (AreExitBehavioursEmpty)
 			return;
@@ -265,7 +265,7 @@ public class Trigger_InArea : AteGameObject
 		if (areaType != AreaType.UnityTriggers)
 			return;
 
-		AteGameObject triggerer = theCollider.gameObject.AteGameObject ();
+		AteObject triggerer = theCollider.gameObject.AteGameObject ();
 		if (triggerer == null)
 			return;
 
@@ -287,7 +287,7 @@ public class Trigger_InArea : AteGameObject
 		if (collisionArea.InstanceID != eventData.FullCollisionArea.InstanceID)
 			return;
 
-		AteGameObject triggerer = eventData.HittingCollider.gameObject.AteGameObject ();
+		AteObject triggerer = eventData.HittingCollider.gameObject.AteGameObject ();
 		if (triggerer == null)
 			return;
 
@@ -297,7 +297,7 @@ public class Trigger_InArea : AteGameObject
 	#endregion
 
 
-	private void TriggerBehaviourList (List<TriggeredBehaviour> behaviours, AteGameObject triggerer)
+	private void TriggerBehaviourList (List<TriggeredBehaviour> behaviours, AteObject triggerer)
 	{
 		if (behaviours == null)
 			return;
@@ -314,7 +314,7 @@ public class Trigger_InArea : AteGameObject
 	}
 
 
-	private bool GameObjectIsAllowedType (AteGameObject theGameObject)
+	private bool GameObjectIsAllowedType (AteObject theGameObject)
 	{
 		//TODO: This is a bit hacky and specific, will be confusing for designers.
 		if (triggeredByTypes == null)

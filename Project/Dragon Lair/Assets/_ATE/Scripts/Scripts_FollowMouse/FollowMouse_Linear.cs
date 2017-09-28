@@ -6,7 +6,7 @@ using UnityEditor;
 #endif
 
 
-public class FollowMouse_Linear : AteGameObject
+public class FollowMouse_Linear : AteComponent
 {
 	public Camera theCam;
 

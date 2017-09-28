@@ -8,21 +8,21 @@ public static class ExtGameObject
 	#region Ate Specific
 
 	/// <summary>
-	/// Uses GetComponent() to return an AteGameObject component.
+	/// Uses GetComponent() to return an AteObject component.
 	/// Can return null.
 	/// </summary>
-	public static AteGameObject AteGameObject (this GameObject arg)
+	public static AteObject AteGameObject (this GameObject arg)
 	{
-		return arg.GetComponent<AteGameObject> () as AteGameObject;
+		return arg.GetComponent<AteObject> () as AteObject;
 	}
 
 	/// <summary>
-	/// Uses GetComponents() to return all AteGameObject components.
+	/// Uses GetComponents() to return all AteObject components.
 	/// Can return null.
 	/// </summary>
-	public static AteGameObject[] AteGameObjects (this GameObject arg)
+	public static AteObject[] AteGameObjects (this GameObject arg)
 	{
-		return arg.GetComponents<AteGameObject> () as AteGameObject[];
+		return arg.GetComponents<AteObject> () as AteObject[];
 	}
 
 	#endregion

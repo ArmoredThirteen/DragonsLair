@@ -6,7 +6,7 @@ using UnityEditor;
 #endif
 
 
-public abstract class CameraController : AteGameObject
+public abstract class CameraController : AteComponent
 {
 	public Camera theCam;
 

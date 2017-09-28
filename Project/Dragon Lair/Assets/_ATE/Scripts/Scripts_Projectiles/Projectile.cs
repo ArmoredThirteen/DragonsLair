@@ -6,7 +6,7 @@ using UnityEditor;
 #endif
 
 
-public class Projectile : AteGameObject
+public class Projectile : AteComponent
 {
 	public float maxLifetime = 60;
 	public float moveSpeed = 1;

@@ -8,6 +8,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 432480}
+  - 114: {fileID: 11475248}
   - 114: {fileID: 11410350}
   m_Layer: 0
   m_Name: Projectile_Shooter
@@ -39,14 +40,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04f597a1c6ada8f4294a40201d5c6209, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
+  _myObject: {fileID: 11475248}
   isAutoFire: 0
-  projectilePrefab: {fileID: 11477018, guid: f350e0dda744bd245b979032c5955cb3, type: 2}
+  projectilePrefab: {fileID: 11477018, guid: cf09afe9adadcf344b11bf278ba0d93c, type: 2}
   projectileParent: {fileID: 0}
   projectileTarget: {fileID: 0}
-  fireStartVariance: 5
-  targetVariance: 5
+  fireStartVariance: 0
+  targetVariance: 0
   autoFireDelay: 2
+--- !u!114 &11475248
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 197366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82f931430d776a6409f3837e69bbbdc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 0
+  components:
+  - {fileID: 11410350}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

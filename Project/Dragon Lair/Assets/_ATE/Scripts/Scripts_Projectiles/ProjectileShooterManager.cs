@@ -7,7 +7,7 @@ using UnityEditor;
 #endif
 
 
-public class ProjectileShooterManager : AteGameObject
+public class ProjectileShooterManager : AteComponent
 {
 	public List<ProjectileShooter> projectileShooters = new List<ProjectileShooter> ();
 	public IndexChooser chooserProjectileShooters = new IndexChooser ();

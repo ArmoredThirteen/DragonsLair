@@ -22,7 +22,7 @@ public class Trigger_InArea_SubTrigger : MonoBehaviour
 			return;
 		}
 
-		AteGameObject triggerer = theCollider.gameObject.AteGameObject ();
+		AteObject triggerer = theCollider.gameObject.AteGameObject ();
 		if (triggerer != null)
 		{
 			toTrigger.ManualEnterArea (triggerer);
@@ -44,7 +44,7 @@ public class Trigger_InArea_SubTrigger : MonoBehaviour
 			return;
 		}
 
-		AteGameObject triggerer = theCollider.gameObject.AteGameObject ();
+		AteObject triggerer = theCollider.gameObject.AteGameObject ();
 		if (triggerer != null)
 		{
 			toTrigger.ManualExitArea (triggerer);

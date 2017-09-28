@@ -13,7 +13,7 @@ namespace CollisionSystem
 	/// <summary>
 	/// Description
 	/// </summary>
-	public abstract class AteCollider : AteGameObject
+	public abstract class AteCollider : AteComponent
 	{
 		
 		#region Public Variables

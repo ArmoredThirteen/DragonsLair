@@ -14,7 +14,7 @@ namespace CollisionSystem
 	/// <summary>
 	/// A collection of AteColliders that mimics functionality of single colliders.
 	/// </summary>
-	public class CollisionArea : AteGameObject
+	public class CollisionArea : AteComponent
 	{
 		
 		#region Public Variables

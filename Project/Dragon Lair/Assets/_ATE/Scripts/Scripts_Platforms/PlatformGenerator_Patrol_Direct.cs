@@ -6,7 +6,7 @@ using UnityEditor;
 #endif
 
 
-public class PlatformGenerator_Patrol_Direct : AteGameObject
+public class PlatformGenerator_Patrol_Direct : AteComponent
 {
 	public bool isPatrolling = true;
 
