@@ -6,7 +6,7 @@ using UnityEditor;
 #endif
 
 
-namespace CollisionSystem
+namespace Ate.Collision
 {
 
 
@@ -52,7 +52,7 @@ namespace CollisionSystem
 
 		#endregion
 
-	}//end class
+	}//End Class
 
 
-}//end namespace
+}//End Namespace

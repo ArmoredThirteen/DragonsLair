@@ -1,13 +1,20 @@
 ﻿
 
-public enum HudTextBoxType
+namespace Ate
 {
-	Informative  = 0,
-	LargeCentral = 50,
 
-	Dialogue = 100,
 
-	Warning = 200,
+	public enum HudTextBoxType
+	{
+		Informative  = 0,
+		LargeCentral = 50,
 
-	MainMenu = 1000,
-}
+		Dialogue = 100,
+
+		Warning = 200,
+
+		MainMenu = 1000,
+	}
+
+
+}//End Namespace

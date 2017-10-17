@@ -1,30 +1,36 @@
 ﻿
 
-/// <summary>
-/// Broad categories of AteGameObjects.
-/// </summary>
-public enum GOType
+namespace Ate
 {
-	None = 0,
+	
 
-	Player = 100,
-	Enemy  = 200,
+	/// <summary>
+	/// Broad categories of AteObjects.
+	/// </summary>
+	public enum GOType
+	{
+		None = 0,
 
-	GameObjectTrigger     = 1000,
+		Player = 100,
+		Enemy  = 200,
 
-	TriggerActionBundle   = 1100,
-	SequencedActionBundle = 1110,
+		GameObjectTrigger     = 1000,
 
-
-	Projectile = 10500,
-}
-
+		TriggerActionBundle   = 1100,
+		SequencedActionBundle = 1110,
 
 
-/// <summary>
-/// Specific sub-categories of AteGameObjects.
-/// </summary>
-/*public enum GOSubtype
-{
-	None = 0,
-}*/
+		Projectile = 10500,
+	}
+
+
+	/// <summary>
+	/// Specific sub-categories of AteObjects.
+	/// </summary>
+	/*public enum GOSubtype
+	{
+		None = 0,
+	}*/
+
+
+}//End Namespace

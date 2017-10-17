@@ -6,195 +6,202 @@ using UnityEditor;
 #endif
 
 
-public class TriggeredBehaviour_ABaseCopy : TriggeredBehaviour
+namespace Ate
 {
-	//	Variables for designers.
-	//	Shown in editor with DrawInspector() at bottom.
-	#region Public Variables
-
-	#endregion
 
 
-	#if UNITY_EDITOR
-
-	/// <summary>
-	/// Called by parent class for drawing specific variables at top.
-	/// Parent class should automatically check for when it is dirty.
-	/// </summary>
-	protected override void DrawChildInspector ()
+	public class TriggeredBehaviour_ABaseCopy : TriggeredBehaviour
 	{
+		//	Variables for designers.
+		//	Shown in editor with DrawInspector() at bottom.
+		#region Public Variables
 
-	}
-
-	#endif
-
-
-	#region Awake/Start
-
-	/// <summary>
-	/// Called by parent class at the end of its AteAwake().
-	/// </summary>
-	protected override void OnAwake ()
-	{
-		
-	}
-
-	/// <summary>
-	/// Called by AteGameObject at end of its Awake().
-	/// </summary>
-	protected override void AteStart ()
-	{
-		
-	}
-
-	#endregion
+		#endregion
 
 
-	#region OnRequested
+		#if UNITY_EDITOR
 
-	/// <summary>
-	/// For resetting to a more 'factory default' version.
-	/// For things like only playing a sequencer once, then
-	/// resetting it from a different behaviour somewhere
-	/// else so it can be played again.
-	/// </summary>
-	protected override void OnDataReset()
-	{
-		
-	}
+		/// <summary>
+		/// Called by parent class for drawing specific variables at top.
+		/// Parent class should automatically check for when it is dirty.
+		/// </summary>
+		protected override void DrawChildInspector ()
+		{
 
+		}
 
-	/// <summary>
-	/// Called when parent class had a request to play.
-	/// If inactive and cancelRequestsWhileInactive is true, won't be called.
-	/// </summary>
-	protected override void OnRequestedPlaying (AteObject triggerer)
-	{
-		
-	}
-
-	/// <summary>
-	/// Called when parent class had a request to complete.
-	/// If inactive and cancelRequestsWhileInactive is true, won't be called.
-	/// </summary>
-	protected override void OnRequestedComplete ()
-	{
-		
-	}
-
-	/// <summary>
-	/// Called when parent class had a request to reset.
-	/// If inactive and cancelRequestsWhileInactive is true, won't be called.
-	/// </summary>
-	protected override void OnRequestedPlayReset ()
-	{
-		
-	}
-
-	#endregion
+		#endif
 
 
-	#region OnEntered
+		#region Awake/Start
 
-	/// <summary>
-	/// Called when behaviour enters the Ready state.
-	/// Currently it starts in Ready, but the enter callback
-	/// only happens when it switches to Ready.
-	/// So for now it can be thought more as 'OnReset'.
-	/// </summary>
-	protected override void OnEnteredReady (TriggeredState prevState)
-	{
-		
-	}
+		/// <summary>
+		/// Called by parent class at the end of its AteAwake().
+		/// </summary>
+		protected override void OnAwake ()
+		{
+			
+		}
 
-	/// <summary>
-	/// Called when behaviour enters the Playing state.
-	/// For instant-fire behaviours, this is where 99% of the logic will go.
-	/// </summary>
-	protected override void OnEnteredPlaying (TriggeredState prevState)
-	{
-		//	Called at end of this method for an instant-fire behaviour
-		//RequestComplete ();
-	}
+		/// <summary>
+		/// Called by AteObject at end of its Awake().
+		/// </summary>
+		protected override void AteStart ()
+		{
+			
+		}
 
-	/// <summary>
-	/// Called when behaviour enters the Complete state.
-	/// Happens after a RequestComplete() call and CanSwitchToComplete is true.
-	/// </summary>
-	protected override void OnEnteredComplete (TriggeredState prevState)
-	{
-		
-	}
-
-	#endregion
+		#endregion
 
 
-	#region OnUpdate
+		#region OnRequested
 
-	/// <summary>
-	/// Called every frame behaviour is in the Ready state.
-	/// </summary>
-	protected override void OnUpdateReady ()
-	{
-		
-	}
-
-	/// <summary>
-	/// Called every frame behaviour is in the Playing state.
-	/// For over-time behaviours, this is where most of the logic will go.
-	/// </summary>
-	protected override void OnUpdatePlaying ()
-	{
-		//	Called when an end-condition happens (such as a timer)
-		//RequestComplete ();
-	}
-
-	/// <summary>
-	/// Called every frame behaviour is in the Complete state.
-	/// This will happen after Playing until it is Reset or canceled.
-	/// </summary>
-	protected override void OnUpdateComplete ()
-	{
-		
-	}
-
-	#endregion
+		/// <summary>
+		/// For resetting to a more 'factory default' version.
+		/// For things like only playing a sequencer once, then
+		/// resetting it from a different behaviour somewhere
+		/// else so it can be played again.
+		/// </summary>
+		protected override void OnDataReset()
+		{
+			
+		}
 
 
-	#region CanSwitch
+		/// <summary>
+		/// Called when parent class had a request to play.
+		/// If inactive and cancelRequestsWhileInactive is true, won't be called.
+		/// </summary>
+		protected override void OnRequestedPlaying (AteObject triggerer)
+		{
+			
+		}
 
-	/// <summary>
-	/// After parent class determines if a switch was requested,
-	/// it uses this as an extra check if it can switch yet.
-	/// </summary>
-	protected override bool CanSwitchToPlaying ()
-	{
-		return true;
-	}
+		/// <summary>
+		/// Called when parent class had a request to complete.
+		/// If inactive and cancelRequestsWhileInactive is true, won't be called.
+		/// </summary>
+		protected override void OnRequestedComplete ()
+		{
+			
+		}
 
-	/// <summary>
-	/// After parent class determines if a switch was requested,
-	/// it uses this as an extra check if it can switch yet.
-	/// </summary>
-	protected override bool CanSwitchToComplete ()
-	{
-		return true;
-	}
+		/// <summary>
+		/// Called when parent class had a request to reset.
+		/// If inactive and cancelRequestsWhileInactive is true, won't be called.
+		/// </summary>
+		protected override void OnRequestedPlayReset ()
+		{
+			
+		}
 
-	/// <summary>
-	/// After parent class determines if a switch was requested,
-	/// it uses this as an extra check if it can switch yet.
-	/// </summary>
-	protected override bool CanPlayReset ()
-	{
-		return true;
-	}
-
-	#endregion
+		#endregion
 
 
-	#region Helper Methods
+		#region OnEntered
 
-	#endregion
+		/// <summary>
+		/// Called when behaviour enters the Ready state.
+		/// Currently it starts in Ready, but the enter callback
+		/// only happens when it switches to Ready.
+		/// So for now it can be thought more as 'OnReset'.
+		/// </summary>
+		protected override void OnEnteredReady (TriggeredState prevState)
+		{
+			
+		}
 
-}
+		/// <summary>
+		/// Called when behaviour enters the Playing state.
+		/// For instant-fire behaviours, this is where 99% of the logic will go.
+		/// </summary>
+		protected override void OnEnteredPlaying (TriggeredState prevState)
+		{
+			//	Called at end of this method for an instant-fire behaviour
+			//RequestComplete ();
+		}
+
+		/// <summary>
+		/// Called when behaviour enters the Complete state.
+		/// Happens after a RequestComplete() call and CanSwitchToComplete is true.
+		/// </summary>
+		protected override void OnEnteredComplete (TriggeredState prevState)
+		{
+			
+		}
+
+		#endregion
+
+
+		#region OnUpdate
+
+		/// <summary>
+		/// Called every frame behaviour is in the Ready state.
+		/// </summary>
+		protected override void OnUpdateReady ()
+		{
+			
+		}
+
+		/// <summary>
+		/// Called every frame behaviour is in the Playing state.
+		/// For over-time behaviours, this is where most of the logic will go.
+		/// </summary>
+		protected override void OnUpdatePlaying ()
+		{
+			//	Called when an end-condition happens (such as a timer)
+			//RequestComplete ();
+		}
+
+		/// <summary>
+		/// Called every frame behaviour is in the Complete state.
+		/// This will happen after Playing until it is Reset or canceled.
+		/// </summary>
+		protected override void OnUpdateComplete ()
+		{
+			
+		}
+
+		#endregion
+
+
+		#region CanSwitch
+
+		/// <summary>
+		/// After parent class determines if a switch was requested,
+		/// it uses this as an extra check if it can switch yet.
+		/// </summary>
+		protected override bool CanSwitchToPlaying ()
+		{
+			return true;
+		}
+
+		/// <summary>
+		/// After parent class determines if a switch was requested,
+		/// it uses this as an extra check if it can switch yet.
+		/// </summary>
+		protected override bool CanSwitchToComplete ()
+		{
+			return true;
+		}
+
+		/// <summary>
+		/// After parent class determines if a switch was requested,
+		/// it uses this as an extra check if it can switch yet.
+		/// </summary>
+		protected override bool CanPlayReset ()
+		{
+			return true;
+		}
+
+		#endregion
+
+
+		#region Helper Methods
+
+		#endregion
+
+	}//End Class
+
+
+}//End Namespace

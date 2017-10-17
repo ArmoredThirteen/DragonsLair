@@ -6,79 +6,86 @@ using UnityEditor;
 #endif
 
 
-public class Player_FireOnClick : AteComponent
+namespace Ate
 {
-	public float fireDelay = 1;
-	public ProjectileShooter defaultShooter;
-
-	private bool _isMousePressed = false;
-
-	private float _timer_lastShot;
 
 
-	#if UNITY_EDITOR
-
-	public override void DrawInspector ()
+	public class Player_FireOnClick : AteComponent
 	{
-		base.DrawInspector ();
+		public float fireDelay = 1;
+		public ProjectileShooter defaultShooter;
 
-		fireDelay = EditorGUILayout.FloatField ("Fire Speed", fireDelay);
+		private bool _isMousePressed = false;
 
-		defaultShooter = EditorGUILayout.ObjectField
-			("Default Shooter", defaultShooter, typeof(ProjectileShooter), true)
-			as ProjectileShooter;
-	}
-
-	#endif
+		private float _timer_lastShot;
 
 
-	protected override void AteAwake ()
-	{
-		_timer_lastShot = fireDelay;
-	}
+		#if UNITY_EDITOR
 
-	protected override void AteUpdate ()
-	{
-		_timer_lastShot += Time.deltaTime;
-		AttemptFiring ();
-	}
+		public override void DrawInspector ()
+		{
+			base.DrawInspector ();
 
+			fireDelay = EditorGUILayout.FloatField ("Fire Speed", fireDelay);
 
-	protected override void RegisterEvents ()
-	{
-		GameManager.Events.Register<EventType_UI, EventData_UI> ((int)EventType_UI.Clicked,  OnMouseClicked);
-		GameManager.Events.Register<EventType_UI, EventData_UI> ((int)EventType_UI.Released, OnMouseReleased);
-	}
+			defaultShooter = EditorGUILayout.ObjectField
+				("Default Shooter", defaultShooter, typeof(ProjectileShooter), true)
+				as ProjectileShooter;
+		}
 
-	protected override void UnregisterEvents ()
-	{
-		GameManager.Events.Unregister<EventType_UI, EventData_UI> ((int)EventType_UI.Clicked,  OnMouseClicked);
-		GameManager.Events.Unregister<EventType_UI, EventData_UI> ((int)EventType_UI.Released, OnMouseReleased);
-	}
+		#endif
 
 
-	private void OnMouseClicked (EventData_UI data)
-	{
-		_isMousePressed = true;
-		AttemptFiring ();
-	}
+		protected override void AteAwake ()
+		{
+			_timer_lastShot = fireDelay;
+		}
 
-	private void OnMouseReleased (EventData_UI data)
-	{
-		_isMousePressed = false;
-	}
+		protected override void AteUpdate ()
+		{
+			_timer_lastShot += Time.deltaTime;
+			AttemptFiring ();
+		}
 
 
-	private void AttemptFiring ()
-	{
-		if (!_isMousePressed)
-			return;
-		if (_timer_lastShot < fireDelay)
-			return;
+		protected override void RegisterEvents ()
+		{
+			GameManager.Events.Register<EventType_UI, EventData_UI> ((int)EventType_UI.Clicked,  OnMouseClicked);
+			GameManager.Events.Register<EventType_UI, EventData_UI> ((int)EventType_UI.Released, OnMouseReleased);
+		}
 
-		defaultShooter.FireProjectile ();
+		protected override void UnregisterEvents ()
+		{
+			GameManager.Events.Unregister<EventType_UI, EventData_UI> ((int)EventType_UI.Clicked,  OnMouseClicked);
+			GameManager.Events.Unregister<EventType_UI, EventData_UI> ((int)EventType_UI.Released, OnMouseReleased);
+		}
 
-		_timer_lastShot = 0;
-	}
 
-}
+		private void OnMouseClicked (EventData_UI data)
+		{
+			_isMousePressed = true;
+			AttemptFiring ();
+		}
+
+		private void OnMouseReleased (EventData_UI data)
+		{
+			_isMousePressed = false;
+		}
+
+
+		private void AttemptFiring ()
+		{
+			if (!_isMousePressed)
+				return;
+			if (_timer_lastShot < fireDelay)
+				return;
+
+			defaultShooter.FireProjectile ();
+
+			_timer_lastShot = 0;
+		}
+
+	}//End Class
+
+
+}//End Namespace

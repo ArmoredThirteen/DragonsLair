@@ -3,19 +3,26 @@ using System.Collections;
 using UnityEditor;
 
 
-[CustomEditor (typeof(AteGameObject), true)]
-public class AteGameObjectEditor : Editor
+namespace Ate
 {
-	private AteGameObject _target;
 
 
-	public override void OnInspectorGUI ()
+	[CustomEditor (typeof(AteGameObject), true)]
+	public class AteGameObjectEditor : Editor
 	{
-		_target = (AteGameObject)target;
+		private AteGameObject _target;
 
-		_target.DrawInspector ();
 
-		EditorHelper.SetDirtyIfChanged (_target);
-	}
+		public override void OnInspectorGUI ()
+		{
+			_target = (AteGameObject)target;
 
-}
+			_target.DrawInspector ();
+
+			EditorHelper.SetDirtyIfChanged (_target);
+		}
+
+	}//End CLass
+
+
+}//End Namespace

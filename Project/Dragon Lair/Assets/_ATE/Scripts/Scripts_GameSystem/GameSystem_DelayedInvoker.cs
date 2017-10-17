@@ -5,133 +5,139 @@ using System.Collections;
 using System.Collections.Generic;
 
 
-public class GameSystem_DelayedInvoker : GameSystem
+namespace Ate
 {
-	#region Ordered Callbacks
-
-	private List<DelayedCallback> _noPauseCallbacks = new List<DelayedCallback> ();
-
-	#endregion
 
 
-	#region GameSystem
-
-	public override void Initialize (){}
-	public override void SceneInitialize (){}
-
-
-	public override void SystemUpdate ()
+	public class GameSystem_DelayedInvoker : GameSystem
 	{
-		InvokeCallbacks (Time.time, ref _noPauseCallbacks);
-	}
+		#region Ordered Callbacks
 
-	public override void SystemLateUpdate (){}
+		private List<DelayedCallback> _noPauseCallbacks = new List<DelayedCallback> ();
 
-	#endregion
-
-
-	//TODO: Make it so when GameObject or script is destroyed, they unregister.
-	/// <summary>
-	/// Registers a delayed callback.
-	/// After the delay, will only call if caller is not null.
-	/// WARNING: Delayed calls still happen after GameObject is destroyed.
-	/// </summary>
-	public void Register (float delay, Callback<object> callback, object callbackInput = null)
-	{
-		float callTime = Time.time + delay;
-		_noPauseCallbacks.Add (new DelayedCallback (callTime, callback, callbackInput));
-		_noPauseCallbacks.Sort ();
-	}
-
-	/// <summary>
-	/// Don't know how to do this one yet :(
-	/// </summary>
-	public void Unregister (Callback callback)
-	{
-		
-	}
+		#endregion
 
 
-	private void InvokeCallbacks (float curTime, ref List<DelayedCallback> callbacks)
-	{
-		if (callbacks == null)
-			return;
-		if (callbacks.Count <= 0)
-			return;
+		#region GameSystem
 
-		//	Find out how many callbacks have timed out
-		int invokesThisFrame = 0;
-		for (int i = 0; i < callbacks.Count; i++)
+		public override void Initialize (){}
+		public override void SceneInitialize (){}
+
+
+		public override void SystemUpdate ()
 		{
-			if (callbacks[i].callTime > curTime)
-				break;
-			invokesThisFrame++;
+			InvokeCallbacks (Time.time, ref _noPauseCallbacks);
 		}
 
-		//	Attempt to invoke callbacks
-		for (int i = 0; i < invokesThisFrame; i++)
+		public override void SystemLateUpdate (){}
+
+		#endregion
+
+
+		//TODO: Make it so when GameObject or script is destroyed, they unregister.
+		/// <summary>
+		/// Registers a delayed callback.
+		/// After the delay, will only call if caller is not null.
+		/// WARNING: Delayed calls still happen after GameObject is destroyed.
+		/// </summary>
+		public void Register (float delay, Callback<object> callback, object callbackInput = null)
 		{
-			if (callbacks[i] == null)
-				continue;
-			if (callbacks[i].theCallback == null)
-				continue;
+			float callTime = Time.time + delay;
+			_noPauseCallbacks.Add (new DelayedCallback (callTime, callback, callbackInput));
+			_noPauseCallbacks.Sort ();
+		}
+
+		/// <summary>
+		/// Don't know how to do this one yet :(
+		/// </summary>
+		public void Unregister (Callback callback)
+		{
 			
-			callbacks[i].theCallback (callbacks[i].callbackInput);
 		}
 
-		//	Remove callbacks from list
-		for (int i = 0; i < invokesThisFrame; i++)
+
+		private void InvokeCallbacks (float curTime, ref List<DelayedCallback> callbacks)
 		{
-			callbacks.RemoveAt (0);
-		}
-	}
-	
+			if (callbacks == null)
+				return;
+			if (callbacks.Count <= 0)
+				return;
 
-	private void Cleanup ()
-	{
+			//	Find out how many callbacks have timed out
+			int invokesThisFrame = 0;
+			for (int i = 0; i < callbacks.Count; i++)
+			{
+				if (callbacks[i].callTime > curTime)
+					break;
+				invokesThisFrame++;
+			}
+
+			//	Attempt to invoke callbacks
+			for (int i = 0; i < invokesThisFrame; i++)
+			{
+				if (callbacks[i] == null)
+					continue;
+				if (callbacks[i].theCallback == null)
+					continue;
+				
+				callbacks[i].theCallback (callbacks[i].callbackInput);
+			}
+
+			//	Remove callbacks from list
+			for (int i = 0; i < invokesThisFrame; i++)
+			{
+				callbacks.RemoveAt (0);
+			}
+		}
 		
-	}
 
-
-
-	#region DelayedCallback Class
-
-	private class DelayedCallback : IComparable
-	{
-		public float            callTime;
-		public Callback<object> theCallback;
-		public object           callbackInput;
-
-		public DelayedCallback (float callTime, Callback<object> theCallback)
+		private void Cleanup ()
 		{
-			this.callTime      = callTime;
-			this.theCallback   = theCallback;
-			this.callbackInput = null;
+			
 		}
 
-		public DelayedCallback (float callTime, Callback<object> theCallback, object callbackInput)
+
+
+		#region DelayedCallback Class
+
+		private class DelayedCallback : IComparable
 		{
-			this.callTime      = callTime;
-			this.theCallback   = theCallback;
-			this.callbackInput = callbackInput;
+			public float            callTime;
+			public Callback<object> theCallback;
+			public object           callbackInput;
+
+			public DelayedCallback (float callTime, Callback<object> theCallback)
+			{
+				this.callTime      = callTime;
+				this.theCallback   = theCallback;
+				this.callbackInput = null;
+			}
+
+			public DelayedCallback (float callTime, Callback<object> theCallback, object callbackInput)
+			{
+				this.callTime      = callTime;
+				this.theCallback   = theCallback;
+				this.callbackInput = callbackInput;
+			}
+
+			public int CompareTo (object obj)
+			{
+				DelayedCallback toCompare = obj as DelayedCallback;
+				if (obj == null)
+					return 1;
+
+				if (callTime > toCompare.callTime)
+					return 1;
+				else if (callTime < toCompare.callTime)
+					return -1;
+
+				return 0;
+			}
 		}
 
-		public int CompareTo (object obj)
-		{
-			DelayedCallback toCompare = obj as DelayedCallback;
-			if (obj == null)
-				return 1;
+		#endregion
 
-			if (callTime > toCompare.callTime)
-				return 1;
-			else if (callTime < toCompare.callTime)
-				return -1;
+	}//End Class
 
-			return 0;
-		}
-	}
 
-	#endregion
-
-}
-
+}//End Namespace

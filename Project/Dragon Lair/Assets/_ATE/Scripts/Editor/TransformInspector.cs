@@ -6,80 +6,88 @@ using UnityEngine;
 using UnityEditor;
 using System.Collections;
 
-[CustomEditor(typeof(Transform))]
-public class TransformInspector : Editor
+
+namespace Ate
 {
-	public override void OnInspectorGUI()
+
+
+	[CustomEditor(typeof(Transform))]
+	public class TransformInspector : Editor
 	{
-		
-		Transform t = (Transform)target;
-		
-		// Replicate the standard transform inspector gui
-		EditorGUIUtility.LookLikeControls();
-		EditorGUI.indentLevel = 0;
-
-
-		//	Position
-		EditorGUILayout.BeginHorizontal ();
-		//	reset
-		if (GUILayout.Button ("X", GUILayout.Width (20)))
-			t.localPosition = Vector3.zero;
-		//	label
-		GUILayout.Label ("Position", GUILayout.Width (100));
-		//	values
-		Vector3 position = EditorGUILayout.Vector3Field(new GUIContent (), t.localPosition);
-		EditorGUILayout.EndHorizontal ();
-
-		//	Rotation
-		EditorGUILayout.BeginHorizontal ();
-		//	reset
-		if (GUILayout.Button ("X", GUILayout.Width (20)))
-			t.localEulerAngles = Vector3.zero;
-		//	label
-		GUILayout.Label ("Rotation", GUILayout.Width (100));
-		//	values
-		Vector3 eulerAngles = EditorGUILayout.Vector3Field(new GUIContent (), t.localEulerAngles);
-		EditorGUILayout.EndHorizontal ();
-
-		//	Scale
-		EditorGUILayout.BeginHorizontal ();
-		//	reset
-		if (GUILayout.Button ("X", GUILayout.Width (20)))
-			t.localScale = new Vector3 (1, 1, 1);
-		//	label
-		GUILayout.Label ("Scale", GUILayout.Width (100));
-		//	values
-		Vector3 scale = EditorGUILayout.Vector3Field(new GUIContent (), t.localScale);
-		EditorGUILayout.EndHorizontal ();
-
-
-		EditorGUIUtility.LookLikeInspector();
-		
-		if (GUI.changed)
+		public override void OnInspectorGUI()
 		{
-			Undo.RegisterUndo(t, "Transform Change");
 			
-			t.localPosition = FixIfNaN(position);
-			t.localEulerAngles = FixIfNaN(eulerAngles);
-			t.localScale = FixIfNaN(scale);
+			Transform t = (Transform)target;
+			
+			// Replicate the standard transform inspector gui
+			EditorGUIUtility.LookLikeControls();
+			EditorGUI.indentLevel = 0;
+
+
+			//	Position
+			EditorGUILayout.BeginHorizontal ();
+			//	reset
+			if (GUILayout.Button ("X", GUILayout.Width (20)))
+				t.localPosition = Vector3.zero;
+			//	label
+			GUILayout.Label ("Position", GUILayout.Width (100));
+			//	values
+			Vector3 position = EditorGUILayout.Vector3Field(new GUIContent (), t.localPosition);
+			EditorGUILayout.EndHorizontal ();
+
+			//	Rotation
+			EditorGUILayout.BeginHorizontal ();
+			//	reset
+			if (GUILayout.Button ("X", GUILayout.Width (20)))
+				t.localEulerAngles = Vector3.zero;
+			//	label
+			GUILayout.Label ("Rotation", GUILayout.Width (100));
+			//	values
+			Vector3 eulerAngles = EditorGUILayout.Vector3Field(new GUIContent (), t.localEulerAngles);
+			EditorGUILayout.EndHorizontal ();
+
+			//	Scale
+			EditorGUILayout.BeginHorizontal ();
+			//	reset
+			if (GUILayout.Button ("X", GUILayout.Width (20)))
+				t.localScale = new Vector3 (1, 1, 1);
+			//	label
+			GUILayout.Label ("Scale", GUILayout.Width (100));
+			//	values
+			Vector3 scale = EditorGUILayout.Vector3Field(new GUIContent (), t.localScale);
+			EditorGUILayout.EndHorizontal ();
+
+
+			EditorGUIUtility.LookLikeInspector();
+			
+			if (GUI.changed)
+			{
+				Undo.RegisterUndo(t, "Transform Change");
+				
+				t.localPosition = FixIfNaN(position);
+				t.localEulerAngles = FixIfNaN(eulerAngles);
+				t.localScale = FixIfNaN(scale);
+			}
 		}
-	}
-	
-	private Vector3 FixIfNaN(Vector3 v)
-	{
-		if (float.IsNaN(v.x))
+		
+		private Vector3 FixIfNaN(Vector3 v)
 		{
-			v.x = 0;
+			if (float.IsNaN(v.x))
+			{
+				v.x = 0;
+			}
+			if (float.IsNaN(v.y))
+			{
+				v.y = 0;
+			}
+			if (float.IsNaN(v.z))
+			{
+				v.z = 0;
+			}
+			return v;
 		}
-		if (float.IsNaN(v.y))
-		{
-			v.y = 0;
-		}
-		if (float.IsNaN(v.z))
-		{
-			v.z = 0;
-		}
-		return v;
-	}
-	
-}
+		
+	}//End Class
+
+
+}//End Namespace

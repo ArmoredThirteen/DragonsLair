@@ -1,71 +1,77 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using CollisionSystem;
-using Collider = CollisionSystem.AteCollider;
+using Ate.Collision;
+using Collider = Ate.Collision.AteCollider;
 
 
-public class EventData_Collision : EventData
+namespace Ate
 {
-	private CollisionArea _colArea;
-
-	private AteCollider _colOne;
-	private AteCollider _colTwo;
 
 
-	#region Base Collision
-
-	/// <summary>
-	/// During a base collision, this is arbitrarily one of the two colliders involved.
-	/// </summary>
-	public AteCollider ColliderOne
+	public class EventData_Collision : EventData
 	{
-		get {return _colOne;}
-		set {_colOne = value;}
-	}
+		private CollisionArea _colArea;
 
-	/// <summary>
-	/// During a base collision, this is arbitrarily one of the two colliders involved.
-	/// </summary>
-	public AteCollider ColliderTwo
-	{
-		get {return _colTwo;}
-		set {_colTwo = value;}
-	}
-
-	#endregion
+		private AteCollider _colOne;
+		private AteCollider _colTwo;
 
 
-	#region Area Collision
+		#region Base Collision
 
-	/// <summary>
-	/// During an Area Collision, this is the relevant CollisionArea that was collided with.
-	/// </summary>
-	public CollisionArea FullCollisionArea
-	{
-		get {return _colArea;}
-		set {_colArea = value;}
-	}
+		/// <summary>
+		/// During a base collision, this is arbitrarily one of the two colliders involved.
+		/// </summary>
+		public AteCollider ColliderOne
+		{
+			get {return _colOne;}
+			set {_colOne = value;}
+		}
 
-	/// <summary>
-	/// During an Area Collision, this is the collider belonging to a CollisionArea.
-	/// </summary>
-	public AteCollider AreaCollider
-	{
-		get {return _colOne;}
-		set {_colOne = value;}
-	}
+		/// <summary>
+		/// During a base collision, this is arbitrarily one of the two colliders involved.
+		/// </summary>
+		public AteCollider ColliderTwo
+		{
+			get {return _colTwo;}
+			set {_colTwo = value;}
+		}
 
-	/// <summary>
-	/// During an Area Collision, this is the collider that interacted with a CollisionArea.
-	/// </summary>
-	public AteCollider HittingCollider
-	{
-		get {return _colTwo;}
-		set {_colTwo = value;}
-	}
+		#endregion
 
-	#endregion
 
-}
+		#region Area Collision
 
+		/// <summary>
+		/// During an Area Collision, this is the relevant CollisionArea that was collided with.
+		/// </summary>
+		public CollisionArea FullCollisionArea
+		{
+			get {return _colArea;}
+			set {_colArea = value;}
+		}
+
+		/// <summary>
+		/// During an Area Collision, this is the collider belonging to a CollisionArea.
+		/// </summary>
+		public AteCollider AreaCollider
+		{
+			get {return _colOne;}
+			set {_colOne = value;}
+		}
+
+		/// <summary>
+		/// During an Area Collision, this is the collider that interacted with a CollisionArea.
+		/// </summary>
+		public AteCollider HittingCollider
+		{
+			get {return _colTwo;}
+			set {_colTwo = value;}
+		}
+
+		#endregion
+
+	}//End Class
+
+
+}//End Namespace

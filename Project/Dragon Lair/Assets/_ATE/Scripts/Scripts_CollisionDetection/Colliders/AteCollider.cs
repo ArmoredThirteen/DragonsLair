@@ -6,7 +6,7 @@ using UnityEditor;
 #endif
 
 
-namespace CollisionSystem
+namespace Ate.Collision
 {
 	
 
@@ -36,7 +36,7 @@ namespace CollisionSystem
 		#endif
 
 
-		#region AteGameObject
+		#region AteComponent
 
 		protected override void AteStart ()
 		{
@@ -48,7 +48,7 @@ namespace CollisionSystem
 			
 		}
 
-		//	Not actually from AteGameObject, will hopefully be eventually though
+		//	Not actually from AteObject, will hopefully be eventually though
 		void OnDestroy ()
 		{
 			UnregisterCollider ();
@@ -174,7 +174,7 @@ namespace CollisionSystem
 
 		#endregion
 
-	}//end class
+	}//End Class
 
 
-}//end namespace
+}//End Namespace

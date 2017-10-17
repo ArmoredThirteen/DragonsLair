@@ -1,9 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
-using ScriptGeneration;
 
 
-public class GenerateEnum_Example : MonoBehaviour
+namespace Ate.ScriptGeneration
 {
-	public GenerateEnum_Data enumData = new GenerateEnum_Data ();
-}
+	
+
+	public class GenerateEnum_Example : MonoBehaviour
+	{
+		public GenerateEnum_Data enumData = new GenerateEnum_Data ();
+	}//End Class
+
+
+}//End Namespace

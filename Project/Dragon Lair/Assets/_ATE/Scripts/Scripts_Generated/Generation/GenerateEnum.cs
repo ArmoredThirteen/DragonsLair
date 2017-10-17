@@ -1,16 +1,19 @@
 ﻿
-namespace ScriptGeneration
-{
-	
-	#if UNITY_EDITOR
 
-	using UnityEngine;
-	using UnityEditor;
-	using System;
-	using System.IO;
-	using System.Linq;
-	using System.Collections;
-	using System.Collections.Generic;
+#if UNITY_EDITOR
+
+
+using UnityEngine;
+using UnityEditor;
+using System;
+using System.IO;
+using System.Linq;
+using System.Collections;
+using System.Collections.Generic;
+
+
+namespace Ate.ScriptGeneration
+{
 
 
 	/// <summary>
@@ -129,8 +132,11 @@ namespace ScriptGeneration
 
 		#endregion
 
-	}
+	}//End Class
 
-	#endif
 
-}//	End namespace
+}//End Namespace
+
+
+//Endif UNITY_EDITOR
+#endif

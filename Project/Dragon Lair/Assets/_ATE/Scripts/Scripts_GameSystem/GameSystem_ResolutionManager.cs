@@ -2,24 +2,30 @@
 using System.Collections;
 
 
-public class GameSystem_ResolutionManager : GameSystem
+namespace Ate
 {
-	public int width = 960;
-	public int height = 600;
 
 
-	#region GameSystem
-
-	public override void Initialize ()
+	public class GameSystem_ResolutionManager : GameSystem
 	{
-		Screen.SetResolution (width, height, false);
-	}
+		public int width = 960;
+		public int height = 600;
 
-	public override void SceneInitialize (){}
-	public override void SystemUpdate (){}
-	public override void SystemLateUpdate (){}
 
-	#endregion
+		#region GameSystem
 
-}
+		public override void Initialize ()
+		{
+			Screen.SetResolution (width, height, false);
+		}
 
+		public override void SceneInitialize (){}
+		public override void SystemUpdate (){}
+		public override void SystemLateUpdate (){}
+
+		#endregion
+
+	}//End Class
+
+
+}//End Namespace

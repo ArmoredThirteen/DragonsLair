@@ -3,69 +3,76 @@ using System.Collections;
 using System.Collections.Generic;
 
 
-[System.Serializable]
-public class SequencedActionBundle : AteComponent
+namespace Ate
 {
-	//TODO: Ripe for abuse
-	public bool playing = false;
-
-	public List<SequencedAction> Actions
-	{get; private set;}
 
 
-	protected override void AteAwake()
+	[System.Serializable]
+	public class SequencedActionBundle : AteComponent
 	{
-		SetActionsFromChildren ();
+		//TODO: Ripe for abuse
+		public bool playing = false;
 
-		for (int i = 0; i < Actions.Count; i++)
+		public List<SequencedAction> Actions
+		{get; private set;}
+
+
+		protected override void AteAwake()
 		{
-			Actions[i].Initialize ();
-		}
-	}
+			SetActionsFromChildren ();
 
-	protected override void AteUpdate()
-	{
-		if (playing)
-			UpdateActions ();
-	}
-
-
-	public void SetActionsFromChildren ()
-	{
-		List<SequencedAction> actions = new List<SequencedAction> ();
-
-		SequencedAction[] children = gameObject.GetComponentsInChildren<SequencedAction> () as SequencedAction[];
-		for (int i = 0; i < children.Length; i++)
-		{
-			actions.Add (children[i]);
+			for (int i = 0; i < Actions.Count; i++)
+			{
+				Actions[i].Initialize ();
+			}
 		}
 
-		Actions = actions;
-	}
-
-
-	private void UpdateActions ()
-	{
-		if (Actions.Count <= 0)
-			return;
-
-		for (int i = 0; i < Actions.Count; i++)
+		protected override void AteUpdate()
 		{
-			//	This one has already completed
-			if (Actions[i].CurrentState == SequencedAction.ActionState.Played)
-				continue;
-
-			//	Command needs to begin playing
-			if (Actions[i].CurrentState == SequencedAction.ActionState.Unplayed)
-				Actions[i].RequestPlayCommand ();
-
-			//	Update FSM in Playing or Unplayed state
-			Actions[i].UpdateFSM ();
-
-			//	Potentially delay next command
-			if (Actions[i].delayNextUntilCompleted)
-				break;
+			if (playing)
+				UpdateActions ();
 		}
-	}
 
-}
+
+		public void SetActionsFromChildren ()
+		{
+			List<SequencedAction> actions = new List<SequencedAction> ();
+
+			SequencedAction[] children = gameObject.GetComponentsInChildren<SequencedAction> () as SequencedAction[];
+			for (int i = 0; i < children.Length; i++)
+			{
+				actions.Add (children[i]);
+			}
+
+			Actions = actions;
+		}
+
+
+		private void UpdateActions ()
+		{
+			if (Actions.Count <= 0)
+				return;
+
+			for (int i = 0; i < Actions.Count; i++)
+			{
+				//	This one has already completed
+				if (Actions[i].CurrentState == SequencedAction.ActionState.Played)
+					continue;
+
+				//	Command needs to begin playing
+				if (Actions[i].CurrentState == SequencedAction.ActionState.Unplayed)
+					Actions[i].RequestPlayCommand ();
+
+				//	Update FSM in Playing or Unplayed state
+				Actions[i].UpdateFSM ();
+
+				//	Potentially delay next command
+				if (Actions[i].delayNextUntilCompleted)
+					break;
+			}
+		}
+
+	}//End Class
+
+
+}//End Namespace

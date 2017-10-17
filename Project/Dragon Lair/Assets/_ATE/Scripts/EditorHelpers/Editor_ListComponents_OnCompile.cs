@@ -9,48 +9,55 @@ using UnityEditor;
 #endif
 
 
-/// <summary>
-/// Creates a list of AteComponent classes after every Unity compile.
-/// Mainly for use with inspectors that want an AteComponent dropdown.
-/// </summary>
-[InitializeOnLoad]
-public static class Editor_ListComponents_OnCompile
+namespace Ate
 {
 
-	static Editor_ListComponents_OnCompile ()
+
+	/// <summary>
+	/// Creates a list of AteComponent classes after every Unity compile.
+	/// Mainly for use with inspectors that want an AteComponent dropdown.
+	/// </summary>
+	[InitializeOnLoad]
+	public static class Editor_ListComponents_OnCompile
 	{
-		RebuildComponentsList ();
-	}
 
-
-	private static List<string> _ateComponents = new List<string> ();
-
-	public static List<string> Components
-	{
-		get
+		static Editor_ListComponents_OnCompile ()
 		{
-			return new List<string> (_ateComponents);
+			RebuildComponentsList ();
 		}
-	}
 
 
-	[UnityEditor.Callbacks.DidReloadScripts]
-	private static void RebuildComponentsList ()
-	{
-		_ateComponents.Clear ();
+		private static List<string> _ateComponents = new List<string> ();
 
-		Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies ();
-		for (int i = 0; i < assemblies.Length; i++)
+		public static List<string> Components
 		{
-			Type[] types = assemblies[i].GetTypes ();
-			for (int k = 0; k < types.Length; k++)
+			get
 			{
-				if (types[k].IsSubclassOf (typeof(AteComponent)))
+				return new List<string> (_ateComponents);
+			}
+		}
+
+
+		[UnityEditor.Callbacks.DidReloadScripts]
+		private static void RebuildComponentsList ()
+		{
+			_ateComponents.Clear ();
+
+			Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies ();
+			for (int i = 0; i < assemblies.Length; i++)
+			{
+				Type[] types = assemblies[i].GetTypes ();
+				for (int k = 0; k < types.Length; k++)
 				{
-					_ateComponents.Add (types[k].ToString ());
+					if (types[k].IsSubclassOf (typeof(AteComponent)))
+					{
+						_ateComponents.Add (types[k].ToString ());
+					}
 				}
 			}
 		}
-	}
 
-}
+	}//End Class
+
+
+}//End Namespace

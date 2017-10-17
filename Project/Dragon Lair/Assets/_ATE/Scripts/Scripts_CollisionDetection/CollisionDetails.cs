@@ -2,7 +2,7 @@
 using System.Collections;
 
 
-namespace CollisionSystem
+namespace Ate.Collision
 {
 	
 
@@ -93,7 +93,7 @@ namespace CollisionSystem
 
 		#endregion
 
-	}//end class
+	}//End Class
 
 
-}//end namespace
+}//End Namespace

@@ -6,49 +6,56 @@ using UnityEditor;
 #endif
 
 
-/// <summary>
-/// Description
-/// </summary>
-public class AteComponent_Test : AteComponent
+namespace Ate
 {
-	
-	#region Public Variables
-
-	#endregion
 
 
-	#region Private Variables
-
-	#endregion
-
-
-	#if UNITY_EDITOR
-
-	public override void DrawInspector ()
-	{
-		base.DrawInspector ();
-	}
-
-	#endif
-
-
-	#region AteGameObject
-
-	protected override void AteUpdate ()
+	/// <summary>
+	/// Description
+	/// </summary>
+	public class AteComponent_Test : AteComponent
 	{
 		
-	}
+		#region Public Variables
 
-	#endregion
-
-
-	#region Public Methods
-
-	#endregion
+		#endregion
 
 
-	#region Private Methods
+		#region Private Variables
 
-	#endregion
+		#endregion
 
-}
+
+		#if UNITY_EDITOR
+
+		public override void DrawInspector ()
+		{
+			base.DrawInspector ();
+		}
+
+		#endif
+
+
+		#region AteComponent
+
+		protected override void AteUpdate ()
+		{
+			
+		}
+
+		#endregion
+
+
+		#region Public Methods
+
+		#endregion
+
+
+		#region Private Methods
+
+		#endregion
+
+	}//End Class
+
+
+}//End Namespace

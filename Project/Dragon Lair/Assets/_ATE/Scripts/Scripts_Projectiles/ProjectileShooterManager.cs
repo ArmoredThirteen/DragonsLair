@@ -7,60 +7,67 @@ using UnityEditor;
 #endif
 
 
-public class ProjectileShooterManager : AteComponent
+namespace Ate
 {
-	public List<ProjectileShooter> projectileShooters = new List<ProjectileShooter> ();
-	public IndexChooser chooserProjectileShooters = new IndexChooser ();
-
-	public float fireDelay = 1;
-	private float _timer_fireDelay = 0;
 
 
-	#if UNITY_EDITOR
-
-	public override void DrawInspector ()
+	public class ProjectileShooterManager : AteComponent
 	{
-		base.DrawInspector ();
+		public List<ProjectileShooter> projectileShooters = new List<ProjectileShooter> ();
+		public IndexChooser chooserProjectileShooters = new IndexChooser ();
 
-		chooserProjectileShooters.DrawIndexChooser ();
-		EditorHelper.DrawResizableList<ProjectileShooter> ("Projectile Shooters", ref projectileShooters, DrawProjectileShooter);
-	}
-
-	private void DrawProjectileShooter (int index)
-	{
-		projectileShooters[index] = EditorGUILayout.ObjectField
-			("Projectile Shooter", projectileShooters[index], typeof (ProjectileShooter), true)
-			as ProjectileShooter;
-	}
-
-	#endif
+		public float fireDelay = 1;
+		private float _timer_fireDelay = 0;
 
 
-	protected override void AteAwake ()
-	{
-		chooserProjectileShooters.Initialize ();
-	}
+		#if UNITY_EDITOR
+
+		public override void DrawInspector ()
+		{
+			base.DrawInspector ();
+
+			chooserProjectileShooters.DrawIndexChooser ();
+			EditorHelper.DrawResizableList<ProjectileShooter> ("Projectile Shooters", ref projectileShooters, DrawProjectileShooter);
+		}
+
+		private void DrawProjectileShooter (int index)
+		{
+			projectileShooters[index] = EditorGUILayout.ObjectField
+				("Projectile Shooter", projectileShooters[index], typeof (ProjectileShooter), true)
+				as ProjectileShooter;
+		}
+
+		#endif
 
 
-	protected override void AteUpdate ()
-	{
-		_timer_fireDelay += Time.deltaTime;
-
-		if (_timer_fireDelay < fireDelay)
-			return;
-
-		FireProjectile ();
-		_timer_fireDelay = 0;
-	}
+		protected override void AteAwake ()
+		{
+			chooserProjectileShooters.Initialize ();
+		}
 
 
-	private void FireProjectile ()
-	{
-		ProjectileShooter curShooter =
-			chooserProjectileShooters.GetCurIndexData<ProjectileShooter> (projectileShooters, null, true);
+		protected override void AteUpdate ()
+		{
+			_timer_fireDelay += Time.deltaTime;
 
-		if (curShooter != null)
-			curShooter.FireProjectile ();
-	}
+			if (_timer_fireDelay < fireDelay)
+				return;
 
-}
+			FireProjectile ();
+			_timer_fireDelay = 0;
+		}
+
+
+		private void FireProjectile ()
+		{
+			ProjectileShooter curShooter =
+				chooserProjectileShooters.GetCurIndexData<ProjectileShooter> (projectileShooters, null, true);
+
+			if (curShooter != null)
+				curShooter.FireProjectile ();
+		}
+
+	}//End Class
+
+
+}//End Namespace

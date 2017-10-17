@@ -2,15 +2,22 @@
 using System.Collections;
 
 
-public class HudTextData
+namespace Ate
 {
-	public int ID;
-	public string text;
 
 
-	public HudTextData (int ID, string text)
+	public class HudTextData
 	{
-		this.ID = ID;
-		this.text = text;
-	}
-}
+		public int ID;
+		public string text;
+
+
+		public HudTextData (int ID, string text)
+		{
+			this.ID = ID;
+			this.text = text;
+		}
+	}//End Class
+
+
+}//End Namespace

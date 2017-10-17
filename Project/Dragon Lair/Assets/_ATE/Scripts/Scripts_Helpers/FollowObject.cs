@@ -6,64 +6,71 @@ using UnityEditor;
 #endif
 
 
-public class FollowObject : AteComponent
+namespace Ate
 {
-	public Transform transformToFollow;
-	public Vector3 followOffset;
-
-	private Vector3 _lastToFollowPosition;
 
 
-	#if UNITY_EDITOR
-
-	public override void DrawInspector ()
+	public class FollowObject : AteComponent
 	{
-		base.DrawInspector ();
+		public Transform transformToFollow;
+		public Vector3 followOffset;
 
-		transformToFollow = EditorGUILayout.ObjectField ("Transform to Follow", transformToFollow, typeof(Transform), true) as Transform;
-	}
-
-	#endif
+		private Vector3 _lastToFollowPosition;
 
 
-	protected override void AteAwake ()
-	{
-		StartFollowing (transformToFollow);
-	}
+		#if UNITY_EDITOR
 
-	protected override void AteUpdate ()
-	{
-		
-	}
+		public override void DrawInspector ()
+		{
+			base.DrawInspector ();
 
-	//protected override void AteLateUpdate ()
-	void LateUpdate ()
-	{
-		if (transformToFollow == null)
-			return;
+			transformToFollow = EditorGUILayout.ObjectField ("Transform to Follow", transformToFollow, typeof(Transform), true) as Transform;
+		}
 
-		if (transformToFollow.position != _lastToFollowPosition)
-			MoveToFollow ();
-	}
+		#endif
 
 
-	/// <summary>
-	/// Starts following given transform.
-	/// Can be null, in which case scipt stops following things.
-	/// </summary>
-	public void StartFollowing (Transform theTransform)
-	{
-		transformToFollow = theTransform;
-		if (transformToFollow == null)
-			return;
-		
-		_lastToFollowPosition = transformToFollow.position;
-		followOffset = _lastToFollowPosition.GetDir_To (Position);
-	}
+		protected override void AteAwake ()
+		{
+			StartFollowing (transformToFollow);
+		}
 
-	private void MoveToFollow ()
-	{
-		Position = transformToFollow.position + followOffset;
-	}
+		protected override void AteUpdate ()
+		{
+			
+		}
 
-}
+		//protected override void AteLateUpdate ()
+		void LateUpdate ()
+		{
+			if (transformToFollow == null)
+				return;
+
+			if (transformToFollow.position != _lastToFollowPosition)
+				MoveToFollow ();
+		}
+
+
+		/// <summary>
+		/// Starts following given transform.
+		/// Can be null, in which case scipt stops following things.
+		/// </summary>
+		public void StartFollowing (Transform theTransform)
+		{
+			transformToFollow = theTransform;
+			if (transformToFollow == null)
+				return;
+			
+			_lastToFollowPosition = transformToFollow.position;
+			followOffset = _lastToFollowPosition.GetDir_To (Position);
+		}
+
+		private void MoveToFollow ()
+		{
+			Position = transformToFollow.position + followOffset;
+		}
+
+	}//End Class
+
+
+}//End Namespace

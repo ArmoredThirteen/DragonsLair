@@ -2,117 +2,124 @@
 using System.Collections;
 
 
-public abstract class SequencedAction : MonoBehaviour
+namespace Ate
 {
-	public enum ActionState
+
+
+	public abstract class SequencedAction : MonoBehaviour
 	{
-		Unplayed,
-		Playing,
-		Paused,
-		Played,
-	}
+		public enum ActionState
+		{
+			Unplayed,
+			Playing,
+			Paused,
+			Played,
+		}
 
 
-	public float actionDuration = 1;
-	public bool  delayNextUntilCompleted = true;
+		public float actionDuration = 1;
+		public bool  delayNextUntilCompleted = true;
 
-	private BasicFSM<ActionState> _fsm;
+		private BasicFSM<ActionState> _fsm;
 
-	private bool _playRequested = false;
-	private bool _playCompleted = false;
-
-
-	public ActionState CurrentState
-	{
-		get {return _fsm.GetCurrentState ();}
-	}
+		private bool _playRequested = false;
+		private bool _playCompleted = false;
 
 
-	protected abstract void OnBeganPlay ();
-
-	//protected abstract void OnPauseBegan ();
-	//protected abstract void OnPauseEnded ();
-
-	protected abstract void OnEndedPlay ();
+		public ActionState CurrentState
+		{
+			get {return _fsm.GetCurrentState ();}
+		}
 
 
-	public void Initialize ()
-	{
-		_fsm = new BasicFSM<ActionState> (ActionState.Unplayed);
+		protected abstract void OnBeganPlay ();
 
-		_fsm.SetMainCallbacks (ActionState.Unplayed, FSM_UpdateUnplayed, null, null);
-		_fsm.SetMainCallbacks (ActionState.Playing,  FSM_UpdatePlaying,  FSM_EnterPlaying, null);
-		_fsm.SetMainCallbacks (ActionState.Played,   FSM_UpdatePlayed,   null, null);
+		//protected abstract void OnPauseBegan ();
+		//protected abstract void OnPauseEnded ();
 
-		_fsm.AddPossibleSwitch (ActionState.Unplayed, ActionState.Playing, FSM_ShouldSwitchToPlaying);
-		_fsm.AddPossibleSwitch (ActionState.Playing,  ActionState.Played,  FSM_ShouldSwitchToPlayed);
-	}
+		protected abstract void OnEndedPlay ();
 
 
-	public void UpdateFSM ()
-	{
-		if (_fsm == null)
-			return;
+		public void Initialize ()
+		{
+			_fsm = new BasicFSM<ActionState> (ActionState.Unplayed);
 
-		_fsm.Update ();
-	}
+			_fsm.SetMainCallbacks (ActionState.Unplayed, FSM_UpdateUnplayed, null, null);
+			_fsm.SetMainCallbacks (ActionState.Playing,  FSM_UpdatePlaying,  FSM_EnterPlaying, null);
+			_fsm.SetMainCallbacks (ActionState.Played,   FSM_UpdatePlayed,   null, null);
 
-
-	public void RequestPlayCommand ()
-	{
-		_playRequested = true;
-	}
-
-	/// <summary>
-	/// For child Actions to call when they're completed.
-	/// </summary>
-	protected void OnActionCompleted ()
-	{
-		_playCompleted = true;
-	}
+			_fsm.AddPossibleSwitch (ActionState.Unplayed, ActionState.Playing, FSM_ShouldSwitchToPlaying);
+			_fsm.AddPossibleSwitch (ActionState.Playing,  ActionState.Played,  FSM_ShouldSwitchToPlayed);
+		}
 
 
-	#region FSM Callbacks
+		public void UpdateFSM ()
+		{
+			if (_fsm == null)
+				return;
 
-	private void FSM_UpdateUnplayed ()
-	{
-
-	}
-
-
-	private bool FSM_ShouldSwitchToPlaying ()
-	{
-		return _playRequested;
-	}
+			_fsm.Update ();
+		}
 
 
-	private void FSM_EnterPlaying (ActionState previousState)
-	{
-		OnBeganPlay ();
-	}
+		public void RequestPlayCommand ()
+		{
+			_playRequested = true;
+		}
 
-	private void FSM_UpdatePlaying ()
-	{
-
-	}
-
-
-	private bool FSM_ShouldSwitchToPlayed ()
-	{
-		return _playCompleted;
-	}
+		/// <summary>
+		/// For child Actions to call when they're completed.
+		/// </summary>
+		protected void OnActionCompleted ()
+		{
+			_playCompleted = true;
+		}
 
 
-	private void FSM_EnteredPlayed (ActionState previousState)
-	{
-		OnEndedPlay ();
-	}
+		#region FSM Callbacks
 
-	private void FSM_UpdatePlayed ()
-	{
+		private void FSM_UpdateUnplayed ()
+		{
 
-	}
+		}
 
-	#endregion
 
-}
+		private bool FSM_ShouldSwitchToPlaying ()
+		{
+			return _playRequested;
+		}
+
+
+		private void FSM_EnterPlaying (ActionState previousState)
+		{
+			OnBeganPlay ();
+		}
+
+		private void FSM_UpdatePlaying ()
+		{
+
+		}
+
+
+		private bool FSM_ShouldSwitchToPlayed ()
+		{
+			return _playCompleted;
+		}
+
+
+		private void FSM_EnteredPlayed (ActionState previousState)
+		{
+			OnEndedPlay ();
+		}
+
+		private void FSM_UpdatePlayed ()
+		{
+
+		}
+
+		#endregion
+
+	}//End Class
+
+
+}//End Namespace

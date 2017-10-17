@@ -6,28 +6,35 @@ using UnityEditor;
 #endif
 
 
-public abstract class CameraController : AteComponent
+namespace Ate
 {
-	public Camera theCam;
 
 
-	#if UNITY_EDITOR
-
-	public override void DrawInspector ()
+	public abstract class CameraController : AteComponent
 	{
-		base.DrawInspector();
-
-		theCam = EditorGUILayout.ObjectField
-			("Camera", theCam, typeof (Camera), true)
-			as Camera;
-	}
-
-	#endif
+		public Camera theCam;
 
 
-	/*protected override void AteUpdate ()
-	{
-		
-	}*/
+		#if UNITY_EDITOR
 
-}
+		public override void DrawInspector ()
+		{
+			base.DrawInspector();
+
+			theCam = EditorGUILayout.ObjectField
+				("Camera", theCam, typeof (Camera), true)
+				as Camera;
+		}
+
+		#endif
+
+
+		/*protected override void AteUpdate ()
+		{
+			
+		}*/
+
+	}//End Class
+
+
+}//End Namespace

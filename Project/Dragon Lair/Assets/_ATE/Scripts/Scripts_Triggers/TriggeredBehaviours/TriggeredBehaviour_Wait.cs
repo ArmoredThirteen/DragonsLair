@@ -6,212 +6,219 @@ using UnityEditor;
 #endif
 
 
-/// <summary>
-/// For use with a Sequencer that is set to play OnAtATime.
-/// Causes a delay in the OneAtATime play type.
-/// </summary>
-public class TriggeredBehaviour_Wait : TriggeredBehaviour
+namespace Ate
 {
-	//	Variables for designers.
-	//	Shown in editor with DrawInspector() at bottom.
-	#region Public Variables
-
-	public float minWait = 1;
-	public float maxWait = 2;
-
-	private float _rolledDuration;
-	private float _timer_duration;
-
-	#endregion
-
-
-	#if UNITY_EDITOR
-
-	/// <summary>
-	/// Called by parent class for drawing specific variables at top.
-	/// Parent class should automatically check for when it is dirty.
-	/// </summary>
-	protected override void DrawChildInspector ()
-	{
-		minWait = EditorGUILayout.FloatField ("Min Wait", minWait);
-		maxWait = EditorGUILayout.FloatField ("Max Wait", maxWait);
-	}
-
-	#endif
-
-
-	#region Awake/Start
-
-	/// <summary>
-	/// Called by parent class at the end of its AteAwake().
-	/// </summary>
-	protected override void OnAwake ()
-	{
-		
-	}
-
-	/// <summary>
-	/// Called by AteGameObject at end of its Awake().
-	/// </summary>
-	protected override void AteStart ()
-	{
-		
-	}
-
-	#endregion
-
-
-	#region OnRequested
-
-	/// <summary>
-	/// For resetting to a more 'factory default' version.
-	/// For things like only playing a sequencer once, then
-	/// resetting it from a different behaviour somewhere
-	/// else so it can be played again.
-	/// </summary>
-	protected override void OnDataReset()
-	{
-		
-	}
 
 
 	/// <summary>
-	/// Called when parent class had a request to play.
-	/// If inactive and cancelRequestsWhileInactive is true, won't be called.
+	/// For use with a Sequencer that is set to play OnAtATime.
+	/// Causes a delay in the OneAtATime play type.
 	/// </summary>
-	protected override void OnRequestedPlaying (AteObject triggerer)
+	public class TriggeredBehaviour_Wait : TriggeredBehaviour
 	{
-		
-	}
+		//	Variables for designers.
+		//	Shown in editor with DrawInspector() at bottom.
+		#region Public Variables
 
-	/// <summary>
-	/// Called when parent class had a request to complete.
-	/// If inactive and cancelRequestsWhileInactive is true, won't be called.
-	/// </summary>
-	protected override void OnRequestedComplete ()
-	{
-		
-	}
+		public float minWait = 1;
+		public float maxWait = 2;
 
-	/// <summary>
-	/// Called when parent class had a request to reset.
-	/// If inactive and cancelRequestsWhileInactive is true, won't be called.
-	/// </summary>
-	protected override void OnRequestedPlayReset ()
-	{
-		
-	}
+		private float _rolledDuration;
+		private float _timer_duration;
 
-	#endregion
+		#endregion
 
 
-	#region OnEntered
+		#if UNITY_EDITOR
 
-	/// <summary>
-	/// Called when behaviour enters the Ready state.
-	/// Currently it starts in Ready, but the enter callback
-	/// only happens when it switches to Ready.
-	/// So for now it can be thought more as 'OnReset'.
-	/// </summary>
-	protected override void OnEnteredReady (TriggeredState prevState)
-	{
-		
-	}
+		/// <summary>
+		/// Called by parent class for drawing specific variables at top.
+		/// Parent class should automatically check for when it is dirty.
+		/// </summary>
+		protected override void DrawChildInspector ()
+		{
+			minWait = EditorGUILayout.FloatField ("Min Wait", minWait);
+			maxWait = EditorGUILayout.FloatField ("Max Wait", maxWait);
+		}
 
-	/// <summary>
-	/// Called when behaviour enters the Playing state.
-	/// For instant-fire behaviours, this is where 99% of the logic will go.
-	/// </summary>
-	protected override void OnEnteredPlaying (TriggeredState prevState)
-	{
-		_timer_duration = 0;
-		_rolledDuration = Random.Range (minWait, maxWait);
-
-		//	Called at end of this method for an instant-fire behaviour
-		//RequestComplete ();
-	}
-
-	/// <summary>
-	/// Called when behaviour enters the Complete state.
-	/// Happens after a RequestComplete() call and CanSwitchToComplete is true.
-	/// </summary>
-	protected override void OnEnteredComplete (TriggeredState prevState)
-	{
-		
-	}
-
-	#endregion
+		#endif
 
 
-	#region OnUpdate
+		#region Awake/Start
 
-	/// <summary>
-	/// Called every frame behaviour is in the Ready state.
-	/// </summary>
-	protected override void OnUpdateReady ()
-	{
-		
-	}
+		/// <summary>
+		/// Called by parent class at the end of its AteAwake().
+		/// </summary>
+		protected override void OnAwake ()
+		{
+			
+		}
 
-	/// <summary>
-	/// Called every frame behaviour is in the Playing state.
-	/// For over-time behaviours, this is where most of the logic will go.
-	/// </summary>
-	protected override void OnUpdatePlaying ()
-	{
-		_timer_duration += Time.deltaTime;
-		if (_timer_duration >= _rolledDuration)
-			RequestComplete();
-		//	Called when an end-condition happens (such as a timer)
-		//RequestComplete ();
-	}
+		/// <summary>
+		/// Called by AteObject at end of its Awake().
+		/// </summary>
+		protected override void AteStart ()
+		{
+			
+		}
 
-	/// <summary>
-	/// Called every frame behaviour is in the Complete state.
-	/// This will happen after Playing until it is Reset or canceled.
-	/// </summary>
-	protected override void OnUpdateComplete ()
-	{
-		
-	}
-
-	#endregion
+		#endregion
 
 
-	#region CanSwitch
+		#region OnRequested
 
-	/// <summary>
-	/// After parent class determines if a switch was requested,
-	/// it uses this as an extra check if it can switch yet.
-	/// </summary>
-	protected override bool CanSwitchToPlaying ()
-	{
-		return true;
-	}
-
-	/// <summary>
-	/// After parent class determines if a switch was requested,
-	/// it uses this as an extra check if it can switch yet.
-	/// </summary>
-	protected override bool CanSwitchToComplete ()
-	{
-		return true;
-	}
-
-	/// <summary>
-	/// After parent class determines if a switch was requested,
-	/// it uses this as an extra check if it can switch yet.
-	/// </summary>
-	protected override bool CanPlayReset ()
-	{
-		return true;
-	}
-
-	#endregion
+		/// <summary>
+		/// For resetting to a more 'factory default' version.
+		/// For things like only playing a sequencer once, then
+		/// resetting it from a different behaviour somewhere
+		/// else so it can be played again.
+		/// </summary>
+		protected override void OnDataReset()
+		{
+			
+		}
 
 
-	#region Helper Methods
+		/// <summary>
+		/// Called when parent class had a request to play.
+		/// If inactive and cancelRequestsWhileInactive is true, won't be called.
+		/// </summary>
+		protected override void OnRequestedPlaying (AteObject triggerer)
+		{
+			
+		}
 
-	#endregion
+		/// <summary>
+		/// Called when parent class had a request to complete.
+		/// If inactive and cancelRequestsWhileInactive is true, won't be called.
+		/// </summary>
+		protected override void OnRequestedComplete ()
+		{
+			
+		}
 
-}
+		/// <summary>
+		/// Called when parent class had a request to reset.
+		/// If inactive and cancelRequestsWhileInactive is true, won't be called.
+		/// </summary>
+		protected override void OnRequestedPlayReset ()
+		{
+			
+		}
+
+		#endregion
+
+
+		#region OnEntered
+
+		/// <summary>
+		/// Called when behaviour enters the Ready state.
+		/// Currently it starts in Ready, but the enter callback
+		/// only happens when it switches to Ready.
+		/// So for now it can be thought more as 'OnReset'.
+		/// </summary>
+		protected override void OnEnteredReady (TriggeredState prevState)
+		{
+			
+		}
+
+		/// <summary>
+		/// Called when behaviour enters the Playing state.
+		/// For instant-fire behaviours, this is where 99% of the logic will go.
+		/// </summary>
+		protected override void OnEnteredPlaying (TriggeredState prevState)
+		{
+			_timer_duration = 0;
+			_rolledDuration = Random.Range (minWait, maxWait);
+
+			//	Called at end of this method for an instant-fire behaviour
+			//RequestComplete ();
+		}
+
+		/// <summary>
+		/// Called when behaviour enters the Complete state.
+		/// Happens after a RequestComplete() call and CanSwitchToComplete is true.
+		/// </summary>
+		protected override void OnEnteredComplete (TriggeredState prevState)
+		{
+			
+		}
+
+		#endregion
+
+
+		#region OnUpdate
+
+		/// <summary>
+		/// Called every frame behaviour is in the Ready state.
+		/// </summary>
+		protected override void OnUpdateReady ()
+		{
+			
+		}
+
+		/// <summary>
+		/// Called every frame behaviour is in the Playing state.
+		/// For over-time behaviours, this is where most of the logic will go.
+		/// </summary>
+		protected override void OnUpdatePlaying ()
+		{
+			_timer_duration += Time.deltaTime;
+			if (_timer_duration >= _rolledDuration)
+				RequestComplete();
+			//	Called when an end-condition happens (such as a timer)
+			//RequestComplete ();
+		}
+
+		/// <summary>
+		/// Called every frame behaviour is in the Complete state.
+		/// This will happen after Playing until it is Reset or canceled.
+		/// </summary>
+		protected override void OnUpdateComplete ()
+		{
+			
+		}
+
+		#endregion
+
+
+		#region CanSwitch
+
+		/// <summary>
+		/// After parent class determines if a switch was requested,
+		/// it uses this as an extra check if it can switch yet.
+		/// </summary>
+		protected override bool CanSwitchToPlaying ()
+		{
+			return true;
+		}
+
+		/// <summary>
+		/// After parent class determines if a switch was requested,
+		/// it uses this as an extra check if it can switch yet.
+		/// </summary>
+		protected override bool CanSwitchToComplete ()
+		{
+			return true;
+		}
+
+		/// <summary>
+		/// After parent class determines if a switch was requested,
+		/// it uses this as an extra check if it can switch yet.
+		/// </summary>
+		protected override bool CanPlayReset ()
+		{
+			return true;
+		}
+
+		#endregion
+
+
+		#region Helper Methods
+
+		#endregion
+
+	}//End Class
+
+
+}//End Namespace

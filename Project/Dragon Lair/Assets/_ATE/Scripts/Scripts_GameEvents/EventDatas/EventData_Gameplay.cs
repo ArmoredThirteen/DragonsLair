@@ -3,29 +3,36 @@ using System.Collections;
 using System.Collections.Generic;
 
 
-public class EventData_Gameplay : EventData
+namespace Ate
 {
-	private int _intArgOne;
-
-	private float _floatArgOne;
 
 
-	/// <summary>
-	/// For scene-loading events. Uses _intArgOne.
-	/// </summary>
-	public int SceneIndex
+	public class EventData_Gameplay : EventData
 	{
-		get {return _intArgOne;}
-		set {_intArgOne = value;}
-	}
+		private int _intArgOne;
 
-	/// <summary>
-	/// For movement speed changing events.
-	/// </summary>
-	public float WalkSpeed
-	{
-		get {return _floatArgOne;}
-		set {_floatArgOne = value;}
-	}
-}
+		private float _floatArgOne;
+
+
+		/// <summary>
+		/// For scene-loading events. Uses _intArgOne.
+		/// </summary>
+		public int SceneIndex
+		{
+			get {return _intArgOne;}
+			set {_intArgOne = value;}
+		}
+
+		/// <summary>
+		/// For movement speed changing events.
+		/// </summary>
+		public float WalkSpeed
+		{
+			get {return _floatArgOne;}
+			set {_floatArgOne = value;}
+		}
+	}//End Class
+
+
+}//End Namespace
 

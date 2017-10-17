@@ -6,59 +6,66 @@ using UnityEditor;
 #endif
 
 
-public class FollowMouse_Linear : AteComponent
+namespace Ate
 {
-	public Camera theCam;
-
-	public float moveSpeed = 1;
-
-	public bool followX = true;
-	public bool followY = true;
-	public bool followZ = true;
 
 
-	private bool isFollowing = true;
-
-
-	#if UNITY_EDITOR
-
-	public override void DrawInspector ()
+	public class FollowMouse_Linear : AteComponent
 	{
-		base.DrawInspector ();
+		public Camera theCam;
 
-		theCam = EditorGUILayout.ObjectField
-			("Camera", theCam, typeof (Camera), true)
-			as Camera;
+		public float moveSpeed = 1;
 
-		moveSpeed = EditorGUILayout.FloatField ("Move Speed", moveSpeed);
-
-		followX = EditorGUILayout.Toggle ("Follow X", followX);
-		followY = EditorGUILayout.Toggle ("Follow Y", followY);
-		followZ = EditorGUILayout.Toggle ("Follow Z", followZ);
-	}
-
-	#endif
+		public bool followX = true;
+		public bool followY = true;
+		public bool followZ = true;
 
 
-	protected override void AteAwake ()
-	{
-		
-	}
+		private bool isFollowing = true;
 
-	protected override void AteUpdate ()
-	{
-		if (!isFollowing)
-			return;
 
-		Vector3 mousePos = theCam.ScreenToWorldPoint (Input.mousePosition);
+		#if UNITY_EDITOR
 
-		mousePos = new Vector3 (
-			(followX ? mousePos.x : Position.x),
-			(followY ? mousePos.y : Position.y),
-			(followZ ? mousePos.z : Position.z)
-		);
+		public override void DrawInspector ()
+		{
+			base.DrawInspector ();
 
-		Position = Vector3.Lerp (Position, mousePos, moveSpeed * Time.deltaTime);
-	}
+			theCam = EditorGUILayout.ObjectField
+				("Camera", theCam, typeof (Camera), true)
+				as Camera;
 
-}
+			moveSpeed = EditorGUILayout.FloatField ("Move Speed", moveSpeed);
+
+			followX = EditorGUILayout.Toggle ("Follow X", followX);
+			followY = EditorGUILayout.Toggle ("Follow Y", followY);
+			followZ = EditorGUILayout.Toggle ("Follow Z", followZ);
+		}
+
+		#endif
+
+
+		protected override void AteAwake ()
+		{
+			
+		}
+
+		protected override void AteUpdate ()
+		{
+			if (!isFollowing)
+				return;
+
+			Vector3 mousePos = theCam.ScreenToWorldPoint (Input.mousePosition);
+
+			mousePos = new Vector3 (
+				(followX ? mousePos.x : Position.x),
+				(followY ? mousePos.y : Position.y),
+				(followZ ? mousePos.z : Position.z)
+			);
+
+			Position = Vector3.Lerp (Position, mousePos, moveSpeed * Time.deltaTime);
+		}
+
+	}//End Class
+
+
+}//End Namespace

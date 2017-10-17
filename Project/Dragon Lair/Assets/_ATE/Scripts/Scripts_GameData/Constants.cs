@@ -2,9 +2,15 @@
 using System.Collections;
 
 
-
-public static class Constants
+namespace Ate
 {
-	//TODO: What exactly is this class??
-}
+
+
+	public static class Constants
+	{
+		//TODO: What exactly is this class??
+	}//End Class
+
+
+}//End Namespace
 

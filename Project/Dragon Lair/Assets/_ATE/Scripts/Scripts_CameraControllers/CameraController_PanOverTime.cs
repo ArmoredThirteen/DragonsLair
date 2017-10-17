@@ -6,62 +6,69 @@ using UnityEditor;
 #endif
 
 
-public class CameraController_PanOverTime : CameraController
+namespace Ate
 {
-	public bool panImmediately = false;
-	public float panDuration = 5;
-	public Transform panTarget;
 
 
-	private bool _isPanning;
-	private Vector3 _startPosition;
-
-	private float _timer_panning;
-
-
-	#if UNITY_EDITOR
-
-	public override void DrawInspector ()
+	public class CameraController_PanOverTime : CameraController
 	{
-		base.DrawInspector();
-
-		panImmediately = EditorGUILayout.Toggle     ("Pan Immediately", panImmediately);
-		panDuration    = EditorGUILayout.FloatField ("Pan Duration",    panDuration);
-
-		panTarget = EditorGUILayout.ObjectField
-			("Pan Target", panTarget, typeof(Transform), true)
-			as Transform;
-	}
-
-	#endif
+		public bool panImmediately = false;
+		public float panDuration = 5;
+		public Transform panTarget;
 
 
-	protected override void AteStart ()
-	{
-		if (panImmediately)
-			BeginPanning ();
-	}
+		private bool _isPanning;
+		private Vector3 _startPosition;
 
-	protected override void AteUpdate ()
-	{
-		if (!_isPanning)
-			return;
-		
-		_timer_panning += Time.deltaTime;
-		float timerRatio = _timer_panning / panDuration;
-
-		theCam.transform.position = Vector3.Lerp (_startPosition, panTarget.position.yOf (theCam.transform.position.y), timerRatio);
-	}
+		private float _timer_panning;
 
 
-	public void BeginPanning ()
-	{
-		if (_isPanning)
-			return;
+		#if UNITY_EDITOR
 
-		_startPosition = theCam.transform.position;
-		_timer_panning = 0;
-		_isPanning = true;
-	}
+		public override void DrawInspector ()
+		{
+			base.DrawInspector();
 
-}
+			panImmediately = EditorGUILayout.Toggle     ("Pan Immediately", panImmediately);
+			panDuration    = EditorGUILayout.FloatField ("Pan Duration",    panDuration);
+
+			panTarget = EditorGUILayout.ObjectField
+				("Pan Target", panTarget, typeof(Transform), true)
+				as Transform;
+		}
+
+		#endif
+
+
+		protected override void AteStart ()
+		{
+			if (panImmediately)
+				BeginPanning ();
+		}
+
+		protected override void AteUpdate ()
+		{
+			if (!_isPanning)
+				return;
+			
+			_timer_panning += Time.deltaTime;
+			float timerRatio = _timer_panning / panDuration;
+
+			theCam.transform.position = Vector3.Lerp (_startPosition, panTarget.position.yOf (theCam.transform.position.y), timerRatio);
+		}
+
+
+		public void BeginPanning ()
+		{
+			if (_isPanning)
+				return;
+
+			_startPosition = theCam.transform.position;
+			_timer_panning = 0;
+			_isPanning = true;
+		}
+
+	}//End Class
+
+
+}//End Namespace

@@ -6,7 +6,7 @@ using UnityEditor;
 #endif
 
 
-namespace CollisionSystem
+namespace Ate.Collision
 {
 	//TODO: The size of this class will BLOW UP with anything more than circle and sphere colliders!
 	//TODO: The size of this class will BLOW UP with anything more than circle and sphere colliders!
@@ -120,7 +120,7 @@ namespace CollisionSystem
 		}
 
 
-	}//end class
+	}//End Class
 
 
-}//end namespace
+}//End Namespace

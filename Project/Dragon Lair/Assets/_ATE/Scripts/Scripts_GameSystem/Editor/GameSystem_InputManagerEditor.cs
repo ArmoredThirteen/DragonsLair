@@ -3,34 +3,41 @@ using System.Collections;
 using UnityEditor;
 
 
-[CustomEditor (typeof(GameSystem_InputManager))]
-public class GameSystem_InputManagerEditor : Editor
+namespace Ate
 {
-	private GameSystem_InputManager _target;
 
 
-	public override void OnInspectorGUI()
+	[CustomEditor (typeof(GameSystem_InputManager))]
+	public class GameSystem_InputManagerEditor : Editor
 	{
-		_target = (GameSystem_InputManager)target;
+		private GameSystem_InputManager _target;
 
-		EditorHelper.DrawResizableList<KeyCode> ("Key Codes to Track", ref _target.keysToTrack, DrawEntry_KeyCode);
 
-		if (GUI.changed)
+		public override void OnInspectorGUI()
 		{
-			EditorUtility.SetDirty (target);
+			_target = (GameSystem_InputManager)target;
 
-			//	If it is a scene object and the application isn't playing
-			if (!string.IsNullOrEmpty (_target.gameObject.scene.name) && !Application.isPlaying)
+			EditorHelper.DrawResizableList<KeyCode> ("Key Codes to Track", ref _target.keysToTrack, DrawEntry_KeyCode);
+
+			if (GUI.changed)
 			{
-				EditorApplication.MarkSceneDirty ();
+				EditorUtility.SetDirty (target);
+
+				//	If it is a scene object and the application isn't playing
+				if (!string.IsNullOrEmpty (_target.gameObject.scene.name) && !Application.isPlaying)
+				{
+					EditorApplication.MarkSceneDirty ();
+				}
 			}
 		}
-	}
 
 
-	private void DrawEntry_KeyCode (int index)
-	{
-		_target.keysToTrack[index] = (KeyCode)EditorGUILayout.EnumPopup ("KeyCode", _target.keysToTrack[index]);
-	}
+		private void DrawEntry_KeyCode (int index)
+		{
+			_target.keysToTrack[index] = (KeyCode)EditorGUILayout.EnumPopup ("KeyCode", _target.keysToTrack[index]);
+		}
 
-}
+	}//End Class
+
+
+}//End Namespace

@@ -3,13 +3,22 @@ using System.Collections;
 using System.Collections.Generic;
 
 
-public class EventData_Updates : EventData
+namespace Ate
 {
-	public int updateIndex;
 
-	public EventData_Updates (int updateIndex)
+
+	public class EventData_Updates : EventData
 	{
-		this.updateIndex = updateIndex;
-	}
-}
+		
+		public int updateIndex;
+
+		public EventData_Updates (int updateIndex)
+		{
+			this.updateIndex = updateIndex;
+		}
+
+	}//End Class
+
+
+}//End Namespace
 

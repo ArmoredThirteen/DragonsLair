@@ -6,66 +6,73 @@ using UnityEditor;
 #endif
 
 
-public class Projectile : AteComponent
+namespace Ate
 {
-	public float maxLifetime = 60;
-	public float moveSpeed = 1;
-
-	public bool faceTarget = true;
-
-	private float _timer_lifetime = 0;
-	private bool isFired = false;
-
-	private Vector3 targetDirection;
-	//private Transform target;
 
 
-	#if UNITY_EDITOR
-
-	public override void DrawInspector ()
+	public class Projectile : AteComponent
 	{
-		base.DrawInspector ();
+		public float maxLifetime = 60;
+		public float moveSpeed = 1;
 
-		maxLifetime = EditorGUILayout.FloatField ("Max Lifetime", maxLifetime);
-		moveSpeed = EditorGUILayout.FloatField ("Move Speed", moveSpeed);
+		public bool faceTarget = true;
 
-		faceTarget = EditorGUILayout.Toggle ("Face Target", faceTarget);
-	}
+		private float _timer_lifetime = 0;
+		private bool isFired = false;
 
-	#endif
+		private Vector3 targetDirection;
+		//private Transform target;
 
 
-	public void Fire (Vector3 targetPos)
-	{
-		targetDirection = Position.GetDir_To (targetPos, moveSpeed);
+		#if UNITY_EDITOR
 
-		if (faceTarget)
+		public override void DrawInspector ()
 		{
-			transform.LookAt (Position+targetDirection);
+			base.DrawInspector ();
+
+			maxLifetime = EditorGUILayout.FloatField ("Max Lifetime", maxLifetime);
+			moveSpeed = EditorGUILayout.FloatField ("Move Speed", moveSpeed);
+
+			faceTarget = EditorGUILayout.Toggle ("Face Target", faceTarget);
 		}
 
-		isFired = true;
-	}
+		#endif
 
 
-	protected override void AteUpdate ()
-	{
-		if (!isFired)
-			return;
-
-		_timer_lifetime += Time.deltaTime;
-		if (_timer_lifetime >= maxLifetime)
+		public void Fire (Vector3 targetPos)
 		{
-			_timer_lifetime = 0;
-			Destroy (gameObject);
-			return;
+			targetDirection = Position.GetDir_To (targetPos, moveSpeed);
+
+			if (faceTarget)
+			{
+				transform.LookAt (Position+targetDirection);
+			}
+
+			isFired = true;
 		}
 
-		//TODO: Live rotation to target if needed
-		//		(useful when it uses a transform target not just a vector)
 
-		//transform.position = Vector3.Lerp (Position, targetDirection, moveSpeed);
-		transform.position = Position + (targetDirection * Time.deltaTime);
-	}
+		protected override void AteUpdate ()
+		{
+			if (!isFired)
+				return;
 
-}
+			_timer_lifetime += Time.deltaTime;
+			if (_timer_lifetime >= maxLifetime)
+			{
+				_timer_lifetime = 0;
+				Destroy (gameObject);
+				return;
+			}
+
+			//TODO: Live rotation to target if needed
+			//		(useful when it uses a transform target not just a vector)
+
+			//transform.position = Vector3.Lerp (Position, targetDirection, moveSpeed);
+			transform.position = Position + (targetDirection * Time.deltaTime);
+		}
+
+	}//End Class
+
+
+}//End Namespace

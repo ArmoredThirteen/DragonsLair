@@ -1,8 +1,13 @@
 ﻿
 
-
-public enum EventType_Trigger
+namespace Ate
 {
-	None = 0,
-}
 
+
+	public enum EventType_Trigger
+	{
+		None = 0,
+	}
+
+
+}//End Namespace

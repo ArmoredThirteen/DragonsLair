@@ -1,22 +1,29 @@
 ﻿
 
-/// <summary>
-/// Available TriggeredBehaviour types.
-/// </summary>
-public enum TriggeredBehaviourType
+namespace Ate
 {
-	None = 0,
+	
 
-	DebugLog = 100,
+	/// <summary>
+	/// Available TriggeredBehaviour types.
+	/// </summary>
+	public enum TriggeredBehaviourType
+	{
+		None = 0,
 
-	AddHudText    = 1000,
-	RemoveHudText = 1010,
-	ClearHudText  = 1020,
+		DebugLog = 100,
 
-	ModifyActionActivity = 1500,
+		AddHudText    = 1000,
+		RemoveHudText = 1010,
+		ClearHudText  = 1020,
 
-	ResetActionBundle = 1600,
+		ModifyActionActivity = 1500,
 
-	SceneLoad   = 5000,
-	SceneReload = 5010,
-}
+		ResetActionBundle = 1600,
+
+		SceneLoad   = 5000,
+		SceneReload = 5010,
+	}
+
+
+}//End Namespace
