@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Collider = Ate.Collision.Collider;
 
 
 namespace Ate.Collision
@@ -12,13 +13,13 @@ namespace Ate.Collision
 	public class CollisionDetails
 	{
 
-		public CollisionDetails (AteCollider colOne, AteCollider colTwo)
+		public CollisionDetails (Collider colOne, Collider colTwo)
 		{
 			this.colOne = colOne;
 			this.colTwo = colTwo;
 		}
 
-		public CollisionDetails (Pair<AteCollider,AteCollider> colPair)
+		public CollisionDetails (Pair<Collider,Collider> colPair)
 		{
 			this.colOne = colPair.v1;
 			this.colTwo = colPair.v2;
@@ -27,8 +28,8 @@ namespace Ate.Collision
 
 		#region Public Variables
 
-		public AteCollider colOne;
-		public AteCollider colTwo;
+		public Collider colOne;
+		public Collider colTwo;
 
 		#endregion
 

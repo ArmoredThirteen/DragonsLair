@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Ate.Collision;
-using Collider = Ate.Collision.AteCollider;
+using Collider = Ate.Collision.Collider;
 
 
 namespace Ate
@@ -13,8 +13,8 @@ namespace Ate
 	{
 		private CollisionArea _colArea;
 
-		private AteCollider _colOne;
-		private AteCollider _colTwo;
+		private Collider _colOne;
+		private Collider _colTwo;
 
 
 		#region Base Collision
@@ -22,7 +22,7 @@ namespace Ate
 		/// <summary>
 		/// During a base collision, this is arbitrarily one of the two colliders involved.
 		/// </summary>
-		public AteCollider ColliderOne
+		public Collider ColliderOne
 		{
 			get {return _colOne;}
 			set {_colOne = value;}
@@ -31,7 +31,7 @@ namespace Ate
 		/// <summary>
 		/// During a base collision, this is arbitrarily one of the two colliders involved.
 		/// </summary>
-		public AteCollider ColliderTwo
+		public Collider ColliderTwo
 		{
 			get {return _colTwo;}
 			set {_colTwo = value;}
@@ -54,7 +54,7 @@ namespace Ate
 		/// <summary>
 		/// During an Area Collision, this is the collider belonging to a CollisionArea.
 		/// </summary>
-		public AteCollider AreaCollider
+		public Collider AreaCollider
 		{
 			get {return _colOne;}
 			set {_colOne = value;}
@@ -63,7 +63,7 @@ namespace Ate
 		/// <summary>
 		/// During an Area Collision, this is the collider that interacted with a CollisionArea.
 		/// </summary>
-		public AteCollider HittingCollider
+		public Collider HittingCollider
 		{
 			get {return _colTwo;}
 			set {_colTwo = value;}

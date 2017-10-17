@@ -19,12 +19,12 @@ namespace Ate.Collision
 	public static class CheckCollisionMethods
 	{
 		
-		public static CollisionDetails CheckCollision (CheckCollisionSettings settings, Pair<AteCollider_Circle,AteCollider_Circle> colPair)
+		public static CollisionDetails CheckCollision (CheckCollisionSettings settings, Pair<Collider_Circle,Collider_Circle> colPair)
 		{
 			return CheckCollision (settings, colPair.v1, colPair.v2);
 		}
 
-		public static CollisionDetails CheckCollision (CheckCollisionSettings settings, AteCollider_Circle colOne, AteCollider_Circle colTwo)
+		public static CollisionDetails CheckCollision (CheckCollisionSettings settings, Collider_Circle colOne, Collider_Circle colTwo)
 		{
 			Vector3 colOnePos = colOne.GetPosition ();
 			Vector3 colTwoPos = colTwo.GetPosition ();
@@ -52,12 +52,10 @@ namespace Ate.Collision
 		}
 
 
-		public static CollisionDetails CheckCollision (CheckCollisionSettings settings, Pair<AteCollider_Sphere,AteCollider_Sphere> colPair)
 		{
 			return CheckCollision (settings, colPair.v1, colPair.v2);
 		}
 
-		public static CollisionDetails CheckCollision (CheckCollisionSettings settings, AteCollider_Sphere colOne, AteCollider_Sphere colTwo)
 		{
 			Vector3 colOnePos = colOne.GetPosition ();
 			Vector3 colTwoPos = colTwo.GetPosition ();
@@ -73,22 +71,18 @@ namespace Ate.Collision
 		}
 
 
-		public static CollisionDetails CheckCollision (CheckCollisionSettings settings, Pair<AteCollider_Circle,AteCollider_Sphere> colPair)
 		{
 			return CheckCollision (settings, colPair.v1, colPair.v2);
 		}
 
-		public static CollisionDetails CheckCollision (CheckCollisionSettings settings, Pair<AteCollider_Sphere,AteCollider_Circle> colPair)
 		{
 			return CheckCollision (settings, colPair.v1, colPair.v2);
 		}
 
-		public static CollisionDetails CheckCollision (CheckCollisionSettings settings, AteCollider_Circle colOne, AteCollider_Sphere colTwo)
 		{
 			return CheckCollision (settings, colTwo, colOne);
 		}
 
-		public static CollisionDetails CheckCollision (CheckCollisionSettings settings, AteCollider_Sphere colOne, AteCollider_Circle colTwo)
 		{
 			Vector3 colOnePos = colOne.GetPosition ();
 			Vector3 colTwoPos = colTwo.GetPosition ();

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 
-namespace Ate
+namespace Ate.GameSystems
 {
 
 
@@ -51,27 +51,27 @@ namespace Ate
 		/// <summary>
 		/// Manager for registering and broadcasting events.
 		/// </summary>
-		public static GameSystem_EventManager Events {get; private set;}
+		public static EventManager Events {get; private set;}
 
 		/// <summary>
 		/// Manager for registering delayed callbacks.
 		/// </summary>
-		public static GameSystem_DelayedInvoker DelayedInvoker {get; private set;}
+		public static DelayedInvoker DelayedInvoker {get; private set;}
 
 		/// <summary>
 		/// Tracks GameObjects to make them more easily accessed.
 		/// </summary>
-		public static GameSystem_GameObjectTracker ObjectTracker {get; private set;}
+		public static GameObjectTracker ObjectTracker {get; private set;}
 
 		/// <summary>
 		/// For adding and clearing text from Hud boxes.
 		/// </summary>
-		public static GameSystem_HudText HudText {get; private set;}
+		public static HudText HudText {get; private set;}
 
 		/// <summary>
 		/// For setting and modifying various universal stats.
 		/// </summary>
-		public static GameSystem_StatTracker Stats {get; private set;}
+		public static StatTracker Stats {get; private set;}
 
 		#endregion
 
@@ -282,11 +282,11 @@ namespace Ate
 		private void FSM_Update_Loading ()
 		{
 			//	Put before GameSystem initialization so they're safer
-			Events         = GetGameSystem<GameSystem_EventManager> ();
-			DelayedInvoker = GetGameSystem<GameSystem_DelayedInvoker> ();
-			ObjectTracker  = GetGameSystem<GameSystem_GameObjectTracker> ();
-			HudText        = GetGameSystem<GameSystem_HudText> ();
-			Stats          = GetGameSystem<GameSystem_StatTracker> ();
+			Events         = GetGameSystem<EventManager> ();
+			DelayedInvoker = GetGameSystem<DelayedInvoker> ();
+			ObjectTracker  = GetGameSystem<GameObjectTracker> ();
+			HudText        = GetGameSystem<HudText> ();
+			Stats          = GetGameSystem<StatTracker> ();
 
 			//TODO: Seperate InitializeSystems and SceneInitializeSystems
 			InitializeSystems ();

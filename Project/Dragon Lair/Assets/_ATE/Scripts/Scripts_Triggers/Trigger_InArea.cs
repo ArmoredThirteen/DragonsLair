@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Ate.GameSystems;
 using Ate.Collision;
 
 #if UNITY_EDITOR
@@ -171,7 +172,7 @@ namespace Ate
 			AttemptEnterTriggers (triggerer);
 		}
 
-		void OnTriggerEnter (Collider theCollider)
+		void OnTriggerEnter (UnityEngine.Collider theCollider)
 		{
 			if (AreEnterBehavioursEmpty)
 				return;
@@ -261,7 +262,7 @@ namespace Ate
 			AttemptExitTriggers (triggerer);
 		}
 
-		void OnTriggerExit (Collider theCollider)
+		void OnTriggerExit (UnityEngine.Collider theCollider)
 		{
 			if (AreExitBehavioursEmpty)
 				return;

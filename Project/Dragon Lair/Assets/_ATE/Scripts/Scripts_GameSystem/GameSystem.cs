@@ -2,7 +2,7 @@
 using System.Collections;
 
 
-namespace Ate
+namespace Ate.GameSystems
 {
 
 

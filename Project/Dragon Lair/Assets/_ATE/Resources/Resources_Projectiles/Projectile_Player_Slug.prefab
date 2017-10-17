@@ -97,7 +97,7 @@ GameObject:
   - 4: {fileID: 464452}
   - 114: {fileID: 11417444}
   - 114: {fileID: 11432894}
-  - 114: {fileID: 11483184}
+  - 114: {fileID: 11407330}
   m_Layer: 0
   m_Name: CollisionArea
   m_TagString: Untagged
@@ -254,6 +254,20 @@ MonoBehaviour:
   - {fileID: 480936}
   - {fileID: 421948}
   sequenceType: 1
+--- !u!114 &11407330
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 194844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87ead51daff86c548ab3caf21f8164c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _myObject: {fileID: 11417444}
+  flattenAxisIn3D: 1
+  radius: 0.5
 --- !u!114 &11411062
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -305,7 +319,7 @@ MonoBehaviour:
   type: 0
   components:
   - {fileID: 11432894}
-  - {fileID: 11483184}
+  - {fileID: 11407330}
 --- !u!114 &11426464
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -396,20 +410,6 @@ MonoBehaviour:
   type: 0
   components:
   - {fileID: 11407074}
---- !u!114 &11483184
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 194844}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70960bab28ea0694787cef38422c1af8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _myObject: {fileID: 11417444}
-  flattenAxisIn3D: 1
-  radius: 0.5
 --- !u!114 &11496512
 MonoBehaviour:
   m_ObjectHideFlags: 1

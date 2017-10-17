@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Ate.GameSystems;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -17,7 +18,7 @@ namespace Ate
 		#region Public Variables
 
 		public TrackedStatType statID = TrackedStatType.None;
-		public GameSystem_StatTracker.ModType modType = GameSystem_StatTracker.ModType.Add;
+		public StatTracker.ModType modType = StatTracker.ModType.Add;
 		public float modValue = 1;
 
 		#endregion
@@ -35,7 +36,7 @@ namespace Ate
 			public GameSystem_StatTracker.ModType modType = GameSystem_StatTracker.ModType.Add;
 			public float modValue = 1;*/
 			statID = (TrackedStatType)EditorGUILayout.EnumPopup ("Stat ID", statID);
-			modType = (GameSystem_StatTracker.ModType)EditorGUILayout.EnumPopup ("Mod Type", modType);
+			modType = (StatTracker.ModType)EditorGUILayout.EnumPopup ("Mod Type", modType);
 			modValue = EditorGUILayout.FloatField ("Mod Value", modValue);
 		}
 

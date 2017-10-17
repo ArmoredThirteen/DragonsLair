@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Ate.GameSystems;
+using Collider = Ate.Collision.Collider;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -32,15 +34,15 @@ namespace Ate.Collision
 		public bool areaIncludesOthers   = false;
 
 		/// <summary> Any non-self and non-children colliders to include in _areaColliders. </summary>
-		public List<AteCollider> otherColliders = new List<AteCollider> ();
+		public List<Collider> otherColliders = new List<Collider> ();
 
 		#endregion
 
 
 		#region Private Variables
 
-		private List<AteCollider> _areaColliders     = new List<AteCollider> ();
-		private List<AteCollider> _currentCollisions = new List<AteCollider> ();
+		private List<Collider> _areaColliders     = new List<Collider> ();
+		private List<Collider> _currentCollisions = new List<Collider> ();
 
 		#endregion
 
@@ -79,7 +81,7 @@ namespace Ate.Collision
 
 		private void DrawEntry_OtherCollider (int index)
 		{
-			otherColliders[index] = EditorGUILayout.ObjectField ("Collider", otherColliders[index], typeof(AteCollider), true) as AteCollider;
+			otherColliders[index] = EditorGUILayout.ObjectField ("Collider", otherColliders[index], typeof(Collider), true) as Collider;
 		}
 
 		#endif
@@ -140,7 +142,7 @@ namespace Ate.Collision
 		/// </summary>
 		private void FillAreaColliders ()
 		{
-			_areaColliders = new List<AteCollider> ();
+			_areaColliders = new List<Collider> ();
 			if (areaIncludesSelf)
 			{
 				AddAreaCollidersFromGameObject (this.gameObject);
@@ -174,7 +176,7 @@ namespace Ate.Collision
 			if (theObj == null)
 				return;
 			
-			List<AteCollider> theColliders = new List<AteCollider> (theObj.GetComponents<AteCollider> ());
+			List<Collider> theColliders = new List<Collider> (theObj.GetComponents<Collider> ());
 			for (int i = 0; i < theColliders.Count; i++)
 			{
 				if (theColliders[i] == null)
@@ -214,8 +216,8 @@ namespace Ate.Collision
 			if (!IsValidCollision (colOneIsInArea, colTwoIsInArea))
 				return;
 			
-			AteCollider ourCollider     = colOneIsInArea ? eventData.ColliderOne : eventData.ColliderTwo;
-			AteCollider hittingCollider = colTwoIsInArea ? eventData.ColliderOne : eventData.ColliderTwo;
+			Collider ourCollider     = colOneIsInArea ? eventData.ColliderOne : eventData.ColliderTwo;
+			Collider hittingCollider = colTwoIsInArea ? eventData.ColliderOne : eventData.ColliderTwo;
 
 			bool isFirstCollider = !_currentCollisions.Contains (hittingCollider);
 			_currentCollisions.Add (hittingCollider);
@@ -234,8 +236,8 @@ namespace Ate.Collision
 			if (!IsValidCollision (colOneIsInArea, colTwoIsInArea))
 				return;
 
-			AteCollider ourCollider     = colOneIsInArea ? eventData.ColliderOne : eventData.ColliderTwo;
-			AteCollider hittingCollider = colOneIsInArea ? eventData.ColliderTwo : eventData.ColliderOne;
+			Collider ourCollider     = colOneIsInArea ? eventData.ColliderOne : eventData.ColliderTwo;
+			Collider hittingCollider = colOneIsInArea ? eventData.ColliderTwo : eventData.ColliderOne;
 
 			_currentCollisions.Remove (hittingCollider);
 			bool isLastCollider = !_currentCollisions.Contains (hittingCollider);
@@ -262,7 +264,7 @@ namespace Ate.Collision
 		}
 
 
-		private void SendCollisionAreaBegan (AteCollider ourCollider, AteCollider hittingCollider)
+		private void SendCollisionAreaBegan (Collider ourCollider, Collider hittingCollider)
 		{
 			#if DebugEnter
 			DebugLog.Simple ("<color=green>Collision Began</color>\r\nCol One: ", ourCollider, "Col Two: ", hittingCollider);
@@ -276,7 +278,7 @@ namespace Ate.Collision
 			GameManager.Events.Broadcast<EventType_Collision> ((int)EventType_Collision.AreaCollisionBegan, eventData);
 		}
 
-		private void SendCollisionAreaEnded (AteCollider ourCollider, AteCollider hittingCollider)
+		private void SendCollisionAreaEnded (Collider ourCollider, Collider hittingCollider)
 		{
 			#if DebugExit
 			DebugLog.Simple ("<color=red>Collision Ended</color>\r\nCol One: ", ourCollider, "Col Two: ", hittingCollider);

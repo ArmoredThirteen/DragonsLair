@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Ate.Collision;
+using Collider = Ate.Collision.Collider;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -56,12 +58,12 @@ namespace Ate.Collision
 		/// <summary>
 		/// All Colliders registered with the processor.
 		/// </summary>
-		private List<AteCollider> _colliders = new List<AteCollider> ();
+		private List<Collider> _colliders = new List<Collider> ();
 
 		/// <summary>
 		/// Pairs of all possible collisions between Colliders.
 		/// </summary>
-		private List<Pair<AteCollider,AteCollider>> _colliderPairs = new List<Pair<AteCollider, AteCollider>> ();
+		private List<Pair<Collider,Collider>> _colliderPairs = new List<Pair<Collider, Collider>> ();
 
 		#endregion
 
@@ -117,7 +119,7 @@ namespace Ate.Collision
 		/// <summary>
 		/// Adds theCol to the list of registered colliders and collider pairs.
 		/// </summary>
-		public void RegisterCollider (AteCollider theCol)
+		public void RegisterCollider (Collider theCol)
 		{
 			if (theCol == null)
 				return;
@@ -132,7 +134,7 @@ namespace Ate.Collision
 		/// <summary>
 		/// Using list of registered colliders, registers new pairs.
 		/// </summary>
-		public void RegisterColliderPairs (AteCollider theCol)
+		public void RegisterColliderPairs (Collider theCol)
 		{
 			if (theCol == null)
 				return;
@@ -144,14 +146,14 @@ namespace Ate.Collision
 				if (_colliders[i] == theCol)
 					continue;
 
-				_colliderPairs.Add (new Pair<AteCollider, AteCollider> (theCol, _colliders[i]));
+				_colliderPairs.Add (new Pair<Collider, Collider> (theCol, _colliders[i]));
 			}
 		}
 
 		/// <summary>
 		/// Removes all instances of theCol from the list of registered colliders and collider pairs.
 		/// </summary>
-		public void UnregisterCollider (AteCollider theCol)
+		public void UnregisterCollider (Collider theCol)
 		{
 			if (!_colliders.Contains (theCol))
 				return;
@@ -171,7 +173,7 @@ namespace Ate.Collision
 		/// Using list of registered pairs, removes any referencing given Collider.
 		/// Can be given null, which will remove any pairs containing a null.
 		/// </summary>
-		private void UnregisterColliderPairs (AteCollider theCol)
+		private void UnregisterColliderPairs (Collider theCol)
 		{
 			for (int i = _colliderPairs.Count-1; i >= 0; i--)
 			{
@@ -185,7 +187,7 @@ namespace Ate.Collision
 		/// <summary>
 		/// Returns true if either Collider in the given pair matches the given Collider.
 		/// </summary>
-		private bool ColliderPairContainsCollider (Pair<AteCollider,AteCollider> thePair, AteCollider theCol)
+		private bool ColliderPairContainsCollider (Pair<Collider,Collider> thePair, Collider theCol)
 		{
 			return (theCol == thePair.v1) || (theCol == thePair.v2);
 		}
@@ -255,8 +257,8 @@ namespace Ate.Collision
 
 		private void OnDrawCircles ()
 		{
-			AteCollider_Circle[] colliders =
-				FindObjectsOfType (typeof (AteCollider_Circle)) as AteCollider_Circle[];
+			Collider_Circle[] colliders =
+				FindObjectsOfType (typeof (Collider_Circle)) as Collider_Circle[];
 
 			for (int i = 0; i < colliders.Length; i++)
 			{

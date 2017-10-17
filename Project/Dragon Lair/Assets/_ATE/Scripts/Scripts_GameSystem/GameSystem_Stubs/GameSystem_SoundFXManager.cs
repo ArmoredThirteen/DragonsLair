@@ -2,11 +2,11 @@
 using System.Collections;
 
 
-namespace Ate
+namespace Ate.GameSystems
 {
 
 
-	public class GameSystem_SoundFXManager : GameSystem
+	public class SoundFXManager : GameSystem
 	{
 		#region GameSystem
 

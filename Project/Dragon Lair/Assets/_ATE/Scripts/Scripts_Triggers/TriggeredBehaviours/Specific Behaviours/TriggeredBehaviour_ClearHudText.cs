@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Ate.GameSystems;
+using Ate.Hud;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -16,7 +18,7 @@ namespace Ate
 		//	Shown in editor with DrawInspector() at bottom.
 		#region Public Variables
 
-		public HudTextBoxType boxType = HudTextBoxType.Informative;
+		public TextBoxType boxType = TextBoxType.Informative;
 
 		#endregion
 
@@ -29,7 +31,7 @@ namespace Ate
 		/// </summary>
 		protected override void DrawChildInspector ()
 		{
-			boxType = (HudTextBoxType)EditorGUILayout.EnumPopup ("Box Type", boxType);
+			boxType = (TextBoxType)EditorGUILayout.EnumPopup ("Box Type", boxType);
 		}
 
 		#endif

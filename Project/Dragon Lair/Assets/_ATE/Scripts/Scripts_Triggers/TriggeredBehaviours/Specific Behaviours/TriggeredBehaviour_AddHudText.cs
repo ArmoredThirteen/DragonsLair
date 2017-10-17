@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Ate.GameSystems;
+using Ate.Hud;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -27,7 +29,7 @@ namespace Ate
 			InOrder_RepeatAll  = 130,
 		}
 
-		public HudTextBoxType boxType = HudTextBoxType.Informative;
+		public TextBoxType boxType = TextBoxType.Informative;
 		public TextOrder textOrder = TextOrder.AllAtOnce;
 		public List<string> texts = new List<string> ();
 
@@ -44,7 +46,7 @@ namespace Ate
 		/// </summary>
 		protected override void DrawChildInspector ()
 		{
-			boxType = (HudTextBoxType)EditorGUILayout.EnumPopup ("Box Type", boxType);
+			boxType = (TextBoxType)EditorGUILayout.EnumPopup ("Box Type", boxType);
 			textOrder = (TextOrder)EditorGUILayout.EnumPopup ("Text Order", textOrder);
 
 			EditorHelper.DrawResizableList<string> ("Texts", ref texts, DrawEntry_Text);

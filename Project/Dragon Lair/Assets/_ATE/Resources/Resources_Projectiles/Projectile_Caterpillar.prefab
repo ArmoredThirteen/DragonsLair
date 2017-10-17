@@ -30,7 +30,7 @@ GameObject:
   - 54: {fileID: 5450494}
   - 65: {fileID: 6548372}
   - 114: {fileID: 11410058}
-  - 114: {fileID: 11423208}
+  - 114: {fileID: 11491160}
   m_Layer: 0
   m_Name: Projectile_Caterpillar
   m_TagString: Untagged
@@ -183,20 +183,6 @@ MonoBehaviour:
   areaIncludesChildren: 0
   areaIncludesOthers: 0
   otherColliders: []
---- !u!114 &11423208
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 110004}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70960bab28ea0694787cef38422c1af8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _myObject: {fileID: 11468118}
-  flattenAxisIn3D: 1
-  radius: 0.5
 --- !u!114 &11468118
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -212,7 +198,7 @@ MonoBehaviour:
   components:
   - {fileID: 11477018}
   - {fileID: 11410058}
-  - {fileID: 11423208}
+  - {fileID: 11491160}
 --- !u!114 &11477018
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -255,6 +241,20 @@ MonoBehaviour:
     setWorldVal: 0
     localFollowTarget: {fileID: 0}
     localFollowOffset: 0
+--- !u!114 &11491160
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 110004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87ead51daff86c548ab3caf21f8164c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _myObject: {fileID: 11468118}
+  flattenAxisIn3D: 1
+  radius: 0.5
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
