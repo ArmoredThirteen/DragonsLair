@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Ate.Collision;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -52,10 +53,12 @@ namespace Ate.Collision
 		}
 
 
+		public static CollisionDetails CheckCollision (CheckCollisionSettings settings, Pair<Collider_Sphere,Collider_Sphere> colPair)
 		{
 			return CheckCollision (settings, colPair.v1, colPair.v2);
 		}
 
+		public static CollisionDetails CheckCollision (CheckCollisionSettings settings, Collider_Sphere colOne, Collider_Sphere colTwo)
 		{
 			Vector3 colOnePos = colOne.GetPosition ();
 			Vector3 colTwoPos = colTwo.GetPosition ();
@@ -71,18 +74,22 @@ namespace Ate.Collision
 		}
 
 
+		public static CollisionDetails CheckCollision (CheckCollisionSettings settings, Pair<Collider_Circle,Collider_Sphere> colPair)
 		{
 			return CheckCollision (settings, colPair.v1, colPair.v2);
 		}
 
+		public static CollisionDetails CheckCollision (CheckCollisionSettings settings, Pair<Collider_Sphere,Collider_Circle> colPair)
 		{
 			return CheckCollision (settings, colPair.v1, colPair.v2);
 		}
 
+		public static CollisionDetails CheckCollision (CheckCollisionSettings settings, Collider_Circle colOne, Collider_Sphere colTwo)
 		{
 			return CheckCollision (settings, colTwo, colOne);
 		}
 
+		public static CollisionDetails CheckCollision (CheckCollisionSettings settings, Collider_Sphere colOne, Collider_Circle colTwo)
 		{
 			Vector3 colOnePos = colOne.GetPosition ();
 			Vector3 colTwoPos = colTwo.GetPosition ();
