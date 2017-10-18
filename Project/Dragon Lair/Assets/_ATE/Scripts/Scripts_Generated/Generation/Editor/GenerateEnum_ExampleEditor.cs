@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.Collections;
-using Ate.ScriptGeneration;
+using Ate.EditorHelpers;
 
 
 namespace Ate.ScriptGeneration

@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Ate.Animation;
 
 #if UNITY_EDITOR
 using UnityEditor;
+using Ate.EditorHelpers;
 #endif
 
 

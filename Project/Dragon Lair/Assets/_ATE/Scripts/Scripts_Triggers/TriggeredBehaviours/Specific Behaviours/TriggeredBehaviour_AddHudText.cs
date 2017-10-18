@@ -6,6 +6,7 @@ using Ate.Hud;
 
 #if UNITY_EDITOR
 using UnityEditor;
+using Ate.EditorHelpers;
 #endif
 
 

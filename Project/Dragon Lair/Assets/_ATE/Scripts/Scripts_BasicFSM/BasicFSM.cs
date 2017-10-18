@@ -8,7 +8,7 @@ using System.Collections.Generic;
 //TODO: http://www.somasim.com/blog/2015/08/c-performance-tips-for-unity-part-2-structs-and-enums/
 
 
-namespace Ate
+namespace Ate.FSM
 {
 
 

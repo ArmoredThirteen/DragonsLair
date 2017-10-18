@@ -1,6 +1,7 @@
 ﻿
 #if UNITY_EDITOR
 
+
 using UnityEngine;
 using UnityEditor;
 using System.Collections;
@@ -8,7 +9,7 @@ using System.Collections.Generic;
 using UnityEditor.SceneManagement;
 
 
-namespace Ate
+namespace Ate.EditorHelpers
 {
 	
 
@@ -424,4 +425,6 @@ namespace Ate
 
 }//End Namespace
 
+
+//endif UNITY_EDITOR
 #endif

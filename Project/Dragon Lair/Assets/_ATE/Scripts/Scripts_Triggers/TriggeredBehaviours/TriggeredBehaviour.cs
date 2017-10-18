@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Ate.FSM;
 
 #if UNITY_EDITOR
 using UnityEditor;
+using Ate.EditorHelpers;
 #endif
 
 
