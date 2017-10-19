@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Ate.GameSystems;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -22,7 +23,12 @@ namespace Ate.SpriteAnimation
 		public List<Sprite> sprites = new List<Sprite> ();
 
 		public bool startPaused = false;
-		public float framesPerSecond = 8;
+		/// <summary>
+		/// If true, updates frame when internal update count matches frame length.
+		/// If false, updates frame when event data update count matches frame length.
+		/// </summary>
+		public bool localUpdate = true;
+		public int frameLength = 3;
 		public int startFrame = 0;
 
 		#endregion
@@ -34,11 +40,10 @@ namespace Ate.SpriteAnimation
 
 		private bool _drawSpriteList = false;
 
-		private float _interval_fps;
-		private float _timer_fps;
-
 		private bool _isPaused;
 		private int _curFrame = 0;
+
+		private int _totalFramesPlayed = 0;
 
 		#endregion
 
@@ -52,6 +57,7 @@ namespace Ate.SpriteAnimation
 			OnDrawSpriteList ();
 
 			startPaused = EditorGUILayout.Toggle ("Start Paused", startPaused);
+			localUpdate = EditorGUILayout.Toggle ("Local Update", localUpdate);
 			OnDrawFPS ();
 			startFrame = EditorGUILayout.IntField ("Start Frame", startFrame);
 		}
@@ -59,9 +65,7 @@ namespace Ate.SpriteAnimation
 
 		private void OnDrawFPS ()
 		{
-			float newFPS = EditorGUILayout.FloatField ("Frames/Sec", framesPerSecond);
-			if (newFPS > 0)
-				framesPerSecond = newFPS;
+			frameLength = EditorGUILayout.IntField ("Frame Length", frameLength);
 		}
 
 		private void OnDrawSpriteList ()
@@ -91,11 +95,9 @@ namespace Ate.SpriteAnimation
 
 		protected override void AteAwake ()
 		{
-			_interval_fps = 1/framesPerSecond;
-			_timer_fps = _interval_fps;
-
 			_isPaused = startPaused;
 			_curFrame = startFrame;
+			_totalFramesPlayed = 0;
 		}
 
 		protected override void AteStart ()
@@ -117,25 +119,28 @@ namespace Ate.SpriteAnimation
 				PauseSpriteAnimation ();
 			else
 				PlaySpriteAnimation ();
+
+			randTimeToPlay = Time.time + Random.Range(0.0f, 3.0f);
 		}
 
+		private float randTimeToPlay;
 		protected override void AteUpdate ()
 		{
-			if (_isPaused)
-				return;
+			if (Time.time > randTimeToPlay && _isPaused)
+				PlaySpriteAnimation ();
+		}
 
-			//	So FPS can update live in editor
-			#if UNITY_EDITOR
-			_interval_fps = 1/framesPerSecond;
-			#endif
 
-			_timer_fps -= Time.deltaTime;
-			if (_timer_fps <= 0)
-			{
-				_timer_fps = _interval_fps;
-				int nextFrame = (_curFrame+1) % sprites.Count;
-				ChangeFrameTo (nextFrame);
-			}
+		protected override void RegisterEvents ()
+		{
+			GameManager.Events.Register<EventType_Updates, EventData_Updates>
+			((int)EventType_Updates.fpsUpdate24, OnFpsUpdate24);
+		}
+
+		protected override void UnregisterEvents ()
+		{
+			GameManager.Events.Unregister<EventType_Updates, EventData_Updates>
+			((int)EventType_Updates.fpsUpdate24, OnFpsUpdate24);
 		}
 
 		#endregion
@@ -159,10 +164,38 @@ namespace Ate.SpriteAnimation
 
 		#region Private Methods
 
+		private void OnFpsUpdate24 (EventData_Updates eventData)
+		{
+			if (_isPaused)
+				return;
+
+			bool shouldUpdate = false;
+
+			if (localUpdate)
+			{
+				if ((_totalFramesPlayed % frameLength) == 0)
+					shouldUpdate = true;
+			}
+			else
+			{
+				if ((eventData.updateIndex % frameLength) == 0)
+					shouldUpdate = true;
+			}
+
+			if (shouldUpdate)
+			{
+				int newFrame = (_curFrame + 1) % sprites.Count;
+				ChangeFrameTo (newFrame);
+			}
+
+			_totalFramesPlayed += 1;
+		}
+
+
 		private void ChangeFrameTo (int newFrame)
 		{
-			_curFrame = newFrame;
 			_spriteRenderer.sprite = sprites[_curFrame];
+			_curFrame = newFrame;
 		}
 
 		#endregion
