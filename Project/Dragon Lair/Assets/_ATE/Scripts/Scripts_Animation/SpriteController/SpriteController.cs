@@ -27,7 +27,7 @@ namespace Ate.SpriteAnimation
 		/// If true, updates frame when internal update count matches frame length.
 		/// If false, updates frame when event data update count matches frame length.
 		/// </summary>
-		public bool localUpdate = true;
+		public bool localUpdate = false;
 		public int frameLength = 3;
 		public int startFrame = 0;
 
@@ -58,15 +58,10 @@ namespace Ate.SpriteAnimation
 
 			startPaused = EditorGUILayout.Toggle ("Start Paused", startPaused);
 			localUpdate = EditorGUILayout.Toggle ("Local Update", localUpdate);
-			OnDrawFPS ();
+			frameLength = EditorGUILayout.IntField ("Frame Length", frameLength);
 			startFrame = EditorGUILayout.IntField ("Start Frame", startFrame);
 		}
 
-
-		private void OnDrawFPS ()
-		{
-			frameLength = EditorGUILayout.IntField ("Frame Length", frameLength);
-		}
 
 		private void OnDrawSpriteList ()
 		{

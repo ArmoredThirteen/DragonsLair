@@ -33,6 +33,8 @@ namespace Ate
 
 		private string _filter = "";
 		private int _index_addChoice = 0;
+
+		private bool _showComponentList = false;
 		#endif
 
 		#endregion
@@ -55,6 +57,10 @@ namespace Ate
 			EditorGUILayout.Space ();
 
 			DrawComponentAdder ();
+
+			EditorGUILayout.Space ();
+
+			DrawComponentList ();
 		}
 
 		private void DrawComponentRemover ()
@@ -87,6 +93,15 @@ namespace Ate
 			EditorGUILayout.EndHorizontal ();
 		}
 
+		private void DrawComponentList ()
+		{
+			_showComponentList = EditorGUILayout.Toggle ("Show Component List", _showComponentList);
+			if (!_showComponentList)
+				return;
+
+			EditorHelper.DrawResizableList ("Components", ref components, OnDrawComponent);
+		}
+
 		private List<string> GetFilteredChoices ()
 		{
 			List<string> choices = Editor_ListComponents_OnCompile.Components;
@@ -105,6 +120,13 @@ namespace Ate
 			}
 
 			return choices;
+		}
+
+		private void OnDrawComponent (int index)
+		{
+			components[index] = EditorGUILayout.ObjectField
+				(components[index], typeof(AteComponent), true)
+				as AteComponent;
 		}
 
 		#endif
@@ -263,6 +285,8 @@ namespace Ate
 		{
 			for (int i = 0; i < components.Count; i++)
 			{
+				if (!components[i].isActiveAndEnabled)
+					continue;
 				components[i].ManagedUpdateOne (eventData);
 			}
 		}
@@ -274,6 +298,8 @@ namespace Ate
 		{
 			for (int i = 0; i < components.Count; i++)
 			{
+				if (!components[i].isActiveAndEnabled)
+					continue;
 				components[i].ManagedLateUpdateOne (eventData);
 			}
 		}
