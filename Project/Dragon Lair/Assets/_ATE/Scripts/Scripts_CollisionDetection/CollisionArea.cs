@@ -10,6 +10,10 @@ using Ate.EditorHelpers;
 #endif
 
 
+//#define DebugEnter
+//#define DebugExit
+
+
 namespace Ate.Collision
 {
 	
@@ -170,6 +174,12 @@ namespace Ate.Collision
 						_areaColliders.Add (otherColliders[i]);
 				}
 			}
+
+			//TODO: Getting hacky here
+			for (int i = 0; i < _areaColliders.Count; i++)
+			{
+				_areaColliders[i].MyArea = this;
+			}
 		}
 
 		private void AddAreaCollidersFromGameObject (GameObject theObj)
@@ -211,20 +221,24 @@ namespace Ate.Collision
 		{
 			CleanCurrentCollisions ();
 
+			bool areaOneIsThis  = eventData.AreaOne.InstanceID == this.InstanceID;
+			//bool areaTwoIsThis  = eventData.AreaTwo.InstanceID == this.InstanceID;
 			bool colOneIsInArea = _areaColliders.Contains (eventData.ColliderOne);
 			bool colTwoIsInArea = _areaColliders.Contains (eventData.ColliderTwo);
 
 			if (!IsValidCollision (colOneIsInArea, colTwoIsInArea))
 				return;
-			
-			Collider ourCollider     = colOneIsInArea ? eventData.ColliderOne : eventData.ColliderTwo;
+
+			CollisionArea thisArea    = this;
+			CollisionArea hittingArea = areaOneIsThis ? eventData.AreaTwo : eventData.AreaOne;
+			Collider hitCollider     = colOneIsInArea ? eventData.ColliderOne : eventData.ColliderTwo;
 			Collider hittingCollider = colTwoIsInArea ? eventData.ColliderOne : eventData.ColliderTwo;
 
 			bool isFirstCollider = !_currentCollisions.Contains (hittingCollider);
 			_currentCollisions.Add (hittingCollider);
 
 			if (isFirstCollider || !collidersOnlyEnterOnFirst)
-				SendCollisionAreaBegan (ourCollider, hittingCollider);
+				SendCollisionAreaBegan (thisArea, hittingArea, hitCollider, hittingCollider);
 		}
 
 		private void OnCollisionEnded (EventData_Collision eventData)
@@ -265,16 +279,17 @@ namespace Ate.Collision
 		}
 
 
-		private void SendCollisionAreaBegan (Collider ourCollider, Collider hittingCollider)
+		private void SendCollisionAreaBegan (CollisionArea thisArea, CollisionArea hittingArea, Collider hitCollider, Collider hittingCollider)
 		{
 			#if DebugEnter
 			DebugLog.Simple ("<color=green>Collision Began</color>\r\nCol One: ", ourCollider, "Col Two: ", hittingCollider);
 			#endif
 
 			EventData_Collision eventData = new EventData_Collision ();
-			eventData.FullCollisionArea = this;
-			eventData.AreaCollider      = ourCollider;
-			eventData.HittingCollider   = hittingCollider;
+			eventData.HitArea         = thisArea;
+			eventData.HittingArea     = hittingArea;
+			eventData.HitCollider     = hitCollider;
+			eventData.HittingCollider = hittingCollider;
 
 			GameManager.Events.Broadcast<EventType_Collision> ((int)EventType_Collision.AreaCollisionBegan, eventData);
 		}
@@ -286,8 +301,8 @@ namespace Ate.Collision
 			#endif
 
 			EventData_Collision eventData = new EventData_Collision ();
-			eventData.FullCollisionArea = this;
-			eventData.AreaCollider      = ourCollider;
+			eventData.HitArea = this;
+			eventData.HitCollider      = ourCollider;
 			eventData.HittingCollider   = hittingCollider;
 
 			GameManager.Events.Broadcast<EventType_Collision> ((int)EventType_Collision.AreaCollisionEnded, eventData);

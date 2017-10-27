@@ -15,18 +15,23 @@ namespace Ate.Collision
 
 		public CollisionDetails (Collider colOne, Collider colTwo)
 		{
-			this.colOne = colOne;
-			this.colTwo = colTwo;
+			this.areaOne = colOne.MyArea;
+			this.areaTwo = colTwo.MyArea;
+			this.colOne  = colOne;
+			this.colTwo  = colTwo;
 		}
 
-		public CollisionDetails (Pair<Collider,Collider> colPair)
+		/*public CollisionDetails (Pair<Collider,Collider> colPair)
 		{
 			this.colOne = colPair.v1;
 			this.colTwo = colPair.v2;
-		}
+		}*/
 
 
 		#region Public Variables
+
+		public CollisionArea areaOne;
+		public CollisionArea areaTwo;
 
 		public Collider colOne;
 		public Collider colTwo;

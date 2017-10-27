@@ -198,12 +198,12 @@ namespace Ate
 
 			if (collisionArea == null)
 				return;
-			if (eventData.FullCollisionArea == null)
+			if (eventData.HitArea == null)
 				return;
-			if (collisionArea.InstanceID != eventData.FullCollisionArea.InstanceID)
+			if (collisionArea.InstanceID != eventData.HitArea.InstanceID)
 				return;
-
-			AteObject triggerer = eventData.HittingCollider.gameObject.AteObject ();
+			
+			AteObject triggerer = eventData.HittingArea.gameObject.AteObject ();
 			if (triggerer == null)
 				return;
 
@@ -288,12 +288,12 @@ namespace Ate
 
 			if (collisionArea == null)
 				return;
-			if (eventData.FullCollisionArea == null)
+			if (eventData.HitArea == null)
 				return;
-			if (collisionArea.InstanceID != eventData.FullCollisionArea.InstanceID)
+			if (collisionArea.InstanceID != eventData.HitArea.InstanceID)
 				return;
 
-			AteObject triggerer = eventData.HittingCollider.gameObject.AteObject ();
+			AteObject triggerer = eventData.HitArea.gameObject.AteObject ();
 			if (triggerer == null)
 				return;
 

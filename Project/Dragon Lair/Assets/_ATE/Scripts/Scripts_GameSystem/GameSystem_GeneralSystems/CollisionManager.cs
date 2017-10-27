@@ -41,6 +41,8 @@ namespace Ate.GameSystems
 			for (int i = 0; i < details.Count; i++)
 			{
 				EventData_Collision theData = new EventData_Collision ();
+				theData.AreaOne = details[i].areaOne;
+				theData.AreaTwo = details[i].areaTwo;
 				theData.ColliderOne = details[i].colOne;
 				theData.ColliderTwo = details[i].colTwo;
 

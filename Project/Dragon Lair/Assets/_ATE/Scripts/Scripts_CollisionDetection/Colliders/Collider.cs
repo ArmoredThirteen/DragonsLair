@@ -19,10 +19,18 @@ namespace Ate.Collision
 		
 		#region Public Variables
 
+		public CollisionArea MyArea
+		{
+			get {return _myArea;}
+			set {_myArea = value;}
+		}
+
 		#endregion
 
 
 		#region Private Variables
+
+		private CollisionArea _myArea = null;
 
 		#endregion
 

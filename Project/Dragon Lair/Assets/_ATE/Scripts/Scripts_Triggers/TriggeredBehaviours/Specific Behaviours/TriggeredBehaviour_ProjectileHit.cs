@@ -10,7 +10,7 @@ namespace Ate
 {
 
 
-	public class TriggeredBehaviour_ABaseCopy : TriggeredBehaviour
+	public class TriggeredBehaviour_ProjectileHit : TriggeredBehaviour
 	{
 		//	Variables for designers.
 		//	Shown in editor with DrawChildInspector() at bottom.
@@ -74,7 +74,7 @@ namespace Ate
 		/// </summary>
 		protected override void OnRequestedPlaying (AteObject triggerer)
 		{
-			
+			Debug.Log ("<color=maroon>Projectile Hit: </color>" + name + " hit by -> " + triggerer.name);
 		}
 
 		/// <summary>

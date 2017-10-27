@@ -6,6 +6,7 @@ using Collider = Ate.Collision.Collider;
 
 #if UNITY_EDITOR
 using UnityEditor;
+using Ate.EditorHelpers;
 #endif
 
 
@@ -260,15 +261,76 @@ namespace Ate.Collision
 			Collider_Circle[] colliders =
 				FindObjectsOfType (typeof (Collider_Circle)) as Collider_Circle[];
 
+			Vector3 upVector = new Vector3 ();
+			switch (upAxis)
+			{
+				case VectorAxis.X:
+					upVector = Vector3.right;
+					break;
+
+				case VectorAxis.Y:
+					upVector = Vector3.up;
+					break;
+
+				case VectorAxis.Z:
+					upVector = Vector3.forward;
+					break;
+			}
+
 			for (int i = 0; i < colliders.Length; i++)
 			{
-				UnityEditor.Handles.DrawWireDisc (colliders[i].transform.position, Vector3.up, colliders[i].radius);
+				if (!colliders[i].isActiveAndEnabled)
+					continue;
+				
+				UnityEditor.Handles.DrawWireDisc (colliders[i].transform.position, upVector, colliders[i].radius);
 			}
 		}
 
 		private void OnDrawSpheres ()
 		{
-			
+			Collider_Sphere[] colliders =
+				FindObjectsOfType (typeof (Collider_Sphere)) as Collider_Sphere[];
+
+			Vector3 upVector  = new Vector3 ();
+			Vector3 vectTwo   = new Vector3 ();
+			Vector3 vectThree = new Vector3 ();
+
+			switch (upAxis)
+			{
+				case VectorAxis.X:
+					upVector  = Vector3.right;
+					vectTwo   = Vector3.up;
+					vectThree = Vector3.forward;
+					break;
+
+				case VectorAxis.Y:
+					upVector = Vector3.up;
+					vectTwo   = Vector3.right;
+					vectThree = Vector3.forward;
+					break;
+
+				case VectorAxis.Z:
+					upVector = Vector3.forward;
+					vectTwo   = Vector3.right;
+					vectThree = Vector3.up;
+					break;
+			}
+
+			for (int i = 0; i < colliders.Length; i++)
+			{
+				if (!colliders[i].isActiveAndEnabled)
+					continue;
+
+				UnityEditor.Handles.DrawWireDisc (colliders[i].transform.position, upVector,  colliders[i].radius);
+
+				Color defColor = UnityEditor.Handles.color;
+				UnityEditor.Handles.color = Color.red;
+
+				UnityEditor.Handles.DrawWireDisc (colliders[i].transform.position, vectTwo,   colliders[i].radius);
+				UnityEditor.Handles.DrawWireDisc (colliders[i].transform.position, vectThree, colliders[i].radius);
+
+				UnityEditor.Handles.color = defColor;
+			}
 		}
 
 		#endif

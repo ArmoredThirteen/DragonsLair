@@ -57,7 +57,7 @@ namespace Ate
 		#endif
 
 
-		public void Fire (Vector3 targetPos)
+		public void Fire (AteObject firer, Vector3 targetPos)
 		{
 			_targetPosition = Position;
 			targetDirection = Position.GetDir_To (targetPos, moveSpeed);
