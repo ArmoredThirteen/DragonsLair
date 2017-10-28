@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using Ate.GameSystems;
 
 #if UNITY_EDITOR
 using UnityEditor;
+using Ate.EditorHelpers;
 #endif
 
 
@@ -12,12 +14,14 @@ namespace Ate.Collision
 	
 
 	/// <summary>
-	/// Description
+	/// Base class for various types of colliders.
 	/// </summary>
 	public abstract class Collider : AteComponent
 	{
 		
 		#region Public Variables
+
+		public List<CollisionArea> ignoreAreas = new List<CollisionArea> ();
 
 		public CollisionArea MyArea
 		{
@@ -30,6 +34,8 @@ namespace Ate.Collision
 
 		#region Private Variables
 
+		private bool _showIgnoreAreas = false;
+
 		private CollisionArea _myArea = null;
 
 		#endregion
@@ -40,6 +46,17 @@ namespace Ate.Collision
 		public override void DrawInspector ()
 		{
 			base.DrawInspector ();
+
+			_showIgnoreAreas = EditorGUILayout.Toggle ("Show Ignore Areas", _showIgnoreAreas);
+			if (_showIgnoreAreas)
+				EditorHelper.DrawResizableList<CollisionArea> ("Ignore Collisions With", ref ignoreAreas, OnDrawIgnoreArea);
+		}
+
+		private void OnDrawIgnoreArea (int index)
+		{
+			ignoreAreas[index] = EditorGUILayout.ObjectField
+				("Area", ignoreAreas[index], typeof(CollisionArea), true)
+				as CollisionArea;
 		}
 
 		#endif

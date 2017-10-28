@@ -217,6 +217,15 @@ namespace Ate.Collision
 				if (distance > sqrMaxCheckDistance)
 					continue;
 
+				//	If particular collision should be ignored
+				if (_colliderPairs[i].v1.MyArea != null && _colliderPairs[i].v2.MyArea != null)
+				{
+					if (_colliderPairs[i].v1.ignoreAreas.Contains (_colliderPairs[i].v2.MyArea))
+						continue;
+					if (_colliderPairs[i].v2.ignoreAreas.Contains (_colliderPairs[i].v1.MyArea))
+						continue;
+				}
+
 				CollisionDetails details = _colliderPairs[i].v1.CheckCollision (settings, _colliderPairs[i].v2);
 
 				if (details != null)

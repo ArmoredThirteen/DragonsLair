@@ -45,13 +45,13 @@ namespace Ate
 			base.DrawInspector ();
 
 			maxLifetime = EditorGUILayout.FloatField ("Max Lifetime", maxLifetime);
-			moveSpeed = EditorGUILayout.FloatField ("Move Speed", moveSpeed);
+			moveSpeed   = EditorGUILayout.FloatField ("Move Speed",   moveSpeed);
 
 			faceTarget = EditorGUILayout.Toggle ("Face Target", faceTarget);
 
 			pixelsPerUnit = EditorGUILayout.IntField ("Pixels per Unit", pixelsPerUnit);
-			localUpdate = EditorGUILayout.Toggle ("Local Update", localUpdate);
-			frameLength = EditorGUILayout.IntField ("Frame Length", frameLength);
+			localUpdate   = EditorGUILayout.Toggle   ("Local Update",    localUpdate);
+			frameLength   = EditorGUILayout.IntField ("Frame Length",    frameLength);
 		}
 
 		#endif

@@ -293,7 +293,7 @@ namespace Ate
 			if (collisionArea.InstanceID != eventData.HitArea.InstanceID)
 				return;
 
-			AteObject triggerer = eventData.HitArea.gameObject.AteObject ();
+			AteObject triggerer = eventData.HittingArea.gameObject.AteObject ();
 			if (triggerer == null)
 				return;
 

@@ -21,24 +21,6 @@ namespace Ate
 		#region Area Collisions
 
 		/// <summary>
-		/// During a base collision, this is arbitrarily one of the two collision areas involved.
-		/// </summary>
-		public CollisionArea AreaOne
-		{
-			get {return _areaOne;}
-			set {_areaOne = value;}
-		}
-
-		/// <summary>
-		/// During a base collision, this is arbitrarily one of the two collision areas involved.
-		/// </summary>
-		public CollisionArea AreaTwo
-		{
-			get {return _areaTwo;}
-			set {_areaTwo = value;}
-		}
-
-		/// <summary>
 		/// During an Area Collision, this is the CollisionArea that was collided with.
 		/// </summary>
 		public CollisionArea HitArea

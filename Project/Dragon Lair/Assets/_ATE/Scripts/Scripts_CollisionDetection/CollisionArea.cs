@@ -122,7 +122,7 @@ namespace Ate.Collision
 				((int)EventType_Collision.CollisionEnded, OnCollisionEnded);
 		}
 
-		protected override void AteStart ()
+		protected override void AteAwake ()
 		{
 			FillAreaColliders ();
 		}
@@ -136,6 +136,14 @@ namespace Ate.Collision
 
 
 		#region Public Methods
+
+		public void SetColliderIgnoreArea (CollisionArea theArea)
+		{
+			for (int i = 0; i < _areaColliders.Count; i++)
+			{
+				_areaColliders[i].ignoreAreas.Add (theArea);
+			}
+		}
 
 		#endregion
 
@@ -221,8 +229,7 @@ namespace Ate.Collision
 		{
 			CleanCurrentCollisions ();
 
-			bool areaOneIsThis  = eventData.AreaOne.InstanceID == this.InstanceID;
-			//bool areaTwoIsThis  = eventData.AreaTwo.InstanceID == this.InstanceID;
+			bool areaOneIsThis  = eventData.ColliderOne.MyArea.InstanceID == this.InstanceID;
 			bool colOneIsInArea = _areaColliders.Contains (eventData.ColliderOne);
 			bool colTwoIsInArea = _areaColliders.Contains (eventData.ColliderTwo);
 
@@ -230,9 +237,9 @@ namespace Ate.Collision
 				return;
 
 			CollisionArea thisArea    = this;
-			CollisionArea hittingArea = areaOneIsThis ? eventData.AreaTwo : eventData.AreaOne;
-			Collider hitCollider     = colOneIsInArea ? eventData.ColliderOne : eventData.ColliderTwo;
-			Collider hittingCollider = colTwoIsInArea ? eventData.ColliderOne : eventData.ColliderTwo;
+			CollisionArea hittingArea = areaOneIsThis ? eventData.ColliderTwo.MyArea : eventData.ColliderOne.MyArea;
+			Collider hitCollider      = colOneIsInArea ? eventData.ColliderOne : eventData.ColliderTwo;
+			Collider hittingCollider  = colTwoIsInArea ? eventData.ColliderOne : eventData.ColliderTwo;
 
 			bool isFirstCollider = !_currentCollisions.Contains (hittingCollider);
 			_currentCollisions.Add (hittingCollider);
@@ -245,21 +252,23 @@ namespace Ate.Collision
 		{
 			CleanCurrentCollisions ();
 
+			bool areaOneIsThis  = eventData.ColliderOne.MyArea.InstanceID == this.InstanceID;
 			bool colOneIsInArea = _areaColliders.Contains (eventData.ColliderOne);
 			bool colTwoIsInArea = _areaColliders.Contains (eventData.ColliderTwo);
 
 			if (!IsValidCollision (colOneIsInArea, colTwoIsInArea))
 				return;
 
-			Collider ourCollider     = colOneIsInArea ? eventData.ColliderOne : eventData.ColliderTwo;
-			Collider hittingCollider = colOneIsInArea ? eventData.ColliderTwo : eventData.ColliderOne;
+			CollisionArea thisArea    = this;
+			CollisionArea hittingArea = areaOneIsThis ? eventData.ColliderTwo.MyArea : eventData.ColliderOne.MyArea;
+			Collider hitCollider      = colOneIsInArea ? eventData.ColliderOne : eventData.ColliderTwo;
+			Collider hittingCollider  = colOneIsInArea ? eventData.ColliderTwo : eventData.ColliderOne;
 
 			_currentCollisions.Remove (hittingCollider);
 			bool isLastCollider = !_currentCollisions.Contains (hittingCollider);
 
-
 			if (isLastCollider || !collidersOnlyExitOnLast)
-				SendCollisionAreaEnded (ourCollider, hittingCollider);
+				SendCollisionAreaEnded (thisArea, hittingArea, hitCollider, hittingCollider);
 		}
 
 		/// <summary>
@@ -294,16 +303,17 @@ namespace Ate.Collision
 			GameManager.Events.Broadcast<EventType_Collision> ((int)EventType_Collision.AreaCollisionBegan, eventData);
 		}
 
-		private void SendCollisionAreaEnded (Collider ourCollider, Collider hittingCollider)
+		private void SendCollisionAreaEnded (CollisionArea thisArea, CollisionArea hittingArea, Collider hitCollider, Collider hittingCollider)
 		{
 			#if DebugExit
 			DebugLog.Simple ("<color=red>Collision Ended</color>\r\nCol One: ", ourCollider, "Col Two: ", hittingCollider);
 			#endif
 
 			EventData_Collision eventData = new EventData_Collision ();
-			eventData.HitArea = this;
-			eventData.HitCollider      = ourCollider;
-			eventData.HittingCollider   = hittingCollider;
+			eventData.HitArea         = thisArea;
+			eventData.HittingArea     = hittingArea;
+			eventData.HitCollider     = hitCollider;
+			eventData.HittingCollider = hittingCollider;
 
 			GameManager.Events.Broadcast<EventType_Collision> ((int)EventType_Collision.AreaCollisionEnded, eventData);
 		}

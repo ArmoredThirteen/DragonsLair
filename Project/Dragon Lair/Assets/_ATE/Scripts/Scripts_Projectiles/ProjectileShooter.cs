@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Ate.Collision;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -154,18 +155,18 @@ namespace Ate
 			if (targetTransform == null)
 				return;
 			
-			Projectile newObject = GameObject.Instantiate<Projectile> (projectilePrefab) as Projectile;
-			if (newObject == null)
+			Projectile newProjectile = GameObject.Instantiate<Projectile> (projectilePrefab) as Projectile;
+			if (newProjectile == null)
 				return;
 
 			//	Projectile starting location
 			Transform curBarrel = barrels[_barrelIndex];
 			//TODO: RandomInCircle_UpY falsely assumes Y is always up
-			newObject.gameObject.SetPosition (curBarrel.position.GetLoc_RandomInCircle_UpY (fireStartVariance));
+			newProjectile.gameObject.SetPosition (curBarrel.position.GetLoc_RandomInCircle_UpY (fireStartVariance));
 			_barrelIndex = (_barrelIndex + 1) % barrels.Count;
 
 			//	Projectile parent
-			newObject.MyTransform.parent = projectileParent;
+			newProjectile.MyTransform.parent = projectileParent;
 
 			//	Projectile target location
 			Vector3 location = new Vector3 ();
@@ -191,9 +192,26 @@ namespace Ate
 					break;
 			}
 
+			ModifyProjectile (firer, newProjectile);
+
 			//	Roughly fire toward the target
 			//TODO: RandomInCircle_UpY falsely assumes Y is always up
-			newObject.Fire (firer, location.GetLoc_RandomInCircle_UpY (targetVariance));
+			newProjectile.Fire (firer, location.GetLoc_RandomInCircle_UpY (targetVariance));
+		}
+
+
+		//TODO: This is supposed to be an entire modification system, not just ignoreArea stuff
+		private void ModifyProjectile (AteObject firer, Projectile newProjectile)
+		{
+			CollisionArea projectileArea = newProjectile.GetComponent<CollisionArea> () as CollisionArea;
+			if (projectileArea == null)
+				return;
+
+			CollisionArea firerArea = firer.GetComponent<CollisionArea> () as CollisionArea;
+			if (firerArea == null)
+				return;
+
+			projectileArea.SetColliderIgnoreArea (firerArea);
 		}
 
 	}//End Class
