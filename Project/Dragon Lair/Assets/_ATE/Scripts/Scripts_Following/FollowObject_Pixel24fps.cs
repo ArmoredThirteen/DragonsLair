@@ -16,7 +16,7 @@ namespace Ate
 	/// Intended to snap to pixels on slower framerate.
 	/// Uses target object as guide to determine when to snap.
 	/// </summary>
-	public class FollowObject_Pixel24fps : AteComponent
+	public class FollowObject_Pixel24fps : AteComponent_fpsControlled
 	{
 
 		#region Public Variables
@@ -25,20 +25,10 @@ namespace Ate
 
 		public int pixelsPerUnit = 8;
 
-		/// <summary>
-		/// If true, updates frame when internal update count matches frame length.
-		/// If false, updates frame when event data update count matches frame length.
-		/// </summary>
-		public bool localUpdate = false;
-		public int frameLength = 6;
-
 		#endregion
 
 
 		#region Private Variables
-
-		private int _curFrame = 0;
-		private int _totalFramesPlayed = 0;
 
 		#endregion
 
@@ -49,14 +39,13 @@ namespace Ate
 		{
 			base.DrawInspector ();
 
+			EditorGUILayout.Space ();
+
 			targetObject = EditorGUILayout.ObjectField
 				("Target", targetObject, typeof(GameObject), true)
 				as GameObject;
 
 			pixelsPerUnit = EditorGUILayout.IntField ("Pixels per Unit", pixelsPerUnit);
-
-			localUpdate = EditorGUILayout.Toggle ("Local Update", localUpdate);
-			frameLength = EditorGUILayout.IntField ("Frame Length", frameLength);
 		}
 
 		#endif
@@ -70,16 +59,14 @@ namespace Ate
 		}
 
 
-		protected override void RegisterEvents ()
+		protected override void UpdateBaseFps ()
 		{
-			GameManager.Events.Register<EventType_Updates, EventData_Updates>
-			((int)EventType_Updates.fpsUpdate24, OnFpsUpdate24);
+
 		}
 
-		protected override void UnregisterEvents ()
+		protected override void UpdateFrameLength ()
 		{
-			GameManager.Events.Unregister<EventType_Updates, EventData_Updates>
-			((int)EventType_Updates.fpsUpdate24, OnFpsUpdate24);
+			UpdateLocation ();
 		}
 
 		#endregion
@@ -91,29 +78,6 @@ namespace Ate
 
 
 		#region Private Methods
-
-		private void OnFpsUpdate24 (EventData_Updates eventData)
-		{
-			bool shouldUpdate = false;
-
-			if (localUpdate)
-			{
-				if ((_totalFramesPlayed % frameLength) == 0)
-					shouldUpdate = true;
-			}
-			else
-			{
-				if ((eventData.updateIndex % frameLength) == 0)
-					shouldUpdate = true;
-			}
-
-			if (shouldUpdate)
-			{
-				UpdateLocation ();
-			}
-
-			_totalFramesPlayed += 1;
-		}
 
 		private void UpdateLocation ()
 		{

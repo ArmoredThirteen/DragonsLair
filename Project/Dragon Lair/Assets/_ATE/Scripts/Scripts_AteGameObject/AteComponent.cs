@@ -45,12 +45,59 @@ namespace Ate
 				DrawRemoveOption ();
 		}
 
+
 		private void DrawRemoveOption ()
 		{
 			if (GUILayout.Button ("Remove Component"))
 			{
-				_myObject.DestroyComponent (this);
+				DestroyThroughMyObject ();
 				return;
+			}
+		}
+
+		/// <summary>
+		/// Uses _myObject.DestroyComponent (this).
+		/// Use in editor instead of destroying this object directly.
+		/// DestroyComponent does background modifications to the AteObject.
+		/// </summary>
+		private void DestroyThroughMyObject ()
+		{
+			_myObject.DestroyComponent (this);
+		}
+
+		/// <summary>
+		/// Menu option to right click and destroy components correctly.
+		/// </summary>
+		[MenuItem("CONTEXT/AteComponent/Ate Destroy Component")]
+		private static void DestroyThroughMyObject (MenuCommand command)
+		{
+			AteComponent component = command.context as AteComponent;
+			if (component == null)
+				return;
+
+			component.DestroyThroughMyObject ();
+		}
+
+
+		/// <summary>
+		/// For when this instance is reset. Used to automatically
+		/// add this component to MyObject.
+		/// </summary>
+		private void Reset ()
+		{
+			AteObject myObj = gameObject.GetComponent<AteObject> () as AteObject;
+			//	Should never happen
+			if (myObj == null)
+				return;
+
+			myObj.AddComponent_ByReference (this);
+
+			EditorUtility.SetDirty (myObj);
+
+			//	If it is a scene object and the application isn't playing
+			if (!string.IsNullOrEmpty (myObj.gameObject.scene.name) && !Application.isPlaying)
+			{
+				EditorApplication.MarkSceneDirty ();
 			}
 		}
 

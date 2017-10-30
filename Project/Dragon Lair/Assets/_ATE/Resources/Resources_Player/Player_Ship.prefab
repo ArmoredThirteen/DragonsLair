@@ -44,7 +44,7 @@ GameObject:
   - 114: {fileID: 11462660}
   - 114: {fileID: 11406192}
   m_Layer: 0
-  m_Name: PlayerWeaponTurret
+  m_Name: WeaponTurret
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -186,7 +186,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 144910}
-  m_LocalRotation: {x: 0, y: 0.017452408, z: 0, w: 0.9998477}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.5, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -248,7 +248,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 109532}
-  m_LocalRotation: {x: 0, y: 0.017452408, z: 0, w: 0.9998477}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1.6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -346,6 +346,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _myObject: {fileID: 11481782}
+  ignoreAreas: []
   flattenAxisIn3D: 0
   radius: 1.5
 --- !u!114 &11456694
@@ -455,10 +456,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _myObject: {fileID: 11482216}
+  localUpdate: 0
+  frameLengthFrom: 100
+  frameLength_custom: 4
   targetObject: {fileID: 0}
   pixelsPerUnit: 2
-  localUpdate: 0
-  frameLength: 3
 --- !u!114 &11480416
 MonoBehaviour:
   m_ObjectHideFlags: 1

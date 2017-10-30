@@ -7,7 +7,7 @@ using UnityEditor;
 #endif
 
 
-namespace Ate
+namespace Ate.Projectiles
 {
 
 

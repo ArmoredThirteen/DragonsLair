@@ -25,6 +25,8 @@ namespace Ate
 
 
 		#if UNITY_EDITOR
+		private bool _showAteAddRemove = false;
+
 		private bool _canRemoveComponents = false;
 		public bool CanRemoveComponents ()
 		{
@@ -52,11 +54,15 @@ namespace Ate
 
 			EditorGUILayout.Space ();
 
-			DrawComponentRemover ();
+			_showAteAddRemove = EditorGUILayout.Toggle ("Show Add/Remove Options", _showAteAddRemove);
+			if (_showAteAddRemove)
+			{
+				DrawComponentRemover ();
 
-			EditorGUILayout.Space ();
+				EditorGUILayout.Space ();
 
-			DrawComponentAdder ();
+				DrawComponentAdder ();
+			}
 
 			EditorGUILayout.Space ();
 
@@ -87,7 +93,7 @@ namespace Ate
 			if (GUILayout.Button ("Add"))
 			{
 				Type theType = Type.GetType (choices[_index_addChoice]);
-				AddComponent (theType);
+				AddComponent_ByType (theType);
 			}
 
 			EditorGUILayout.EndHorizontal ();
@@ -127,6 +133,25 @@ namespace Ate
 			components[index] = EditorGUILayout.ObjectField
 				(components[index], typeof(AteComponent), true)
 				as AteComponent;
+		}
+
+
+		public void AddComponent_ByType (Type theType)
+		{
+			AteComponent theComponent = gameObject.AddComponent (theType) as AteComponent;
+			if (theComponent == null)
+				return;
+
+			AddComponent_ByReference (theComponent);
+		}
+
+		public void AddComponent_ByReference (AteComponent theComponent)
+		{
+			//	Only add component if it isn't already in the components list
+			if (!components.Contains (theComponent))
+				components.Add (theComponent);
+			
+			theComponent.SetMyObject (this);
 		}
 
 		#endif
@@ -222,16 +247,6 @@ namespace Ate
 
 		#region Base Methods
 
-		public void AddComponent (Type theType)
-		{
-			AteComponent theComponent = gameObject.AddComponent (theType) as AteComponent;
-			if (theComponent == null)
-				return;
-
-			components.Add (theComponent);
-			theComponent.SetMyObject (this);
-		}
-
 		/// <summary>
 		/// Called by components when they are removed.
 		/// </summary>
@@ -239,6 +254,19 @@ namespace Ate
 		{
 			components.Remove (theComponent);
 			GameObject.DestroyImmediate (theComponent);
+
+			#if UNITY_EDITOR
+			if (!Application.isPlaying)
+			{
+				EditorUtility.SetDirty (this);
+
+				//	If it is a scene object
+				if (!string.IsNullOrEmpty (this.gameObject.scene.name))
+				{
+					EditorApplication.MarkSceneDirty ();
+				}
+			}
+			#endif
 		}
 
 

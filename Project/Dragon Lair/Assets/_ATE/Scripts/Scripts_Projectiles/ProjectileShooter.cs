@@ -9,7 +9,7 @@ using Ate.EditorHelpers;
 #endif
 
 
-namespace Ate
+namespace Ate.Projectiles
 {
 
 

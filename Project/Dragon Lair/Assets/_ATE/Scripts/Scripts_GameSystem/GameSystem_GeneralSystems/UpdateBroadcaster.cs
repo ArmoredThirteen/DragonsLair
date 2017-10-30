@@ -9,6 +9,8 @@ namespace Ate.GameSystems
 
 	public class UpdateBroadcaster : GameSystem
 	{
+		public int controlledFPS_universalFrameLength = 3;
+
 		private static List<EventData_Updates> _data_systemUpdates     = new List<EventData_Updates> ();
 		private static List<EventData_Updates> _data_systemLateUpdates = new List<EventData_Updates> ();
 

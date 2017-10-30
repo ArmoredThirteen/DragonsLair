@@ -6,14 +6,14 @@ using UnityEditor;
 #endif
 
 
-namespace Ate.Projectiles
+namespace Ate.Enemies
 {
 	
 	
 	/// <summary>
-	/// Description
+	/// Controls movement of enemy ships.
 	/// </summary>
-	public abstract class ProjectileMod : AteComponent
+	public class EnemyShipMovement : AteComponent
 	{
 		
 		#region Public Variables

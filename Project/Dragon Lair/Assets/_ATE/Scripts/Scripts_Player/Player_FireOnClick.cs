@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using Ate.GameSystems;
+using Ate.Projectiles;
 
 #if UNITY_EDITOR
 using UnityEditor;
