@@ -78,8 +78,9 @@ namespace Ate
 
 			if (frameLengthFrom == FrameLengthSetting.Universal)
 			{
-				UpdateBroadcaster theUpdateBroadcaster = GameManager.GetGameSystem<UpdateBroadcaster> ();
-				EditorGUILayout.LabelField ("Current Universal Frame Length: " + theUpdateBroadcaster.controlledFPS_universalFrameLength);
+				//TODO: Find the object in the scene because this throws nulls in editor
+				//UpdateBroadcaster theUpdateBroadcaster = GameManager.GetGameSystem<UpdateBroadcaster> ();
+				//EditorGUILayout.LabelField ("Current Universal Frame Length: " + theUpdateBroadcaster.controlledFPS_universalFrameLength);
 				EditorGUILayout.LabelField ("Go to the UpdateBroadcaster GameSystem to change the Universal Frame Length.");
 			}
 			else if (frameLengthFrom == FrameLengthSetting.Custom)

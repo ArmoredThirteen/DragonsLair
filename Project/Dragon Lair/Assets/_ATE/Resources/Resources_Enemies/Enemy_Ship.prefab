@@ -473,6 +473,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _myObject: {fileID: 11476392}
+  localUpdate: 0
+  frameLengthFrom: 200
+  frameLength_custom: 12
+  moveDistance: 0.5
+  maxMoveSteps: 2
 --- !u!114 &11492020
 MonoBehaviour:
   m_ObjectHideFlags: 1
