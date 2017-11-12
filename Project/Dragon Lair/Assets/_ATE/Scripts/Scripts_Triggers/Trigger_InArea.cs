@@ -223,7 +223,7 @@ namespace Ate
 			if (behavioursOnInteract.Count == 0)
 				return;
 
-			if (theData.theKey != interactKey)
+			if (theData.TheKey != interactKey)
 				return;
 			if (_currentlyInTrigger.Count < requiredToInteract)
 				return;

@@ -817,6 +817,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bdaf8814dcc8bf42b0c1e3d603ff957, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  controlledFPS_universalFrameLength: 8
 --- !u!114 &11485620
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -839,6 +840,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f881097749060c04ca23305b7c5ee178, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveSensitivity: 0
+  moveCheckTime: 0.25
+  satStillTime: 5
   keysToTrack: 430100000d00000020000000
 --- !u!1001 &100100000
 Prefab:

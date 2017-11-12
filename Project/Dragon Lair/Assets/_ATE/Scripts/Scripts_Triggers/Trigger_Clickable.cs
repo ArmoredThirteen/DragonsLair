@@ -82,7 +82,7 @@ namespace Ate
 
 		private void OnInteractEvent (EventData_UI theData)
 		{
-			if (theData.theKey != interactKey)
+			if (theData.TheKey != interactKey)
 				return;
 			if (_curMouseOvers <= 0)
 				return;

@@ -25,6 +25,9 @@ namespace Ate
 		//DoubleClickedAboveTile = 310,
 		//HeldAboveTile = 320,
 		//ReleasedAboveTile = 330,
+
+		MouseMoved   = 1000,
+		MouseStopped = 1100,
 	}
 
 

@@ -108,8 +108,8 @@ GameObject:
   m_Component:
   - 4: {fileID: 410740}
   - 114: {fileID: 11482216}
-  - 114: {fileID: 11479620}
   - 114: {fileID: 11480416}
+  - 114: {fileID: 11449716}
   m_Layer: 0
   m_Name: Player_Ship
   m_TagString: Untagged
@@ -349,6 +349,26 @@ MonoBehaviour:
   ignoreAreas: []
   flattenAxisIn3D: 0
   radius: 1.5
+--- !u!114 &11449716
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 178148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e9e4ab8b56e279438c112f5fcbda305, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _myObject: {fileID: 11482216}
+  localUpdate: 0
+  frameLengthFrom: 100
+  frameLength_custom: 12
+  theCam: {fileID: 0}
+  movePerFrame: 1.5
+  freezeAxis_x: 0
+  freezeAxis_y: 1
+  freezeAxis_z: 1
 --- !u!114 &11456694
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -444,23 +464,6 @@ MonoBehaviour:
   type: 0
   components:
   - {fileID: 11472806}
---- !u!114 &11479620
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 178148}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a3cb27fdedd7d342aac118583513164, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _myObject: {fileID: 11482216}
-  localUpdate: 0
-  frameLengthFrom: 100
-  frameLength_custom: 4
-  targetObject: {fileID: 0}
-  pixelsPerUnit: 2
 --- !u!114 &11480416
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -507,8 +510,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 100
   components:
-  - {fileID: 11479620}
   - {fileID: 11480416}
+  - {fileID: 11449716}
 --- !u!212 &21285164
 SpriteRenderer:
   m_ObjectHideFlags: 1

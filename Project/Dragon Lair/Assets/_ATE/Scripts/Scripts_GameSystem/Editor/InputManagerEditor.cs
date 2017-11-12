@@ -19,18 +19,13 @@ namespace Ate.GameSystems
 		{
 			_target = (InputManager)target;
 
+			_target.moveSensitivity = EditorGUILayout.FloatField ("Move Sensitivity", _target.moveSensitivity);
+			_target.moveCheckTime   = EditorGUILayout.FloatField ("Move Check Time",  _target.moveCheckTime);
+			_target.satStillTime    = EditorGUILayout.FloatField ("Sat Still Time",   _target.satStillTime);
+
 			EditorHelper.DrawResizableList<KeyCode> ("Key Codes to Track", ref _target.keysToTrack, DrawEntry_KeyCode);
 
-			if (GUI.changed)
-			{
-				EditorUtility.SetDirty (target);
-
-				//	If it is a scene object and the application isn't playing
-				if (!string.IsNullOrEmpty (_target.gameObject.scene.name) && !Application.isPlaying)
-				{
-					EditorApplication.MarkSceneDirty ();
-				}
-			}
+			EditorHelper.SetDirtyIfChanged (_target);
 		}
 
 

@@ -331,7 +331,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _myObject: {fileID: 11476392}
   localUpdate: 0
-  frameLengthFrom: 100
+  frameLengthFrom: 200
   frameLength_custom: 4
   theShooter: {fileID: 11457560}
   minFireTime: 2
@@ -474,7 +474,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _myObject: {fileID: 11476392}
   localUpdate: 0
-  frameLengthFrom: 200
+  frameLengthFrom: 100
   frameLength_custom: 12
   moveDistance: 0.5
   maxMoveSteps: 2

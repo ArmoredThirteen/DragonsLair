@@ -103,12 +103,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _myObject: {fileID: 11461818}
-  maxLifetime: 30
-  moveSpeed: 5
-  faceTarget: 0
-  pixelsPerUnit: 8
   localUpdate: 0
-  frameLength: 3
+  frameLengthFrom: 100
+  frameLength_custom: 4
+  maxLifetime: 30
+  moveSpeed: 1.5
+  faceTarget: 0
 --- !u!114 &11423918
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -154,6 +154,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _myObject: {fileID: 11483618}
+  ignoreAreas: []
   flattenAxisIn3D: 0
   radius: 0.5
 --- !u!114 &11461818

@@ -11,30 +11,18 @@ namespace Ate.Projectiles
 {
 
 
-	public class Projectile : AteComponent
+	public class Projectile : AteComponent_fpsControlled
 	{
-		public float maxLifetime = 60;
+		public float maxLifetime = 50;
 		public float moveSpeed = 1;
 
 		public bool faceTarget = true;
 
-		public int pixelsPerUnit = 8;
-
-		/// <summary>
-		/// If true, updates frame when internal update count matches frame length.
-		/// If false, updates frame when event data update count matches frame length.
-		/// </summary>
-		public bool localUpdate = false;
-		public int frameLength = 6;
-
-
-		private Vector3 _targetPosition = new Vector3 ();
-		private int _totalFramesPlayed = 0;
 
 		private float _timer_lifetime = 0;
-		private bool isFired = false;
+		private bool _isFired = false;
 
-		private Vector3 targetDirection;
+		private Vector3 _targetDirection;
 		//private Transform target;
 
 
@@ -48,10 +36,6 @@ namespace Ate.Projectiles
 			moveSpeed   = EditorGUILayout.FloatField ("Move Speed",   moveSpeed);
 
 			faceTarget = EditorGUILayout.Toggle ("Face Target", faceTarget);
-
-			pixelsPerUnit = EditorGUILayout.IntField ("Pixels per Unit", pixelsPerUnit);
-			localUpdate   = EditorGUILayout.Toggle   ("Local Update",    localUpdate);
-			frameLength   = EditorGUILayout.IntField ("Frame Length",    frameLength);
 		}
 
 		#endif
@@ -59,37 +43,33 @@ namespace Ate.Projectiles
 
 		public void Fire (AteObject firer, Vector3 targetPos)
 		{
-			_targetPosition = Position;
-			targetDirection = Position.GetDir_To (targetPos, moveSpeed);
+			_targetDirection = Position.GetDir_To (targetPos, moveSpeed);
 
 			if (faceTarget)
 			{
-				transform.LookAt (Position+targetDirection);
+				transform.LookAt (Position+_targetDirection);
 			}
 
-			isFired = true;
-		}
-
-
-		protected override void RegisterEvents ()
-		{
-			GameManager.Events.Register<EventType_Updates, EventData_Updates>
-			((int)EventType_Updates.fpsUpdate24, OnFpsUpdate24);
-		}
-
-		protected override void UnregisterEvents ()
-		{
-			GameManager.Events.Unregister<EventType_Updates, EventData_Updates>
-			((int)EventType_Updates.fpsUpdate24, OnFpsUpdate24);
+			_isFired = true;
 		}
 
 
 		protected override void AteUpdate ()
 		{
-			if (!isFired)
+			
+		}
+
+		protected override void UpdateBaseFps ()
+		{
+			
+		}
+
+		protected override void UpdateFrameLength ()
+		{
+			if (!_isFired)
 				return;
 
-			_timer_lifetime += Time.deltaTime;
+			_timer_lifetime = _timer_lifetime + 1;
 			if (_timer_lifetime >= maxLifetime)
 			{
 				_timer_lifetime = 0;
@@ -97,48 +77,19 @@ namespace Ate.Projectiles
 				return;
 			}
 
-			//TODO: Live rotation to target if needed
-			//		(useful when it uses a transform target not just a vector)
-
-			//transform.position = Vector3.Lerp (Position, targetDirection, moveSpeed);
-			_targetPosition = _targetPosition + (targetDirection * Time.deltaTime);
+			UpdateLocation ();
 		}
 
-
-		private void OnFpsUpdate24 (EventData_Updates eventData)
-		{
-			bool shouldUpdate = false;
-
-			if (localUpdate)
-			{
-				if ((_totalFramesPlayed % frameLength) == 0)
-					shouldUpdate = true;
-			}
-			else
-			{
-				if ((eventData.updateIndex % frameLength) == 0)
-					shouldUpdate = true;
-			}
-
-			if (shouldUpdate)
-			{
-				UpdateLocation ();
-			}
-
-			_totalFramesPlayed += 1;
-		}
 
 		private void UpdateLocation ()
 		{
-			float desiredX = _targetPosition.x;
-			float desiredY = _targetPosition.y;
-			float desiredZ = _targetPosition.z;
+			float desiredX = Position.x + _targetDirection.x;
+			float desiredY = Position.y + _targetDirection.y;
+			float desiredZ = Position.z + _targetDirection.z;
 
-			desiredX = Mathf.Round (desiredX * pixelsPerUnit) / pixelsPerUnit;
-			desiredY = Mathf.Round (desiredY * pixelsPerUnit) / pixelsPerUnit;
-			desiredZ = Mathf.Round (desiredZ * pixelsPerUnit) / pixelsPerUnit;
+			Vector3 desiredPosition = new Vector3 (desiredX, desiredY, desiredZ);
 
-			Position = new Vector3 (desiredX, desiredY, desiredZ);
+			Position = desiredPosition;
 		}
 
 	}//End Class
