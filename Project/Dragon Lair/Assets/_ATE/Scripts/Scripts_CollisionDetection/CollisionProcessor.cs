@@ -290,8 +290,10 @@ namespace Ate.Collision
 			{
 				if (!colliders[i].isActiveAndEnabled)
 					continue;
-				
-				UnityEditor.Handles.DrawWireDisc (colliders[i].transform.position, upVector, colliders[i].radius);
+
+				float colliderRadius = colliders[i].radius * colliders[i].gameObject.transform.lossyScale.x;
+
+				UnityEditor.Handles.DrawWireDisc (colliders[i].transform.position, upVector, colliderRadius);
 			}
 		}
 
@@ -330,13 +332,15 @@ namespace Ate.Collision
 				if (!colliders[i].isActiveAndEnabled)
 					continue;
 
-				UnityEditor.Handles.DrawWireDisc (colliders[i].transform.position, upVector,  colliders[i].radius);
+				float colliderRadius = colliders[i].radius * colliders[i].gameObject.transform.lossyScale.x;
+
+				UnityEditor.Handles.DrawWireDisc (colliders[i].transform.position, upVector,  colliderRadius);
 
 				Color defColor = UnityEditor.Handles.color;
 				UnityEditor.Handles.color = Color.red;
 
-				UnityEditor.Handles.DrawWireDisc (colliders[i].transform.position, vectTwo,   colliders[i].radius);
-				UnityEditor.Handles.DrawWireDisc (colliders[i].transform.position, vectThree, colliders[i].radius);
+				UnityEditor.Handles.DrawWireDisc (colliders[i].transform.position, vectTwo,   colliderRadius);
+				UnityEditor.Handles.DrawWireDisc (colliders[i].transform.position, vectThree, colliderRadius);
 
 				UnityEditor.Handles.color = defColor;
 			}

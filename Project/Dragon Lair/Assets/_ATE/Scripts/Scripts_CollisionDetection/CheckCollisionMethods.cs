@@ -43,7 +43,10 @@ namespace Ate.Collision
 				(settings.upAxis == VectorAxis.Z) ? 0 : colTwoPos.z);
 
 			float sqrDistance = colOnePos.SqrDistanceTo (colTwoPos);
-			float totalSqrRadius = (colOne.radius+colTwo.radius) * (colOne.radius+colTwo.radius);
+			float colOneRadius = colOne.ScaledRadius;
+			float colTwoRadius = colTwo.ScaledRadius;
+
+			float totalSqrRadius = (colOneRadius + colTwoRadius) * (colOneRadius + colTwoRadius);
 
 			if (sqrDistance > totalSqrRadius)
 				return null;
@@ -64,7 +67,10 @@ namespace Ate.Collision
 			Vector3 colTwoPos = colTwo.GetPosition ();
 
 			float sqrDistance = colOnePos.SqrDistanceTo (colTwoPos);
-			float totalSqrRadius = (colOne.radius+colTwo.radius) * (colOne.radius+colTwo.radius);
+			float colOneRadius = colOne.ScaledRadius;
+			float colTwoRadius = colTwo.ScaledRadius;
+
+			float totalSqrRadius = (colOneRadius + colTwoRadius) * (colOneRadius + colTwoRadius);
 
 			if (sqrDistance > totalSqrRadius)
 				return null;
@@ -111,7 +117,10 @@ namespace Ate.Collision
 				(settings.upAxis == VectorAxis.Z) ? 0 : colTwoPos.z);
 
 			float sqrDistance = colOnePos.SqrDistanceTo (colTwoPos);
-			float totalSqrRadius = (colOne.radius+colTwo.radius) * (colOne.radius+colTwo.radius);
+			float colOneRadius = colOne.ScaledRadius;
+			float colTwoRadius = colTwo.ScaledRadius;
+
+			float totalSqrRadius = (colOneRadius + colTwoRadius) * (colOneRadius + colTwoRadius);
 
 			if (sqrDistance > totalSqrRadius)
 				return null;

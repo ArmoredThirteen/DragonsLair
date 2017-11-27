@@ -28,6 +28,23 @@ namespace Ate.Collision
 		#endregion
 
 
+		#region Properties
+
+		/// <summary>
+		/// Returns the radius multiplied by the GameObject's X-axis lossy scale.
+		/// Uses MyTransform so should not be used during editor-time circle display.
+		/// </summary>
+		public float ScaledRadius
+		{
+			get
+			{
+				return FindScaledRadius ();
+			}
+		}
+
+		#endregion
+
+
 		#if UNITY_EDITOR
 
 		public override void DrawInspector ()
@@ -59,6 +76,15 @@ namespace Ate.Collision
 		public override Vector3 GetPosition ()
 		{
 			return transform.position;
+		}
+
+		/// <summary>
+		/// Returns the radius multiplied by the GameObject's X-axis lossy scale.
+		/// Uses MyTransform so should not be used during editor-time circle display.
+		/// </summary>
+		public float FindScaledRadius ()
+		{
+			return radius * MyTransform.lossyScale.x;
 		}
 
 		#endregion

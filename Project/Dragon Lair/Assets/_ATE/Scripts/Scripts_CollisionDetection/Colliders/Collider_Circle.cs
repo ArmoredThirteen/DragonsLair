@@ -19,12 +19,30 @@ namespace Ate.Collision
 		#region Public Variables
 
 		public bool flattenAxisIn3D = false;
-		public float radius = 1;
 
 		#endregion
 
 
 		#region Private Variables
+
+		public float radius = 1;
+
+		#endregion
+
+
+		#region Properties
+
+		/// <summary>
+		/// Returns the radius multiplied by the GameObject's X-axis lossy scale.
+		/// Uses MyTransform so should not be used during editor-time circle display.
+		/// </summary>
+		public float ScaledRadius
+		{
+			get
+			{
+				return FindScaledRadius ();
+			}
+		}
 
 		#endregion
 
@@ -60,6 +78,15 @@ namespace Ate.Collision
 		public override Vector3 GetPosition ()
 		{
 			return transform.position;
+		}
+
+		/// <summary>
+		/// Returns the radius multiplied by the GameObject's X-axis lossy scale.
+		/// Uses MyTransform so should not be used during editor-time circle display.
+		/// </summary>
+		public float FindScaledRadius ()
+		{
+			return radius * MyTransform.lossyScale.x;
 		}
 
 		#endregion
