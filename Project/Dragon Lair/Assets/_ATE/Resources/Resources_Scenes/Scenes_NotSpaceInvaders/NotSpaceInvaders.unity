@@ -263,6 +263,10 @@ Prefab:
       propertyPath: m_LocalScale.z
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 11487094, guid: ae808116c8abc264abec5b6203c61732, type: 2}
+      propertyPath: useRandomSeed
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ae808116c8abc264abec5b6203c61732, type: 2}
   m_IsPrefabParent: 0
@@ -324,6 +328,10 @@ Prefab:
     - target: {fileID: 441988, guid: ae808116c8abc264abec5b6203c61732, type: 2}
       propertyPath: m_LocalScale.z
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 11487094, guid: ae808116c8abc264abec5b6203c61732, type: 2}
+      propertyPath: useRandomSeed
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ae808116c8abc264abec5b6203c61732, type: 2}
@@ -467,6 +475,14 @@ Prefab:
     - target: {fileID: 410740, guid: b52ba13cbde48444987c0ff5722fa9f0, type: 2}
       propertyPath: m_LocalScale.z
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 11449716, guid: b52ba13cbde48444987c0ff5722fa9f0, type: 2}
+      propertyPath: movePerFrame
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11449716, guid: b52ba13cbde48444987c0ff5722fa9f0, type: 2}
+      propertyPath: freezeAxis_y
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b52ba13cbde48444987c0ff5722fa9f0, type: 2}

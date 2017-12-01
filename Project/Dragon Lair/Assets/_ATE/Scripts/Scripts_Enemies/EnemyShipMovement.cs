@@ -34,12 +34,18 @@ namespace Ate.Enemies
 		public float moveDistance = 0.5f;
 		public int   maxMoveSteps = 1;
 
+		public bool  useRandomSeed = true;
+		public int   seed          = 0;
+
 		#endregion
 
 
 		#region Private Variables
 
 		private Vector3 _startLocation = new Vector3 ();
+
+
+		private System.Random _random = new System.Random ();
 
 
 		private int _curSteps_x = 0;
@@ -71,12 +77,23 @@ namespace Ate.Enemies
 
 			moveDistance = EditorGUILayout.FloatField ("Move Distance",  moveDistance);
 			maxMoveSteps = EditorGUILayout.IntField   ("Max Move Steps", maxMoveSteps);
+
+			useRandomSeed = EditorGUILayout.Toggle ("Use Random Seed", useRandomSeed);
+			if (!useRandomSeed)
+				seed = EditorGUILayout.IntField ("Seed", seed);
 		}
 
 		#endif
 
 
 		#region AteComponent
+
+		protected override void AteAwake ()
+		{
+			base.AteAwake ();
+
+			_random = new System.Random (seed);
+		}
 
 		protected override void AteStart ()
 		{
@@ -134,7 +151,14 @@ namespace Ate.Enemies
 			if (_curSteps_z > minMoveSteps && (_curSteps_z-1 != _prevSteps_z))
 				_possibleMoves.Add (MoveDirection.NegativeZ);*/
 
-			int randomDirection = Random.Range (0, _possibleMoves.Count);
+			int randomDirection = -1;
+			if (useRandomSeed)
+				randomDirection = Random.Range (0, _possibleMoves.Count);
+			else
+			{
+				randomDirection = _random.Next (0, _possibleMoves.Count);
+			}
+			
 			return _possibleMoves[randomDirection];
 		}
 
