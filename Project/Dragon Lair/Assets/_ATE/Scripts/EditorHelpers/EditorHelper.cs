@@ -48,6 +48,22 @@ namespace Ate.EditorHelpers
 			GUI.FocusControl ("");
 		}
 
+
+		/// <summary>
+		/// If GUI.changed is true, sets the target as dirty.
+		/// Will not mark a scene as being dirty.
+		/// </summary>
+		public static void SetObjectDirtyIfChanged (Object target)
+		{
+			//	Can happen if target destroys itself because of inspector scripts
+			if (target == null)
+				return;
+			if (!GUI.changed)
+				return;
+
+			EditorUtility.SetDirty (target);
+		}
+
 		/// <summary>
 		/// If GUI.changed is true, sets the target as dirty.
 		/// If target is a scene object, also marks the scene as dirty.
