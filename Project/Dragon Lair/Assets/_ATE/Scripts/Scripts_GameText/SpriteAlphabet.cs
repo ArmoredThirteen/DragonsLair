@@ -112,6 +112,48 @@ namespace Ate.GameText
 			}
 		}
 
+
+		public List<int> GetStringIndexes (string theString, bool caseSensitive = false)
+		{
+			List<int>  result   = new List<int>  ();
+			List<char> charList = new List<char> (theString.ToCharArray ());
+
+			for (int i = 0; i < charList.Count; i++)
+			{
+				int characterIndex = GetCharacterIndex (charList[i], caseSensitive);
+
+				if (characterIndex == -1)
+					continue;
+
+				result.Add (characterIndex);
+			}
+
+			return result;
+		}
+
+		/// <summary>
+		/// Finds the index of a given character.
+		/// If no character is found, returns -1.
+		/// </summary>
+		private int GetCharacterIndex (char theChar, bool caseSensitive = false)
+		{
+			for (int i = 0; i < characters.Count; i++)
+			{
+				if (caseSensitive)
+				{
+					if (characters[i].Equals (theChar))
+						return i;
+				}
+				else
+				{
+					if (char.ToUpper (characters[i]).Equals (char.ToUpper (theChar)))
+						return i;
+				}
+			}
+
+			return -1;
+		}
+
 		#endif
 
 	}//End Class
