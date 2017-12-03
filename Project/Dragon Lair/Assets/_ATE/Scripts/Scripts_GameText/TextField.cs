@@ -129,7 +129,7 @@ namespace Ate.GameText
 
 		private void SetLetter (SpriteRenderer letterRenderer, int characterIndex)
 		{
-			letterRenderer.sprite = theAlphabet.sprites[characterIndex];
+			letterRenderer.sprite = theAlphabet.GetSpriteByIndex (characterIndex);
 		}
 
 		#endregion
