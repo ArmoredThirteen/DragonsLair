@@ -98,7 +98,7 @@ namespace Ate.GameText
 
 			for (int i = 0; i < charList.Count; i++)
 			{
-				int characterIndex = GetCharacterIndex (charList[i]);
+				int characterIndex = GetIndexByChar (charList[i]);
 
 				if (characterIndex == -1)
 					continue;
@@ -109,11 +109,14 @@ namespace Ate.GameText
 			return result;
 		}
 
+		#endif
+
+
 		/// <summary>
 		/// Finds the index of a given character.
 		/// If no character is found, returns -1.
 		/// </summary>
-		private int GetCharacterIndex (char theChar)
+		public int GetIndexByChar (char theChar)
 		{
 			for (int i = 0; i < characters.Count; i++)
 			{
@@ -123,9 +126,6 @@ namespace Ate.GameText
 
 			return -1;
 		}
-
-		#endif
-
 
 		/// <summary>
 		/// Given an index, returns a sprite.
@@ -137,6 +137,18 @@ namespace Ate.GameText
 				return defaultSprite;
 
 			return sprites[index];
+		}
+
+		/// <summary>
+		/// Given an index, returns a character.
+		/// If index is -1, returns default character.
+		/// </summary>
+		public char GetCharByIndex (int index)
+		{
+			if (index == -1)
+				return defaultCharacter;
+
+			return characters[index];
 		}
 
 	}//End Class

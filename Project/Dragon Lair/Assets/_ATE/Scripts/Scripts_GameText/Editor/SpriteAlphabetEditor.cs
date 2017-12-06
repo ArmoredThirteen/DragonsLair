@@ -9,7 +9,7 @@ namespace Ate.GameText
 
 
 	[CustomEditor (typeof(SpriteAlphabet), true)]
-	public class AteComponentEditor : Editor
+	public class SpriteAlphabetEditor : Editor
 	{
 		private SpriteAlphabet _target;
 

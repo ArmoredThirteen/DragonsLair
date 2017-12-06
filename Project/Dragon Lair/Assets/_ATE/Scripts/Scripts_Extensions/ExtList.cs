@@ -9,6 +9,22 @@ namespace Ate
 
 	public static class ExtList
 	{
+		/// <summary>
+		/// Returns true if theList has an entry at index.
+		/// </summary>
+		public static bool HasIndex<T> (this List<T> theList, int index)
+		{
+			if (theList.Count == 0 || index < 0 || index >= theList.Count)
+				return false;
+			
+			return true;
+		}
+
+
+		/// <summary>
+		/// Debugs the ToString() result of each list entry.
+		/// Each debug is on a new line.
+		/// </summary>
 		public static void DebugLogAll<T> (this List<T> theList)
 		{
 			string log = "";
@@ -39,6 +55,7 @@ namespace Ate
 			theList[indexOne] = theList[indexTwo];
 			theList[indexTwo] = temp;
 		}
+
 	}//End Class
 
 

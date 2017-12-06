@@ -15,12 +15,14 @@ namespace Ate.GameText
 	/// <summary>
 	/// A text field composed of several SpriteRenderer letters.
 	/// </summary>
-	public class TextField : AteComponent
+	public class TextObject : AteComponent
 	{
 		
 		#region Public Variables
 
 		public SpriteAlphabet theAlphabet = null;
+
+		public IntStoredString theString = new IntStoredString ();
 
 		public List<SpriteRenderer> renderers = new List<SpriteRenderer> ();
 
@@ -30,8 +32,6 @@ namespace Ate.GameText
 		#region Private Variables
 
 		#if UNITY_EDITOR
-		private string _testString = "StR tSt!";
-
 		private bool _displayRenderers = false;
 		#endif
 
@@ -48,25 +48,15 @@ namespace Ate.GameText
 				("The Alphabet", theAlphabet, typeof(SpriteAlphabet), false)
 				as SpriteAlphabet;
 
-			OnDrawSetTestText ();
+			theString.maxTextSize = renderers.Count;
+
+			bool stringChanged = theString.DrawInspector ("String", theAlphabet);
+			if (stringChanged)
+				UpdateText ();
 
 			_displayRenderers = EditorGUILayout.Toggle ("Display Renderers", _displayRenderers);
 			if (_displayRenderers)
 				OnDrawRenderers ();
-		}
-
-		private void OnDrawSetTestText ()
-		{
-			EditorGUILayout.BeginHorizontal ();
-
-			if (GUILayout.Button ("Set String", GUILayout.Width (75)))
-			{
-				ChangeText (theAlphabet.GetStringIndexes (_testString));
-			}
-
-			_testString = EditorGUILayout.TextField (_testString, GUILayout.Width (150));
-
-			EditorGUILayout.EndHorizontal ();
 		}
 
 		private void OnDrawRenderers ()
@@ -104,19 +94,12 @@ namespace Ate.GameText
 
 		#region Public Methods
 
-		/// <summary>
-		/// Changes the text to match the given character indexes.
-		/// The indexes relate to SpriteAlphabet's character list.
-		/// These should not be found live but rather converted
-		/// and stored as int indexes during editor design work.
-		/// In editor you can use SpriteAlphabet.GetStringIndexes().
-		/// </summary>
-		public void ChangeText (List<int> characterIndexes)
+		public void UpdateText ()
 		{
 			for (int i = 0; i < renderers.Count; i++)
 			{
-				if (i < characterIndexes.Count)
-					SetLetter (renderers[i], characterIndexes[i]);
+				if (i < theString.textIndexes.Length)
+					SetLetter (renderers[i], theString.textIndexes[i]);
 				else
 					renderers[i].sprite = null;
 			}
