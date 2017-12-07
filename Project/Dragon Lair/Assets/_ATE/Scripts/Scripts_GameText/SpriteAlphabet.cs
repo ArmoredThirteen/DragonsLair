@@ -21,11 +21,45 @@ namespace Ate.GameText
 	public class SpriteAlphabet : ScriptableObject
 	{
 
+		#region Public Variables
+
 		public char   defaultCharacter = 'Ŋ';
 		public Sprite defaultSprite    = null;
 
+		/// <summary>
+		/// This is tied to special 'pick any character' functionality.
+		/// Basically when told to update random characters, anything
+		/// that was this character can be rerolled to anything in the library.
+		/// </summary>
+		public char   randomCharacter  = '¤';
+
 		public List<char>   characters = new List<char> ();
 		public List<Sprite> sprites    = new List<Sprite> ();
+
+		#endregion
+
+
+		#region Private Variables
+
+		private int _index_Default = -1;
+		private int _index_Random  = -2;
+
+		#endregion
+
+
+		#region Properties
+
+		public int DefaultIndex
+		{
+			get {return _index_Default;}
+		}
+
+		public int RandomIndex
+		{
+			get {return _index_Random;}
+		}
+
+		#endregion
 
 
 		#if UNITY_EDITOR
@@ -39,8 +73,10 @@ namespace Ate.GameText
 
 			EditorGUILayout.Space ();
 
-			defaultCharacter = EditorGUILayout.TextField    ("Default Character", defaultCharacter.ToString ()).ToCharArray(0,1)[0];
+			defaultCharacter = EditorGUILayout.TextField   ("Default Character", defaultCharacter.ToString ()).ToCharArray(0,1)[0];
 			defaultSprite    = EditorGUILayout.ObjectField ("Sprite", defaultSprite, typeof(Sprite), false) as Sprite;
+
+			randomCharacter  = EditorGUILayout.TextField   ("Random Character", randomCharacter.ToString ()).ToCharArray(0,1)[0];
 
 			EditorGUILayout.Space ();
 			EditorGUILayout.Space ();
@@ -100,7 +136,7 @@ namespace Ate.GameText
 			{
 				int characterIndex = GetIndexByChar (charList[i]);
 
-				if (characterIndex == -1)
+				if (characterIndex == _index_Default)
 					continue;
 
 				result.Add (characterIndex);
@@ -114,39 +150,77 @@ namespace Ate.GameText
 
 		/// <summary>
 		/// Finds the index of a given character.
-		/// If no character is found, returns -1.
+		/// If no character is found, returns DefaultIndex.
+		/// If it matches randomCharacter, returns RandomIndex.
 		/// </summary>
 		public int GetIndexByChar (char theChar)
 		{
+			if (theChar.Equals (randomCharacter))
+				return _index_Random;
+			
 			for (int i = 0; i < characters.Count; i++)
 			{
 				if (characters[i].Equals (theChar))
 					return i;
 			}
 
-			return -1;
+			return _index_Default;
 		}
 
 		/// <summary>
 		/// Given an index, returns a sprite.
-		/// If index is -1, returns default sprite.
+		/// If index is DefaultIndex, returns default sprite.
+		/// If index is RandomIndex, returns a random sprite.
 		/// </summary>
 		public Sprite GetSpriteByIndex (int index)
 		{
-			if (index == -1)
+			if (index == _index_Default)
 				return defaultSprite;
+
+			//	Random character
+			if (index == _index_Random)
+			{
+				return sprites[Random.Range (0, sprites.Count)];
+			}
 
 			return sprites[index];
 		}
 
 		/// <summary>
 		/// Given an index, returns a character.
-		/// If index is -1, returns default character.
+		/// If index is DefaultIndex, returns default character.
+		/// If index is RandomIndex, returns the randomCharacter indicator.
 		/// </summary>
-		public char GetCharByIndex (int index)
+		public char GetCharByIndex_NoRng (int index)
 		{
-			if (index == -1)
+			if (index ==_index_Default)
 				return defaultCharacter;
+
+			//	Random character indicator
+			if (index == _index_Random)
+			{
+				return randomCharacter;
+			}
+
+			return characters[index];
+		}
+
+
+		/// <summary>
+		/// Given an index, returns a character.
+		/// If index is DefaultIndex, returns default character.
+		/// If index is RandomIndex, returns a random character.
+		/// </summary>
+		public char GetCharByIndex_Rng (int index)
+		{
+			if (index == _index_Default)
+				return defaultCharacter;
+
+			//	Random character
+			if (index == _index_Random)
+			{
+				return characters[Random.Range (0, characters.Count)];
+			}
 
 			return characters[index];
 		}

@@ -60,7 +60,7 @@ namespace Ate.GameText
 
 			for (int i = 0; i < textIndexes.Length && i < maxTextSize; i++)
 			{
-				theString = theString + alphabet.GetCharByIndex (textIndexes[i]);
+				theString = theString + alphabet.GetCharByIndex_NoRng (textIndexes[i]);
 			}
 
 			return theString;

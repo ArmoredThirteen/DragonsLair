@@ -50,6 +50,11 @@ namespace Ate.GameText
 
 			theString.maxTextSize = renderers.Count;
 
+			if (GUILayout.Button ("Update Randoms", GUILayout.Width (150)))
+			{
+				UpdateRandomCharacters (0.5f);
+			}
+
 			bool stringChanged = theString.DrawInspector ("String", theAlphabet);
 			if (stringChanged)
 				UpdateText ();
@@ -102,6 +107,28 @@ namespace Ate.GameText
 					SetLetter (renderers[i], theString.textIndexes[i]);
 				else
 					renderers[i].sprite = null;
+			}
+		}
+
+		/// <summary>
+		/// Re-rolls any character that with and
+		/// index of theAlphabet.RandomIndex.
+		/// It is a special character indicator.
+		/// If updateChance can be <1 to make each
+		/// character roll to see if they change.
+		/// </summary>
+		public void UpdateRandomCharacters (float updateChance = 1)
+		{
+			for (int i = 0; i < theString.textIndexes.Length; i++)
+			{
+				//	If it is not a random string, ignore it
+				if (theString.textIndexes[i] != theAlphabet.RandomIndex)
+					continue;
+				//	Roll for updateChance on each character
+				if (Random.Range (0, 1.0f) > updateChance)
+					continue;
+
+				SetLetter (renderers[i], theAlphabet.RandomIndex);
 			}
 		}
 
