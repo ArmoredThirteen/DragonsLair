@@ -48,6 +48,10 @@ namespace Ate.GameText
 				("The Alphabet", theAlphabet, typeof(SpriteAlphabet), false)
 				as SpriteAlphabet;
 
+			EditorGUILayout.Space ();
+			DrawColorChange ();
+			EditorGUILayout.Space ();
+
 			theString.maxTextSize = renderers.Count;
 
 			if (GUILayout.Button ("Update Randoms", GUILayout.Width (150)))
@@ -62,6 +66,23 @@ namespace Ate.GameText
 			_displayRenderers = EditorGUILayout.Toggle ("Display Renderers", _displayRenderers);
 			if (_displayRenderers)
 				OnDrawRenderers ();
+		}
+
+		private void DrawColorChange ()
+		{
+			Color theCol = renderers[0].color;
+
+			float red = EditorGUILayout.FloatField ("Red",   theCol.r);
+			float blu = EditorGUILayout.FloatField ("Blue",  theCol.b);
+			float grn = EditorGUILayout.FloatField ("Green", theCol.g);
+
+			if (theCol.r != red || theCol.b != blu || theCol.g != grn)
+			{
+				for (int i = 0; i < renderers.Count; i++)
+				{
+					renderers[i].color = new Color (red, grn, blu);
+				}
+			}
 		}
 
 		private void OnDrawRenderers ()

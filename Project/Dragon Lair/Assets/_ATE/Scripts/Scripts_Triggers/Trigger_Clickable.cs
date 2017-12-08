@@ -18,6 +18,8 @@ namespace Ate
 		public EventType_UI eventsToInteract = EventType_UI.None;
 		public KeyCode interactKey = KeyCode.Mouse0;
 
+		public bool requireMouseOver = true;
+
 		public List<TriggeredBehaviour> behavioursOnInteract = new List<TriggeredBehaviour> ();
 
 
@@ -32,6 +34,8 @@ namespace Ate
 
 			eventsToInteract = (EventType_UI)EditorGUILayout.EnumPopup ("Event to Interact", eventsToInteract);
 			interactKey = (KeyCode)EditorGUILayout.EnumPopup ("Interact Key", interactKey);
+
+			requireMouseOver = EditorGUILayout.Toggle ("Require Mouse-over", requireMouseOver);
 
 			EditorHelper.DrawResizableList<TriggeredBehaviour> ("Behaviours on Interact", ref behavioursOnInteract, DrawEntry_BehaviourOnInteract);
 		}
@@ -84,7 +88,7 @@ namespace Ate
 		{
 			if (theData.TheKey != interactKey)
 				return;
-			if (_curMouseOvers <= 0)
+			if (requireMouseOver && _curMouseOvers <= 0)
 				return;
 
 			//TODO: Eventually, send whoever pressed the interaction button instead of null

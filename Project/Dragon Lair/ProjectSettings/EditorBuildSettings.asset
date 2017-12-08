@@ -5,9 +5,13 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/_ATE/Resources/Resources_Scenes/Scenes_OriginalDragonsLair/MainMenu.unity
-  - enabled: 1
+  - enabled: 0
     path: Assets/_ATE/Resources/Resources_Scenes/Scenes_OriginalDragonsLair/Level0_Tutorial.unity
-  - enabled: 1
+  - enabled: 0
     path: Assets/_ATE/Resources/Resources_Scenes/Scenes_OriginalDragonsLair/Level1_Entrance.unity
+  - enabled: 1
+    path: Assets/_ATE/Resources/Resources_Scenes/Scenes_NotSpaceInvaders/NotInvaders_MainMenu.unity
+  - enabled: 1
+    path: Assets/_ATE/Resources/Resources_Scenes/Scenes_NotSpaceInvaders/NotSpaceInvaders.unity
