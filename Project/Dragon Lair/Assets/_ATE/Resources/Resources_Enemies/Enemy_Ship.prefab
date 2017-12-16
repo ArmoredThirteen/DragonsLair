@@ -303,7 +303,7 @@ MonoBehaviour:
   _myObject: {fileID: 11441950}
   ignoreAreas: []
   flattenAxisIn3D: 0
-  radius: 1.5
+  radius: 0.85
 --- !u!114 &11441950
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -478,6 +478,8 @@ MonoBehaviour:
   frameLength_custom: 12
   moveDistance: 0.5
   maxMoveSteps: 2
+  useRandomSeed: 1
+  seed: 0
 --- !u!114 &11492020
 MonoBehaviour:
   m_ObjectHideFlags: 1

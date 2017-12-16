@@ -1,8 +1,23 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &132978
+--- !u!1 &107560
 GameObject:
   m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 421568}
+  m_Layer: 0
+  m_Name: DeleteOnDestroy
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &132978
+GameObject:
+  m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
@@ -51,14 +66,14 @@ GameObject:
   m_IsActive: 1
 --- !u!1 &155566
 GameObject:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 406132}
   - 114: {fileID: 11467804}
-  - 114: {fileID: 11452592}
+  - 114: {fileID: 11478388}
   - 114: {fileID: 11450270}
   m_Layer: 0
   m_Name: WeaponTurret
@@ -101,7 +116,7 @@ GameObject:
   m_IsActive: 1
 --- !u!1 &160268
 GameObject:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
@@ -213,8 +228,8 @@ Transform:
   m_Children:
   - {fileID: 421388}
   - {fileID: 461694}
-  m_Father: {fileID: 496498}
-  m_RootOrder: 3
+  m_Father: {fileID: 421568}
+  m_RootOrder: 0
 --- !u!4 &421388
 Transform:
   m_ObjectHideFlags: 1
@@ -226,6 +241,21 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 406132}
+  m_RootOrder: 0
+--- !u!4 &421568
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 107560}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 406132}
+  - {fileID: 483134}
+  - {fileID: 445908}
+  m_Father: {fileID: 496498}
   m_RootOrder: 0
 --- !u!4 &430098
 Transform:
@@ -249,8 +279,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 496498}
-  m_RootOrder: 0
+  m_Father: {fileID: 421568}
+  m_RootOrder: 2
 --- !u!4 &461694
 Transform:
   m_ObjectHideFlags: 1
@@ -258,7 +288,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 151138}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.5, y: 1, z: 0}
+  m_LocalPosition: {x: -0.25, y: 1.3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 406132}
@@ -291,7 +321,7 @@ Transform:
   m_Children:
   - {fileID: 473728}
   m_Father: {fileID: 496498}
-  m_RootOrder: 2
+  m_RootOrder: 1
 --- !u!4 &483134
 Transform:
   m_ObjectHideFlags: 1
@@ -302,7 +332,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 496498}
+  m_Father: {fileID: 421568}
   m_RootOrder: 1
 --- !u!4 &488622
 Transform:
@@ -338,10 +368,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 445908}
-  - {fileID: 483134}
+  - {fileID: 421568}
   - {fileID: 474698}
-  - {fileID: 406132}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!4 &497206
@@ -389,7 +417,7 @@ MonoBehaviour:
   playOnRequest: 1
   afterResetPlayOnRequest: 1
   maxPlayResets: -1
-  automaticPlayReset: 1
+  automaticPlayReset: 0
   loadType: 30
   sceneIndex: 0
 --- !u!114 &11415650
@@ -467,9 +495,9 @@ MonoBehaviour:
   playOnRequest: 1
   afterResetPlayOnRequest: 1
   maxPlayResets: -1
-  automaticPlayReset: 1
-  minWait: 2.5
-  maxWait: 2.5
+  automaticPlayReset: 0
+  minWait: 2
+  maxWait: 2
 --- !u!114 &11449774
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -514,20 +542,6 @@ MonoBehaviour:
   barrels:
   - {fileID: 421388}
   - {fileID: 461694}
---- !u!114 &11452592
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 155566}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a290411e97d1101479e81c5c167c8977, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _myObject: {fileID: 11467804}
-  fireDelay: 0.85
-  defaultShooter: {fileID: 11450270}
 --- !u!114 &11455034
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -542,7 +556,7 @@ MonoBehaviour:
   _myObject: {fileID: 11464738}
   ignoreAreas: []
   flattenAxisIn3D: 0
-  radius: 1.5
+  radius: 0.85
 --- !u!114 &11455104
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -604,7 +618,7 @@ MonoBehaviour:
   playOnRequest: 1
   afterResetPlayOnRequest: 1
   maxPlayResets: -1
-  automaticPlayReset: 1
+  automaticPlayReset: 0
   destroyType: 100
   targetGameObject: {fileID: 0}
 --- !u!114 &11467804
@@ -620,8 +634,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 0
   components:
-  - {fileID: 11452592}
   - {fileID: 11450270}
+  - {fileID: 11478388}
 --- !u!114 &11472200
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -668,13 +682,13 @@ MonoBehaviour:
   cancelRequestsWhileInactive: 1
   playOnRequest: 1
   afterResetPlayOnRequest: 1
-  maxPlayResets: -1
+  maxPlayResets: 0
   automaticPlayReset: 1
   behaviourTransforms:
   - {fileID: 497206}
-  - {fileID: 490694}
   - {fileID: 488622}
   - {fileID: 430098}
+  - {fileID: 490694}
   sequenceType: 3
 --- !u!114 &11476498
 MonoBehaviour:
@@ -691,6 +705,23 @@ MonoBehaviour:
   components:
   - {fileID: 11449774}
   - {fileID: 11415650}
+--- !u!114 &11478388
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 155566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46a568b519957064fbdf0ac5b2e0d04e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _myObject: {fileID: 11467804}
+  localUpdate: 0
+  frameLengthFrom: 100
+  frameLength_custom: 4
+  framesPerFire: 4
+  defaultShooter: {fileID: 11450270}
 --- !u!114 &11489550
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -710,9 +741,9 @@ MonoBehaviour:
   playOnRequest: 1
   afterResetPlayOnRequest: 1
   maxPlayResets: -1
-  automaticPlayReset: 1
+  automaticPlayReset: 0
   destroyType: 0
-  targetGameObject: {fileID: 194884}
+  targetGameObject: {fileID: 107560}
 --- !u!212 &21257628
 SpriteRenderer:
   m_ObjectHideFlags: 1
