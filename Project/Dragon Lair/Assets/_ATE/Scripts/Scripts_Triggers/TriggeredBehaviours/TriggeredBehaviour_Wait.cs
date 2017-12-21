@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Ate.GameSystems;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -16,15 +17,43 @@ namespace Ate
 	/// </summary>
 	public class TriggeredBehaviour_Wait : TriggeredBehaviour
 	{
+		public enum WaitType
+		{
+			Seconds = 0,
+
+			Frames = 100,
+		}
+
+
 		//	Variables for designers.
 		//	Shown in editor with DrawInspector() at bottom.
 		#region Public Variables
 
+		public WaitType waitType = WaitType.Seconds;
+
 		public float minWait = 1;
 		public float maxWait = 2;
 
+		/// <summary>
+		/// If true, updates frame when internal update count matches frame length.
+		/// If false, updates frame when event data update count matches frame length.
+		/// </summary>
+		public bool localUpdate         = false;
+		public bool useLocalFrameLength = false;
+
+		public int frameLength = 3;
+
+		#endregion
+
+
+		#region Private Variables
+
 		private float _rolledDuration;
 		private float _timer_duration;
+
+		private int _totalFramesPlayed = 0;
+		/// <summary> If using 24fps updates, increments +1 every frameLengths' worth of frames. </summary>
+		private int _totalFrameLengthsPlayed = 0;
 
 		#endregion
 
@@ -37,8 +66,37 @@ namespace Ate
 		/// </summary>
 		protected override void DrawChildInspector ()
 		{
+			waitType = (WaitType)EditorGUILayout.EnumPopup ("Wait Type", waitType);
+
+			switch (waitType)
+			{
+				case WaitType.Seconds:
+					Draw_WaitType_Seconds ();
+					break;
+
+				case WaitType.Frames:
+					Draw_WaitType_Frames ();
+					break;
+			}
+		}
+
+		private void Draw_WaitType_Seconds ()
+		{
 			minWait = EditorGUILayout.FloatField ("Min Wait", minWait);
 			maxWait = EditorGUILayout.FloatField ("Max Wait", maxWait);
+		}
+
+		private void Draw_WaitType_Frames ()
+		{
+			minWait = (float)EditorGUILayout.IntField ("Min Wait", (int)minWait);
+			maxWait = (float)EditorGUILayout.IntField ("Max Wait", (int)maxWait);
+
+			localUpdate = EditorGUILayout.Toggle ("Local Update", localUpdate);
+
+			useLocalFrameLength = EditorGUILayout.Toggle ("Local Frame Length", useLocalFrameLength);
+
+			if (useLocalFrameLength)
+				frameLength = EditorGUILayout.IntField ("Frame Length", frameLength);
 		}
 
 		#endif
@@ -60,6 +118,39 @@ namespace Ate
 		protected override void AteStart ()
 		{
 			
+		}
+
+
+		protected override void RegisterEvents ()
+		{
+			base.RegisterEvents();
+
+			GameManager.Events.Register<EventType_Updates, EventData_Updates>
+			((int)EventType_Updates.fpsUpdate24, OnFpsUpdate24);
+		}
+
+		protected override void UnregisterEvents ()
+		{
+			base.RegisterEvents();
+
+			GameManager.Events.Unregister<EventType_Updates, EventData_Updates>
+			((int)EventType_Updates.fpsUpdate24, OnFpsUpdate24);
+		}
+
+		#endregion
+
+
+		#region Private Methods
+
+		private void OnFpsUpdate24 (EventData_Updates eventData)
+		{
+			_totalFramesPlayed += 1;
+
+			int currFrame = localUpdate ? _totalFramesPlayed : eventData.updateIndex;
+			int currFrameLength = useLocalFrameLength ? frameLength : eventData.universalFrameLength;
+
+			if ((currFrame % currFrameLength) == 0)
+				_totalFrameLengthsPlayed += 1;
 		}
 
 		#endregion
@@ -128,8 +219,14 @@ namespace Ate
 		/// </summary>
 		protected override void OnEnteredPlaying (TriggeredState prevState)
 		{
-			_timer_duration = 0;
-			_rolledDuration = Random.Range (minWait, maxWait);
+			_timer_duration    = 0;
+			_totalFramesPlayed = 0;
+			_totalFrameLengthsPlayed = 0;
+
+			if (waitType == WaitType.Seconds)
+				_rolledDuration = Random.Range (minWait, maxWait);
+			else if (waitType == WaitType.Frames)
+				_rolledDuration = (float)Random.Range ((int)minWait, (int)maxWait);
 
 			//	Called at end of this method for an instant-fire behaviour
 			//RequestComplete ();
@@ -163,9 +260,18 @@ namespace Ate
 		/// </summary>
 		protected override void OnUpdatePlaying ()
 		{
-			_timer_duration += Time.deltaTime;
-			if (_timer_duration >= _rolledDuration)
-				RequestComplete();
+			if (waitType == WaitType.Seconds)
+			{
+				_timer_duration += Time.deltaTime;
+				if (_timer_duration >= _rolledDuration)
+					RequestComplete();
+			}
+			else if (waitType == WaitType.Frames)
+			{
+				if (_totalFrameLengthsPlayed >= _rolledDuration)
+					RequestComplete ();
+			}
+
 			//	Called when an end-condition happens (such as a timer)
 			//RequestComplete ();
 		}

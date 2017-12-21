@@ -11,10 +11,17 @@ namespace Ate
 	{
 		
 		public int updateIndex;
+		public int universalFrameLength;
 
 		public EventData_Updates (int updateIndex)
 		{
 			this.updateIndex = updateIndex;
+		}
+
+		public EventData_Updates (int updateIndex, int universalFrameLength)
+		{
+			this.updateIndex = updateIndex;
+			this.universalFrameLength = universalFrameLength;
 		}
 
 	}//End Class

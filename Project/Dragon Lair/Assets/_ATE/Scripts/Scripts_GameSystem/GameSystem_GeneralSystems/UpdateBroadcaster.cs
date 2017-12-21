@@ -114,8 +114,9 @@ namespace Ate.GameSystems
 		private void BroadcastFPS (int index)
 		{
 			//	Set up event data
-			EventData_Updates updateData = _data_fps_updates[index];
-			updateData.updateIndex       = _data_fps_updateCount[index];
+			EventData_Updates updateData    = _data_fps_updates[index];
+			updateData.updateIndex          = _data_fps_updateCount[index];
+			updateData.universalFrameLength = controlledFPS_universalFrameLength;
 
 			//	Progress this fps' frame
 			_data_fps_updateCount[index] = _data_fps_updateCount[index] + 1;
