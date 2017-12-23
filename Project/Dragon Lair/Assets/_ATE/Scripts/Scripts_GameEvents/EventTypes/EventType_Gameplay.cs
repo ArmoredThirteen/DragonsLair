@@ -8,6 +8,8 @@ namespace Ate
 	{
 		None = 0,
 
+		StatTracker_StatModified = 100,
+
 		ResetPlayerWalkSpeed = 500,
 		SetPlayerWalkSpeed   = 510,
 

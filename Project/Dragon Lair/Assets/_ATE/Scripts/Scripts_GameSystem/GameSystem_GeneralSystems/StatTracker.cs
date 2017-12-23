@@ -100,7 +100,9 @@ namespace Ate.GameSystems
 				#endif
 				return;
 			}
-			
+
+			float oldStat = theStat.value;
+
 			switch (modType)
 			{
 				case ModType.Set :
@@ -113,6 +115,13 @@ namespace Ate.GameSystems
 					theStat.value *= value;
 					break;
 			}
+
+			float newStat = theStat.value;
+
+			EventData_Gameplay eventData = new EventData_Gameplay ();
+			eventData.OldStatValue = oldStat;
+			eventData.NewStatValue = newStat;
+			GameManager.Events.Broadcast<EventType_Gameplay> ((int)EventType_Gameplay.StatTracker_StatModified, eventData);
 		}
 
 		#endregion

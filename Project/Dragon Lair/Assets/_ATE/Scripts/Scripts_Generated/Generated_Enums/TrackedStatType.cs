@@ -2,6 +2,7 @@
 public enum TrackedStatType
 {
 	None = 0,
-	Greatness = 10,
-	Mistakes = 100,
+	EnemiesKilled = 100,
+	PlayerShotsMissed = 200,
+	EnemyShotsMissed = 250,
 }

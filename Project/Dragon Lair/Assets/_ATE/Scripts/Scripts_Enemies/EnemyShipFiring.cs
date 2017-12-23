@@ -21,15 +21,20 @@ namespace Ate.Enemies
 
 		public ProjectileShooter theShooter = null;
 
-		public float minFireTime = 0.5f;
-		public float maxFireTime = 1.0f;
+		//public float minFireTime = 0.5f;
+		//public float maxFireTime = 1.0f;
+
+		public int minFireFrames = 8;
+		public int maxFireFrames = 16;
 
 		#endregion
 
 
 		#region Private Variables
 
-		private float _timer_fireTime = 0;
+		//private float _timer_fireTime = 0;
+
+		private int _timer_fireFrames = 0;
 
 		#endregion
 
@@ -55,11 +60,13 @@ namespace Ate.Enemies
 
 			GUILayout.Space (15);
 			EditorGUILayout.LabelField ("Min", GUILayout.Width (30));
-			minFireTime = EditorGUILayout.FloatField (minFireTime, GUILayout.Width (50));
+			//minFireTime = EditorGUILayout.FloatField (minFireTime, GUILayout.Width (50));
+			minFireFrames = EditorGUILayout.IntField (minFireFrames, GUILayout.Width (50));
 
 			GUILayout.Space (15);
 			EditorGUILayout.LabelField ("Max", GUILayout.Width (30));
-			maxFireTime = EditorGUILayout.FloatField (maxFireTime, GUILayout.Width (50));
+			//maxFireTime = EditorGUILayout.FloatField (maxFireTime, GUILayout.Width (50));
+			maxFireFrames = EditorGUILayout.IntField (maxFireFrames, GUILayout.Width (50));
 
 			EditorGUILayout.EndHorizontal ();
 		}
@@ -78,7 +85,12 @@ namespace Ate.Enemies
 
 		protected override void AteUpdate ()
 		{
-			_timer_fireTime = _timer_fireTime - Time.deltaTime;
+			/*_timer_fireTime = _timer_fireTime - Time.deltaTime;
+			if (_timer_fireTime <= 0)
+			{
+				FireProjectileShooter ();
+				ResetFireTimer ();
+			}*/
 		}
 
 		protected override void UpdateBaseFps ()
@@ -88,7 +100,9 @@ namespace Ate.Enemies
 
 		protected override void UpdateFrameLength ()
 		{
-			if (_timer_fireTime <= 0)
+			_timer_fireFrames = _timer_fireFrames - 1;
+
+			if (_timer_fireFrames <= 0)
 			{
 				FireProjectileShooter ();
 				ResetFireTimer ();
@@ -115,7 +129,8 @@ namespace Ate.Enemies
 		/// </summary>
 		private void ResetFireTimer ()
 		{
-			_timer_fireTime = Random.Range (minFireTime, maxFireTime);
+			//_timer_fireTime = Random.Range (minFireTime, maxFireTime);
+			_timer_fireFrames = Random.Range (minFireFrames, maxFireFrames);
 		}
 
 		#endregion

@@ -742,16 +742,20 @@ MonoBehaviour:
     enumValues:
     - enumName: None
       enumID: 0
-    - enumName: Greatness
-      enumID: 10
-    - enumName: Mistakes
+    - enumName: EnemiesKilled
       enumID: 100
+    - enumName: PlayerShotsMissed
+      enumID: 200
+    - enumName: EnemyShotsMissed
+      enumID: 250
   stats:
   - id: 0
     value: 0
-  - id: 10
-    value: 0
   - id: 100
+    value: 0
+  - id: 200
+    value: 0
+  - id: 250
     value: 0
 --- !u!114 &11462462
 MonoBehaviour:

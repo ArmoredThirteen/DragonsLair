@@ -12,6 +12,7 @@ namespace Ate
 		private int _intArgOne;
 
 		private float _floatArgOne;
+		private float _floatArgTwo;
 
 
 		/// <summary>
@@ -23,6 +24,7 @@ namespace Ate
 			set {_intArgOne = value;}
 		}
 
+
 		/// <summary>
 		/// For movement speed changing events.
 		/// </summary>
@@ -31,6 +33,28 @@ namespace Ate
 			get {return _floatArgOne;}
 			set {_floatArgOne = value;}
 		}
+
+
+		/// <summary>
+		/// For StatTracker value changes.
+		/// Value before the change happened.
+		/// </summary>
+		public float OldStatValue
+		{
+			get {return _floatArgOne;}
+			set {_floatArgOne = value;}
+		}
+
+		/// <summary>
+		/// For StatTracker value changes.
+		/// Value after the change happened.
+		/// </summary>
+		public float NewStatValue
+		{
+			get {return _floatArgTwo;}
+			set {_floatArgTwo = value;}
+		}
+
 	}//End Class
 
 
