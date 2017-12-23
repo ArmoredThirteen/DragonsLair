@@ -101,7 +101,7 @@ namespace Ate
 
 		protected override void AteStart ()
 		{
-			base.AteStart();
+			base.AteStart ();
 
 			_updateSystem = GameManager.GetGameSystem<UpdateBroadcaster> ();
 			if (_updateSystem == null)

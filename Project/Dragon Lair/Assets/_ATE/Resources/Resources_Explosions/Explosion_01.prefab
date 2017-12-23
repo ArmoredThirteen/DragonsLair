@@ -10,7 +10,7 @@ GameObject:
   - 4: {fileID: 470968}
   - 212: {fileID: 21288502}
   - 114: {fileID: 11448260}
-  - 114: {fileID: 11483244}
+  - 114: {fileID: 11464498}
   m_Layer: 0
   m_Name: Graphics
   m_TagString: Untagged
@@ -85,8 +85,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 0
   components:
-  - {fileID: 11483244}
---- !u!114 &11483244
+  - {fileID: 11464498}
+--- !u!114 &11464498
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -98,6 +98,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _myObject: {fileID: 11448260}
+  localUpdate: 0
+  frameLengthFrom: 100
+  frameLength_custom: 4
   sprites:
   - {fileID: 21300000, guid: a19b92655932bb44ca286805db2a3de9, type: 3}
   - {fileID: 21300002, guid: a19b92655932bb44ca286805db2a3de9, type: 3}
@@ -110,9 +113,9 @@ MonoBehaviour:
   - {fileID: 21300016, guid: a19b92655932bb44ca286805db2a3de9, type: 3}
   - {fileID: 21300018, guid: a19b92655932bb44ca286805db2a3de9, type: 3}
   startPaused: 0
-  localUpdate: 0
-  frameLength: 4
   startFrame: 0
+  maxLoops: 1
+  endFrame: 9
 --- !u!212 &21288502
 SpriteRenderer:
   m_ObjectHideFlags: 1

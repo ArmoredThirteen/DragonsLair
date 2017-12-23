@@ -16,20 +16,23 @@ namespace Ate.SpriteAnimation
 	/// Controls a SpriteRenderer by manually
 	/// changing its Sprite on a per frame basis.
 	/// </summary>
-	public class SpriteController : AteComponent
+	public class SpriteController : AteComponent_fpsControlled
 	{
 		#region Public Variables
 
 		public List<Sprite> sprites = new List<Sprite> ();
 
 		public bool startPaused = false;
-		/// <summary>
-		/// If true, updates frame when internal update count matches frame length.
-		/// If false, updates frame when event data update count matches frame length.
-		/// </summary>
-		public bool localUpdate = false;
-		public int frameLength = 3;
 		public int startFrame = 0;
+
+		/// <summary>
+		/// Number of times the sprites can be iterated through. -1 is Infinite.
+		/// </summary>
+		public int maxLoops = -1;
+		/// <summary>
+		/// Frame to set animation to after maxLoops. -1 is Null.
+		/// </summary>
+		public int endFrame = -1;
 
 		#endregion
 
@@ -41,9 +44,9 @@ namespace Ate.SpriteAnimation
 		private bool _drawSpriteList = false;
 
 		private bool _isPaused;
-		private int _curFrame = 0;
+		private int  _curFrame;
 
-		private int _totalFramesPlayed = 0;
+		private int _curLoop;
 
 		#endregion
 
@@ -56,10 +59,11 @@ namespace Ate.SpriteAnimation
 
 			OnDrawSpriteList ();
 
-			startPaused = EditorGUILayout.Toggle ("Start Paused", startPaused);
-			localUpdate = EditorGUILayout.Toggle ("Local Update", localUpdate);
-			frameLength = EditorGUILayout.IntField ("Frame Length", frameLength);
-			startFrame = EditorGUILayout.IntField ("Start Frame", startFrame);
+			startPaused = EditorGUILayout.Toggle   ("Start Paused", startPaused);
+			startFrame  = EditorGUILayout.IntField ("Start Frame",  startFrame);
+
+			maxLoops = EditorGUILayout.IntField ("Max Loops", maxLoops);
+			endFrame = EditorGUILayout.IntField ("End Frame", endFrame);
 		}
 
 
@@ -90,13 +94,15 @@ namespace Ate.SpriteAnimation
 
 		protected override void AteAwake ()
 		{
+			base.AteAwake ();
+
 			_isPaused = startPaused;
-			_curFrame = startFrame;
-			_totalFramesPlayed = 0;
 		}
 
 		protected override void AteStart ()
 		{
+			base.AteStart ();
+
 			_spriteRenderer = gameObject.GetComponent (typeof(SpriteRenderer)) as SpriteRenderer;
 			if (_spriteRenderer == null)
 			{
@@ -109,33 +115,43 @@ namespace Ate.SpriteAnimation
 			}
 
 			ChangeFrameTo (startFrame);
+			_curLoop = 0;
 
 			if (startPaused)
 				PauseSpriteAnimation ();
 			else
 				PlaySpriteAnimation ();
-
-			randTimeToPlay = Time.time + Random.Range(0.0f, 3.0f);
 		}
 
-		private float randTimeToPlay;
+
 		protected override void AteUpdate ()
 		{
-			if (Time.time > randTimeToPlay && _isPaused)
-				PlaySpriteAnimation ();
+			
 		}
 
-
-		protected override void RegisterEvents ()
+		protected override void UpdateBaseFps ()
 		{
-			GameManager.Events.Register<EventType_Updates, EventData_Updates>
-			((int)EventType_Updates.fpsUpdate24, OnFpsUpdate24);
+			
 		}
 
-		protected override void UnregisterEvents ()
+		protected override void UpdateFrameLength ()
 		{
-			GameManager.Events.Unregister<EventType_Updates, EventData_Updates>
-			((int)EventType_Updates.fpsUpdate24, OnFpsUpdate24);
+			// TODO: Make this an FSM instead of having these various states as tangly logic
+			// Loops are maxed out, exit early
+			if (_curLoop >= maxLoops && maxLoops >= 0)
+				return;
+			
+			_curFrame = _curFrame + 1;
+			if (_curFrame >= sprites.Count)
+			{
+				_curFrame = _curFrame % sprites.Count;
+				_curLoop++;
+			}
+
+			if (_curLoop >= maxLoops && maxLoops >= 0)
+				_curFrame = endFrame;
+
+			ChangeFrameTo (_curFrame);
 		}
 
 		#endregion
@@ -159,38 +175,19 @@ namespace Ate.SpriteAnimation
 
 		#region Private Methods
 
-		private void OnFpsUpdate24 (EventData_Updates eventData)
-		{
-			if (_isPaused)
-				return;
-
-			bool shouldUpdate = false;
-
-			if (localUpdate)
-			{
-				if ((_totalFramesPlayed % frameLength) == 0)
-					shouldUpdate = true;
-			}
-			else
-			{
-				if ((eventData.updateIndex % frameLength) == 0)
-					shouldUpdate = true;
-			}
-
-			if (shouldUpdate)
-			{
-				int newFrame = (_curFrame + 1) % sprites.Count;
-				ChangeFrameTo (newFrame);
-			}
-
-			_totalFramesPlayed += 1;
-		}
-
-
+		/// <summary>
+		/// Changes the frame counter and the sprite to the newFrame.
+		/// Value of -1 changes sprite to null.
+		/// </summary>
 		private void ChangeFrameTo (int newFrame)
 		{
-			_spriteRenderer.sprite = sprites[_curFrame];
 			_curFrame = newFrame;
+
+			Sprite newSprite = null;
+			if (_curFrame >= 0)
+				newSprite = sprites[_curFrame];
+
+			_spriteRenderer.sprite = newSprite;
 		}
 
 		#endregion
