@@ -70,7 +70,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82f931430d776a6409f3837e69bbbdc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 10500
+  type: 0
   components: []
 --- !u!114 &11448260
 MonoBehaviour:
@@ -111,7 +111,7 @@ MonoBehaviour:
   - {fileID: 21300018, guid: a19b92655932bb44ca286805db2a3de9, type: 3}
   startPaused: 0
   localUpdate: 0
-  frameLength: 2
+  frameLength: 4
   startFrame: 0
 --- !u!212 &21288502
 SpriteRenderer:

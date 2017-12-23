@@ -32,6 +32,11 @@ namespace Ate
 
 		protected override void AteAwake ()
 		{
+			
+		}
+
+		protected override void AteStart ()
+		{
 			StartFollowing (transformToFollow);
 		}
 
@@ -46,7 +51,7 @@ namespace Ate
 			if (transformToFollow == null)
 				return;
 
-			if (transformToFollow.position != _lastToFollowPosition)
+			//if (transformToFollow.position != _lastToFollowPosition)
 				MoveToFollow ();
 		}
 
@@ -61,8 +66,8 @@ namespace Ate
 			if (transformToFollow == null)
 				return;
 			
-			_lastToFollowPosition = transformToFollow.position;
-			followOffset = _lastToFollowPosition.GetDir_To (Position);
+			//_lastToFollowPosition = transformToFollow.position;
+			//followOffset = _lastToFollowPosition.GetDir_To (Position);
 		}
 
 		private void MoveToFollow ()

@@ -12,9 +12,33 @@ namespace Ate
 
 	public class TriggeredBehaviour_InstantiateGameObject : TriggeredBehaviour
 	{
+		public enum TargetType
+		{
+			//Default = 0,
+			Self    = 100,
+			Target  = 200,
+			TargetByName = 300,
+		}
+
 		//	Variables for designers.
 		//	Shown in editor with DrawChildInspector() at bottom.
 		#region Public Variables
+
+		public GameObject objectToInstantiate = null;
+
+		public TargetType parentTargetType   = TargetType.TargetByName;
+		public TargetType locationTargetType = TargetType.Self;
+
+		public Transform parentTransform   = null;
+		public Transform locationTransform = null;
+
+		public string parentName   = "DefaultContainer";
+		public string locationName = "DefaultLocation";
+
+		#endregion
+
+
+		#region Private Variables
 
 		#endregion
 
@@ -27,7 +51,23 @@ namespace Ate
 		/// </summary>
 		protected override void DrawChildInspector ()
 		{
+			objectToInstantiate = EditorGUILayout.ObjectField
+				("Instantiate Prefab", objectToInstantiate, typeof(GameObject), false)
+				as GameObject;
 
+			parentTargetType   = (TargetType)EditorGUILayout.EnumPopup ("Parent Object",        parentTargetType);
+			locationTargetType = (TargetType)EditorGUILayout.EnumPopup ("Instantiate Location", locationTargetType);
+
+			parentTransform = EditorGUILayout.ObjectField
+				("Parent Transform", parentTransform, typeof(Transform), true)
+				as Transform;
+
+			locationTransform = EditorGUILayout.ObjectField
+				("Location Transform", locationTransform, typeof(Transform), true)
+				as Transform;
+
+			parentName   = EditorGUILayout.TextField ("Parent Name",   parentName);
+			locationName = EditorGUILayout.TextField ("Location Name", locationName);
 		}
 
 		#endif
@@ -48,7 +88,38 @@ namespace Ate
 		/// </summary>
 		protected override void AteStart ()
 		{
-			
+			InitializeParentTransform ();
+			InitializeLocationTransform ();
+		}
+
+		private void InitializeParentTransform ()
+		{
+			//	Only TargetByName needs to initialize data
+			if (parentTargetType != TargetType.TargetByName)
+				return;
+
+			GameObject theObj = GameObject.Find (parentName);
+
+			if (theObj != null)
+				parentTransform = theObj.transform;
+
+			if (parentTransform = null)
+				parentTargetType = TargetType.Self;
+		}
+
+		private void InitializeLocationTransform ()
+		{
+			//	Only TargetByName needs to initialize data
+			if (locationTargetType != TargetType.TargetByName)
+				return;
+
+			GameObject theObj = GameObject.Find (locationName);
+
+			if (theObj != null)
+				locationTransform = theObj.transform;
+
+			if (locationTransform = null)
+				locationTargetType = TargetType.Self;
 		}
 
 		#endregion
@@ -117,8 +188,15 @@ namespace Ate
 		/// </summary>
 		protected override void OnEnteredPlaying (TriggeredState prevState)
 		{
+			SetParentTransform ();
+			SetLocationTransform ();
+
+			GameObject gameObj = GameObject.Instantiate (objectToInstantiate);
+			gameObj.SetPosition (locationTransform.position);
+			gameObj.transform.SetParent (parentTransform);
+
 			//	Called at end of this method for an instant-fire behaviour
-			//RequestComplete ();
+			RequestComplete ();
 		}
 
 		/// <summary>
@@ -128,6 +206,43 @@ namespace Ate
 		protected override void OnEnteredComplete (TriggeredState prevState)
 		{
 			
+		}
+
+
+		private void SetParentTransform ()
+		{
+			switch (parentTargetType)
+			{
+				case TargetType.Self:
+					parentTransform = MyTransform;
+					break;
+
+				case TargetType.Target:
+					// Don't change parentTransform, it was designer-set
+					break;
+
+				case TargetType.TargetByName:
+					// Don't change locationTransform, it was set during AteAwake()
+					break;
+			}
+		}
+
+		private void SetLocationTransform ()
+		{
+			switch (locationTargetType)
+			{
+				case TargetType.Self:
+					locationTransform = MyTransform;
+					break;
+
+				case TargetType.Target:
+					// Don't change locationTransform, it was designer-set
+					break;
+
+				case TargetType.TargetByName:
+					// Don't change locationTransform, it was set during AteAwake()
+					break;
+			}
 		}
 
 		#endregion
