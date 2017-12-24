@@ -119,6 +119,7 @@ namespace Ate.GameSystems
 			float newStat = theStat.value;
 
 			EventData_Gameplay eventData = new EventData_Gameplay ();
+			eventData.TheStatType  = statType;
 			eventData.OldStatValue = oldStat;
 			eventData.NewStatValue = newStat;
 			GameManager.Events.Broadcast<EventType_Gameplay> ((int)EventType_Gameplay.StatTracker_StatModified, eventData);

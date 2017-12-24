@@ -14,6 +14,10 @@ namespace Ate
 		private float _floatArgOne;
 		private float _floatArgTwo;
 
+		private TrackedStatType _trackedStatTypeOne;
+
+
+		#region Scene Loading
 
 		/// <summary>
 		/// For scene-loading events. Uses _intArgOne.
@@ -24,6 +28,10 @@ namespace Ate
 			set {_intArgOne = value;}
 		}
 
+		#endregion
+
+
+		#region Movement Speed
 
 		/// <summary>
 		/// For movement speed changing events.
@@ -34,6 +42,19 @@ namespace Ate
 			set {_floatArgOne = value;}
 		}
 
+		#endregion
+
+
+		#region StatTracker
+
+		/// <summary>
+		/// The stat that was modified during a stat change event.
+		/// </summary>
+		public TrackedStatType TheStatType
+		{
+			get {return _trackedStatTypeOne;}
+			set {_trackedStatTypeOne = value;}
+		}
 
 		/// <summary>
 		/// For StatTracker value changes.
@@ -54,6 +75,9 @@ namespace Ate
 			get {return _floatArgTwo;}
 			set {_floatArgTwo = value;}
 		}
+
+		#endregion
+
 
 	}//End Class
 
