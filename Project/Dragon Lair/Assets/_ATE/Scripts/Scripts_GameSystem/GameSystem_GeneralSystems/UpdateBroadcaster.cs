@@ -74,6 +74,21 @@ namespace Ate.GameSystems
 		#endregion
 
 
+		#region Public Methods
+
+		public void ModUniversalFramelength (int amount)
+		{
+			int newLength = controlledFPS_universalFrameLength + amount;
+
+			//newLength = Mathf.Min (newLength, 24);
+			newLength = Mathf.Max (newLength, 1);
+
+			controlledFPS_universalFrameLength = newLength;
+		}
+
+		#endregion
+
+
 		#region Private Methods
 
 		private void BroadcastSystemUpdates ()

@@ -2,9 +2,11 @@
 using System.Collections;
 using Ate.GameSystems;
 using Ate.Projectiles;
+using System.Collections.Generic;
 
 #if UNITY_EDITOR
 using UnityEditor;
+using Ate.EditorHelpers;
 #endif
 
 
@@ -14,6 +16,8 @@ namespace Ate
 
 	public class Player_FireOnClick_fpsControlled : AteComponent_fpsControlled
 	{
+		public List<KeyCode> fireKeys = new List<KeyCode> ();
+
 		public int framesPerFire = 2;
 		public ProjectileShooter defaultShooter;
 
@@ -30,6 +34,8 @@ namespace Ate
 		{
 			base.DrawInspector ();
 
+			EditorHelper.DrawResizableList<KeyCode> ("Firing Keys", ref fireKeys, DrawEntry_KeyCode);
+
 			framesPerFire = EditorGUILayout.IntField ("Frames per Fire", framesPerFire);
 
 			defaultShooter = EditorGUILayout.ObjectField
@@ -37,7 +43,31 @@ namespace Ate
 				as ProjectileShooter;
 		}
 
+		private void DrawEntry_KeyCode (int index)
+		{
+			fireKeys[index] = (KeyCode)EditorGUILayout.EnumPopup ("KeyCode", fireKeys[index]);
+		}
+
 		#endif
+
+
+		#region Ate Component
+
+		protected override void RegisterEvents ()
+		{
+			base.RegisterEvents ();
+
+			GameManager.Events.Register<EventType_UI, EventData_UI> ((int)EventType_UI.Clicked,  OnKeyClicked);
+			GameManager.Events.Register<EventType_UI, EventData_UI> ((int)EventType_UI.Released, OnKeyReleased);
+		}
+
+		protected override void UnregisterEvents ()
+		{
+			base.UnregisterEvents ();
+
+			GameManager.Events.Unregister<EventType_UI, EventData_UI> ((int)EventType_UI.Clicked,  OnKeyClicked);
+			GameManager.Events.Unregister<EventType_UI, EventData_UI> ((int)EventType_UI.Released, OnKeyReleased);
+		}
 
 
 		protected override void AteUpdate ()
@@ -60,30 +90,27 @@ namespace Ate
 			}
 		}
 
+		#endregion
 
-		protected override void RegisterEvents ()
+
+		private void OnKeyClicked (EventData_UI eventData)
 		{
-			base.RegisterEvents ();
-
-			GameManager.Events.Register<EventType_UI, EventData_UI> ((int)EventType_UI.Clicked,  OnMouseClicked);
-			GameManager.Events.Register<EventType_UI, EventData_UI> ((int)EventType_UI.Released, OnMouseReleased);
+			if (fireKeys.Contains (eventData.TheKey))
+				FireKeyClicked ();
 		}
 
-		protected override void UnregisterEvents ()
+		private void OnKeyReleased (EventData_UI eventData)
 		{
-			base.UnregisterEvents ();
-
-			GameManager.Events.Unregister<EventType_UI, EventData_UI> ((int)EventType_UI.Clicked,  OnMouseClicked);
-			GameManager.Events.Unregister<EventType_UI, EventData_UI> ((int)EventType_UI.Released, OnMouseReleased);
+			if (fireKeys.Contains (eventData.TheKey))
+				FireKeyReleased ();
 		}
 
-
-		private void OnMouseClicked (EventData_UI data)
+		private void FireKeyClicked ()
 		{
 			_isMousePressed = true;
 		}
 
-		private void OnMouseReleased (EventData_UI data)
+		private void FireKeyReleased ()
 		{
 			_isMousePressed = false;
 		}
