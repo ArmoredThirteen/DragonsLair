@@ -41,6 +41,8 @@ namespace Ate.GameText
 
 		#region Private Variables
 
+		private int _asciiOffsetVal = 32;
+
 		private int _index_Default = -1;
 		private int _index_Random  = -2;
 
@@ -119,7 +121,7 @@ namespace Ate.GameText
 			characters.Clear ();
 			sprites.Clear ();
 
-			for (int i = 32; i < 128; i++)
+			for (int i = _asciiOffsetVal; i < 128; i++)
 			{
 				characters.Add ((char)i);
 				sprites.Add (null);
@@ -161,7 +163,7 @@ namespace Ate.GameText
 			for (int i = 0; i < characters.Count; i++)
 			{
 				if (characters[i].Equals (theChar))
-					return i;
+					return i + _asciiOffsetVal;
 			}
 
 			return _index_Default;
@@ -174,6 +176,8 @@ namespace Ate.GameText
 		/// </summary>
 		public Sprite GetSpriteByIndex (int index)
 		{
+			int asciiOffsetIndex = index - _asciiOffsetVal;
+
 			if (index == _index_Default)
 				return defaultSprite;
 
@@ -183,7 +187,7 @@ namespace Ate.GameText
 				return sprites[Random.Range (0, sprites.Count)];
 			}
 
-			return sprites[index];
+			return sprites[asciiOffsetIndex];
 		}
 
 		/// <summary>
@@ -193,6 +197,8 @@ namespace Ate.GameText
 		/// </summary>
 		public char GetCharByIndex_NoRng (int index)
 		{
+			int asciiOffsetIndex = index - _asciiOffsetVal;
+
 			if (index ==_index_Default)
 				return defaultCharacter;
 
@@ -202,7 +208,7 @@ namespace Ate.GameText
 				return randomCharacter;
 			}
 
-			return characters[index];
+			return characters[asciiOffsetIndex];
 		}
 
 
@@ -213,6 +219,8 @@ namespace Ate.GameText
 		/// </summary>
 		public char GetCharByIndex_Rng (int index)
 		{
+			int asciiOffsetIndex = index - _asciiOffsetVal;
+
 			if (index == _index_Default)
 				return defaultCharacter;
 
@@ -222,7 +230,7 @@ namespace Ate.GameText
 				return characters[Random.Range (0, characters.Count)];
 			}
 
-			return characters[index];
+			return characters[asciiOffsetIndex];
 		}
 
 	}//End Class

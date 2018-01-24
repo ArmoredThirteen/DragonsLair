@@ -633,7 +633,7 @@ MonoBehaviour:
   theAlphabet: {fileID: 11400000, guid: b9581ee014aa421459b6143a30d6722a, type: 2}
   theString:
     maxTextSize: 16
-    textIndexes: 32000000410000004e000000440000004f0000004d0000001a00000000000000fefffffffefffffffefffffffefffffffefffffffefffffffefffffffeffffff
+    textIndexes: 52000000610000006e000000640000006f0000006d0000003a000000fefffffffefffffffefffffffefffffffefffffffefffffffefffffffefffffffeffffff
   renderers:
   - {fileID: 21269372}
   - {fileID: 21278174}
