@@ -306,7 +306,7 @@ AudioSource:
   m_GameObject: {fileID: 1477341695}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 24300001, guid: 0568f78ff8c90ad4586d2d2eb61f41e2,
+  OutputAudioMixerGroup: {fileID: 24393972, guid: 0568f78ff8c90ad4586d2d2eb61f41e2,
     type: 2}
   m_audioClip: {fileID: 8300000, guid: e39813598a1b6b14f8d3c519a691ec2e, type: 3}
   m_PlayOnAwake: 1
@@ -381,11 +381,11 @@ AudioSource:
   m_GameObject: {fileID: 1477341695}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 24300001, guid: 0568f78ff8c90ad4586d2d2eb61f41e2,
+  OutputAudioMixerGroup: {fileID: 24393972, guid: 0568f78ff8c90ad4586d2d2eb61f41e2,
     type: 2}
   m_audioClip: {fileID: 8300000, guid: b6a2130dfdade1e4298e074da8555921, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.35
+  m_Volume: 0.15
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -497,7 +497,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 496430, guid: 9c0736cf90742314fb127cab4d89a1ef, type: 2}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 21248538, guid: 9c0736cf90742314fb127cab4d89a1ef, type: 2}
       propertyPath: m_Sprite

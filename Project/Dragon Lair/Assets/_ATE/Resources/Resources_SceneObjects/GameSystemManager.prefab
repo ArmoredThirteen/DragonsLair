@@ -342,8 +342,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fdd2ac45a56a6d41b5b779a1b806a24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 960
-  height: 600
+  width: 512
+  height: 512
 --- !u!114 &11417892
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -821,7 +821,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bdaf8814dcc8bf42b0c1e3d603ff957, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controlledFPS_universalFrameLength: 8
+  controlledFPS_universalFrameLength: 6
 --- !u!114 &11485620
 MonoBehaviour:
   m_ObjectHideFlags: 1
