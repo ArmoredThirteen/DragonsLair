@@ -111,7 +111,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
 --- !u!1 &758217557
 GameObject:
   m_ObjectHideFlags: 0
@@ -241,7 +241,7 @@ Transform:
   m_Children:
   - {fileID: 1477341696}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
 --- !u!114 &1230411871
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -278,6 +278,7 @@ GameObject:
   - 4: {fileID: 1477341696}
   - 82: {fileID: 1477341697}
   - 82: {fileID: 1477341698}
+  - 170: {fileID: 1477341699}
   m_Layer: 0
   m_Name: BackgroundMusic
   m_TagString: Untagged
@@ -305,10 +306,11 @@ AudioSource:
   m_GameObject: {fileID: 1477341695}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300001, guid: 0568f78ff8c90ad4586d2d2eb61f41e2,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: e39813598a1b6b14f8d3c519a691ec2e, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.65
+  m_Volume: 1
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -379,10 +381,11 @@ AudioSource:
   m_GameObject: {fileID: 1477341695}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300001, guid: 0568f78ff8c90ad4586d2d2eb61f41e2,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: b6a2130dfdade1e4298e074da8555921, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.35
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -445,6 +448,14 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+--- !u!170 &1477341699
+AudioDistortionFilter:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1477341695}
+  m_Enabled: 1
+  m_DistortionLevel: 0.5
 --- !u!1001 &1619988707
 Prefab:
   m_ObjectHideFlags: 0
