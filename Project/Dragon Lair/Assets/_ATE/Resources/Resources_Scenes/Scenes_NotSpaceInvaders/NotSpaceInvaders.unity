@@ -592,11 +592,11 @@ Prefab:
       objectReference: {fileID: 758217561}
     - target: {fileID: 11479712, guid: 5f53283885b8932428fef7af453506c2, type: 2}
       propertyPath: axisDatas.Array.data[0].isUsed
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 11479712, guid: 5f53283885b8932428fef7af453506c2, type: 2}
       propertyPath: axisDatas.Array.data[1].isUsed
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 11479712, guid: 5f53283885b8932428fef7af453506c2, type: 2}
       propertyPath: maxDist_Y

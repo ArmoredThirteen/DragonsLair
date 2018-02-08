@@ -16,16 +16,31 @@ namespace Ate
 
 	public class Player_FireOnClick_fpsControlled : AteComponent_fpsControlled
 	{
+
+		#region Public Variables
+
 		public List<KeyCode> fireKeys = new List<KeyCode> ();
 
 		public int framesPerFire = 2;
 		public ProjectileShooter defaultShooter;
 
+		#endregion
+
+
+		#region Private Variables
 
 		private int _timer_framesSinceFire = int.MaxValue/2;//arbitrarily high so first shot is always reactive
 
-		private bool _fireRequested = false;
-		private bool _isMousePressed = false;
+		private int _keysClickedCount = 0;
+
+		//TODO: Hacky live-updating list is inefficient and prone to abuse
+		/// <summary>
+		/// Keys clicked this frame. Intention is so if you quickly click
+		/// then release a key during a framelength you still fire once.
+		/// </summary>
+		private List<KeyCode> _keysClickedThisFrame = new List<KeyCode> ();
+
+		#endregion
 
 
 		#if UNITY_EDITOR
@@ -70,10 +85,16 @@ namespace Ate
 		}
 
 
+		protected override void AteAwake ()
+		{
+			_keysClickedCount = 0;
+		}
+
 		protected override void AteUpdate ()
 		{
-			CheckFireRequest ();
+			
 		}
+
 
 		protected override void UpdateBaseFps ()
 		{
@@ -88,6 +109,8 @@ namespace Ate
 			{
 				FireIfRequested ();
 			}
+
+			_keysClickedThisFrame.Clear ();
 		}
 
 		#endregion
@@ -95,8 +118,15 @@ namespace Ate
 
 		private void OnKeyClicked (EventData_UI eventData)
 		{
-			if (fireKeys.Contains (eventData.TheKey))
-				FireKeyClicked ();
+			if (!fireKeys.Contains (eventData.TheKey))
+				return;
+			
+			FireKeyClicked ();
+
+			if (!_keysClickedThisFrame.Contains (eventData.TheKey))
+			{
+				_keysClickedThisFrame.Add (eventData.TheKey);
+			}
 		}
 
 		private void OnKeyReleased (EventData_UI eventData)
@@ -107,30 +137,23 @@ namespace Ate
 
 		private void FireKeyClicked ()
 		{
-			_isMousePressed = true;
+			_keysClickedCount++;
 		}
 
 		private void FireKeyReleased ()
 		{
-			_isMousePressed = false;
+			_keysClickedCount--;
 		}
 
-
-		private void CheckFireRequest ()
-		{
-			if (_isMousePressed)
-				_fireRequested = true;
-		}
 
 		private void FireIfRequested ()
 		{
-			if (!_fireRequested)
+			if (_keysClickedCount <= 0 && _keysClickedThisFrame.Count == 0)
 				return;
 
 			defaultShooter.FireProjectile ();
 
 			_timer_framesSinceFire = 0;
-			_fireRequested = false;
 		}
 
 	}//End Class

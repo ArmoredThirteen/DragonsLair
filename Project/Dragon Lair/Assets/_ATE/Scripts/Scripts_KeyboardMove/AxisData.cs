@@ -39,16 +39,16 @@ namespace Ate.KeyboardMove
 
 		#region Private Variables
 
-		private bool _isKeyPressed = false;
+		private bool _isKeyClicked = false;
 
 		#endregion
 
 
 		#region Properties
 
-		public bool IsKeyPressed
+		public bool IsKeyClicked
 		{
-			get {return _isKeyPressed;}
+			get {return _isKeyClicked;}
 		}
 
 		#endregion
@@ -73,44 +73,20 @@ namespace Ate.KeyboardMove
 
 		#region Public Methods
 
-		public void RegisterEvents ()
+		public void OnKeyClicked ()
 		{
-			GameManager.Events.Register<EventType_UI, EventData_UI>
-				((int)EventType_UI.Clicked, OnKeyClicked);
-
-			GameManager.Events.Register<EventType_UI, EventData_UI>
-				((int)EventType_UI.Released, OnKeyReleased);
+			_isKeyClicked = true;
 		}
 
-		public void UnregisterEvents ()
+		public void OnKeyReleased ()
 		{
-			GameManager.Events.Unregister<EventType_UI, EventData_UI>
-				((int)EventType_UI.Clicked, OnKeyClicked);
-
-			GameManager.Events.Unregister<EventType_UI, EventData_UI>
-				((int)EventType_UI.Released, OnKeyReleased);
+			_isKeyClicked = false;
 		}
 
 		#endregion
 
 
 		#region Private Methods
-
-		private void OnKeyClicked (EventData_UI eventData)
-		{
-			if (eventData.TheKey != activateKey)
-				return;
-
-			_isKeyPressed = true;
-		}
-
-		private void OnKeyReleased (EventData_UI eventData)
-		{
-			if (eventData.TheKey != activateKey)
-				return;
-
-			_isKeyPressed = false;
-		}
 
 		#endregion
 

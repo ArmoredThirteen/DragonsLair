@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Ate.GameSystems;
+using System.Collections.Generic;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -43,6 +45,13 @@ namespace Ate.KeyboardMove
 
 
 		#region Private Variables
+
+		//TODO: Hacky live-updating list is inefficient and prone to abuse
+		/// <summary>
+		/// Keys clicked this frame. Intention is so if you quickly click
+		/// then release a key during a framelength you still move once.
+		/// </summary>
+		private List<KeyCode> _keysClickedThisFrame = new List<KeyCode> ();
 
 		#endregion
 
@@ -132,20 +141,16 @@ namespace Ate.KeyboardMove
 		{
 			base.RegisterEvents ();
 
-			for (int i = 0; i < axisDatas.Length; i++)
-			{
-				axisDatas[i].RegisterEvents ();
-			}
+			GameManager.Events.Register<EventType_UI, EventData_UI> ((int)EventType_UI.Clicked, OnKeyClicked);
+			GameManager.Events.Register<EventType_UI, EventData_UI> ((int)EventType_UI.Released, OnKeyReleased);
 		}
 
 		protected override void UnregisterEvents ()
 		{
 			base.UnregisterEvents ();
 
-			for (int i = 0; i < axisDatas.Length; i++)
-			{
-				axisDatas[i].UnregisterEvents ();
-			}
+			GameManager.Events.Unregister<EventType_UI, EventData_UI> ((int)EventType_UI.Clicked, OnKeyClicked);
+			GameManager.Events.Unregister<EventType_UI, EventData_UI> ((int)EventType_UI.Released, OnKeyReleased);
 		}
 
 
@@ -177,7 +182,7 @@ namespace Ate.KeyboardMove
 				AxisData theData = axisDatas[i];
 				if (!theData.isUsed)
 					continue;
-				if (!theData.IsKeyPressed)
+				if (!theData.IsKeyClicked && !_keysClickedThisFrame.Contains (theData.activateKey))
 					continue;
 
 				float moveAmount = movePerFrame;
@@ -217,6 +222,8 @@ namespace Ate.KeyboardMove
 			}
 
 			Position = new Vector3 (newX, newY, newZ);
+
+			_keysClickedThisFrame.Clear ();
 		}
 
 		#endregion
@@ -228,6 +235,33 @@ namespace Ate.KeyboardMove
 
 
 		#region Private Methods
+
+		private void OnKeyClicked (EventData_UI eventData)
+		{
+			for (int i = 0; i < axisDatas.Length; i++)
+			{
+				if (eventData.TheKey == axisDatas[i].activateKey)
+				{
+					axisDatas[i].OnKeyClicked ();
+				}
+			}
+
+			if (!_keysClickedThisFrame.Contains (eventData.TheKey))
+			{
+				_keysClickedThisFrame.Add (eventData.TheKey);
+			}
+		}
+
+		private void OnKeyReleased (EventData_UI eventData)
+		{
+			for (int i = 0; i < axisDatas.Length; i++)
+			{
+				if (eventData.TheKey == axisDatas[i].activateKey)
+				{
+					axisDatas[i].OnKeyReleased ();
+				}
+			}
+		}
 
 		#endregion
 
