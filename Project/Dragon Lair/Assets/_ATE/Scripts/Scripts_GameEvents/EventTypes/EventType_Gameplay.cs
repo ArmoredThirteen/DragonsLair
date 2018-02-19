@@ -10,6 +10,13 @@ namespace Ate
 
 		StatTracker_StatModified = 100,
 
+		PoolObject   = 200,
+		UnpoolObject = 210,
+
+		//DestroyObject = 300,
+		//KillPlayer    = 350,
+		//KillEnemy     = 355,
+
 		ResetPlayerWalkSpeed = 500,
 		SetPlayerWalkSpeed   = 510,
 

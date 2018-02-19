@@ -74,6 +74,11 @@ namespace Ate.GameSystems
 		/// </summary>
 		public static StatTracker Stats {get; private set;}
 
+		/// <summary>
+		/// Handles pooling and unpooling of frequently used objects.
+		/// </summary>
+		public static PoolManager Pooling {get; private set;}
+
 		#endregion
 
 
@@ -161,6 +166,11 @@ namespace Ate.GameSystems
 
 		#region System Access
 
+		/// <summary>
+		/// Searches the gameSystems list for the first (and hopefully only)
+		/// matching GameSystem. Should be safe to use at any time but the
+		/// received systems shouldn't be trusted until after Awake().
+		/// </summary>
 		public static GameSystemType GetGameSystem<GameSystemType> () where GameSystemType: GameSystem
 		{
 			if (Instance == null)
@@ -288,6 +298,7 @@ namespace Ate.GameSystems
 			ObjectTracker  = GetGameSystem<GameObjectTracker> ();
 			HudText        = GetGameSystem<HudText> ();
 			Stats          = GetGameSystem<StatTracker> ();
+			Pooling        = GetGameSystem<PoolManager> ();
 
 			//TODO: Seperate InitializeSystems and SceneInitializeSystems
 			InitializeSystems ();

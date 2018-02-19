@@ -92,7 +92,7 @@ namespace Ate.Enemies
 		{
 			base.AteAwake ();
 
-			_random = new System.Random (seed);
+			BuildRandomFromSeed ();
 		}
 
 		protected override void AteStart ()
@@ -123,6 +123,17 @@ namespace Ate.Enemies
 
 
 		#region Public Methods
+
+		/// <summary>
+		/// Creates a new random system using the given seed.
+		/// Sorta hacky way for enemy spawners to ensure the
+		/// random system is using updated seeds when respawning
+		/// enemies from out of the pool.
+		/// </summary>
+		public void BuildRandomFromSeed ()
+		{
+			_random = new System.Random (seed);
+		}
 
 		#endregion
 

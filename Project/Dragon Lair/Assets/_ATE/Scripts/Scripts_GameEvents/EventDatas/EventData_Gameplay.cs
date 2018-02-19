@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Ate.Pooling;
 
 
 namespace Ate
@@ -9,12 +10,28 @@ namespace Ate
 
 	public class EventData_Gameplay : EventData
 	{
+		private int _ateObjectID;
+
 		private int _intArgOne;
 
 		private float _floatArgOne;
 		private float _floatArgTwo;
 
 		private TrackedStatType _trackedStatTypeOne;
+
+
+		#region General
+
+		/// <summary>
+		/// For object ID for any object-specific event. Uses _ateObjectID.
+		/// </summary>
+		public int AteObjectID
+		{
+			get {return _ateObjectID;}
+			set {_ateObjectID = value;}
+		}
+
+		#endregion
 
 
 		#region Scene Loading
@@ -26,6 +43,20 @@ namespace Ate
 		{
 			get {return _intArgOne;}
 			set {_intArgOne = value;}
+		}
+
+		#endregion
+
+
+		#region Pooling
+
+		/// <summary>
+		/// For object pooling. Uses _intArgOne.
+		/// </summary>
+		public PoolID PoolType
+		{
+			get {return (PoolID)_intArgOne;}
+			set {_intArgOne = (int)value;}
 		}
 
 		#endregion

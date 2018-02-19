@@ -1,5 +1,21 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &104618
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 412348}
+  - 114: {fileID: 11468482}
+  m_Layer: 0
+  m_Name: GameSystem_PoolManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &117916
 GameObject:
   m_ObjectHideFlags: 0
@@ -190,6 +206,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 436498}
   m_RootOrder: 2
+--- !u!4 &412348
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 104618}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 436498}
+  m_RootOrder: 10
 --- !u!4 &416066
 Transform:
   m_ObjectHideFlags: 1
@@ -258,6 +286,7 @@ Transform:
   - {fileID: 445692}
   - {fileID: 488818}
   - {fileID: 433740}
+  - {fileID: 412348}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!4 &445692
@@ -713,6 +742,7 @@ MonoBehaviour:
   - {fileID: 11407730}
   - {fileID: 11461650}
   - {fileID: 11477626}
+  - {fileID: 11468482}
 --- !u!114 &11450648
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -768,6 +798,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e2b1d228146f184c8a5cc49d44f820c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &11468482
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 104618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7c9930f95d72b74cafb6748c6375df1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  poolDatas:
+  - theID: 200
+    poolContainer: {fileID: 0}
+    defaultPrefab: {fileID: 11403024, guid: 0c06c00220c00fd45a875d184add0313, type: 2}
+    startSize: 5
+    maxSize: 50
+    pooledObjects: []
 --- !u!114 &11470026
 MonoBehaviour:
   m_ObjectHideFlags: 1
