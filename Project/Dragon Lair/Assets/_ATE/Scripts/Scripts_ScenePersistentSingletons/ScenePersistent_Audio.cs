@@ -1,16 +1,99 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using System.Collections;
 
-public class ScenePersistent_Audio : MonoBehaviour {
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
-	// Use this for initialization
-	void Start () {
-		
-	}
+
+namespace Ate.ScenePersistance
+{
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-}
+	
+	/// <summary>
+	/// Description
+	/// </summary>
+	public class ScenePersistent_Audio : AteComponent_fpsControlled
+	{
+
+		#region Singleton
+		public static ScenePersistent_Audio AudioInstance
+		{
+			get; private set;
+		}
+		#endregion
+
+
+		#region Public Variables
+
+		#endregion
+
+
+		#region Private Variables
+
+		#endregion
+
+
+		#if UNITY_EDITOR
+
+		public override void DrawInspector ()
+		{
+			base.DrawInspector ();
+		}
+
+		#endif
+
+
+		#region AteComponent
+
+		protected override void AteAwake ()
+		{
+			base.AteAwake ();
+
+			if (AudioInstance == null)
+			{
+				AudioInstance = this;
+				DontDestroyOnLoad (gameObject);
+			}
+			else if (AudioInstance != this)
+			{
+				DestroyImmediate (gameObject);
+				return;
+			}
+		}
+
+		// Updates every game frame
+		protected override void AteUpdate ()
+		{
+			
+		}
+
+
+		// Updates 24 times per second (may be different if UpdateBroadcaster gets rewritten)
+		protected override void UpdateBaseFps ()
+		{
+			
+		}
+
+		// Updates once per framelength, which is one or more AteUpdateBaseFps
+		protected override void UpdateFrameLength ()
+		{
+			
+		}
+
+		#endregion
+
+
+		#region Public Methods
+
+		#endregion
+
+
+		#region Private Methods
+
+		#endregion
+
+	}//End Class
+	
+	
+}//End Namespace

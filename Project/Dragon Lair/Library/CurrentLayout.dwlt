@@ -20,7 +20,7 @@ MonoBehaviour:
   m_ShowMode: 4
   m_Title: 
   m_RootView: {fileID: 9}
-  m_MinSize: {x: 950, y: 300}
+  m_MinSize: {x: 950, y: 442}
   m_MaxSize: {x: 10000, y: 10000}
 --- !u!114 &2
 MonoBehaviour:
@@ -45,7 +45,7 @@ MonoBehaviour:
   m_MinSize: {x: 234, y: 392}
   m_MaxSize: {x: 10004, y: 14042}
   vertical: 1
-  controlID: 177
+  controlID: 12
 --- !u!114 &3
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -95,7 +95,7 @@ MonoBehaviour:
   m_MinSize: {x: 232, y: 392}
   m_MaxSize: {x: 10002, y: 14042}
   vertical: 1
-  controlID: 105
+  controlID: 36
 --- !u!114 &5
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -167,8 +167,8 @@ MonoBehaviour:
     y: 0
     width: 508
     height: 932
-  m_MinSize: {x: 277, y: 192}
-  m_MaxSize: {x: 4002, y: 8042}
+  m_MinSize: {x: 275, y: 171}
+  m_MaxSize: {x: 4002, y: 8021}
   vertical: 1
   controlID: 129
 --- !u!114 &8
@@ -197,7 +197,7 @@ MonoBehaviour:
   - {fileID: 21}
   - {fileID: 15}
   m_Selected: 0
-  m_LastSelected: 0
+  m_LastSelected: 2
 --- !u!114 &9
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -219,7 +219,7 @@ MonoBehaviour:
     y: 0
     width: 1904
     height: 982
-  m_MinSize: {x: 950, y: 300}
+  m_MinSize: {x: 950, y: 442}
   m_MaxSize: {x: 10000, y: 10000}
 --- !u!114 &10
 MonoBehaviour:
@@ -283,7 +283,7 @@ MonoBehaviour:
     y: 30
     width: 1904
     height: 932
-  m_MinSize: {x: 743, y: 392}
+  m_MinSize: {x: 741, y: 392}
   m_MaxSize: {x: 24008, y: 14042}
   vertical: 0
   controlID: 128
@@ -363,10 +363,10 @@ MonoBehaviour:
   m_DepthBufferBits: 0
   m_Pos:
     serializedVersion: 2
-    x: 1368
-    y: 595
-    width: 544
-    height: 415
+    x: 1406
+    y: 672
+    width: 506
+    height: 338
   m_PersistentViewDataDictionary: {fileID: 0}
   m_MixersTreeState:
     scrollPos: {x: 0, y: 0}
@@ -442,16 +442,16 @@ MonoBehaviour:
       splitSize: 6
       xOffset: 0
     m_HorizontalSplitter:
-      ID: 18
+      ID: 157
       splitterInitialOffset: 0
       currentActiveSplitter: -1
-      realSizes: a30000007e010000
+      realSizes: a00000005b010000
       relativeSizes:
       - 0.3
       - 0.7
       minSizes: a0000000a0000000
       maxSizes: 0000000000000000
-      lastTotalSize: 545
+      lastTotalSize: 507
       splitSize: 6
       xOffset: -1
   m_SectionOrder: 00000000030000000100000002000000
@@ -499,7 +499,7 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 0
     m_Folders:
-    - Assets/_ATE/Scripts/Scripts_Helpers
+    - Assets/_ATE/Resources/Resources_Scenes/Scenes_NotSpaceInvaders
   m_ViewMode: 0
   m_StartGridSize: 64
   m_LastFolders:
@@ -540,7 +540,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000260a0000342a0000902a0000d62c0000022d0000082d0000122d00001e2d0000242d00002a2d00002e2d00003c2d0000402d0000422d00004c2d0000502d00005a2d0000782d0000862d00008a2d0000942d0000b02d0000b22d0000b82d0000c22d00003631000044310000623100006431000068310000763100009e310000e2310000e4310000ea310000f0310000163200001c320000223200003232000034320000483200004c32000054320000583200005c320000683200006a3200006c320000783200008632000096320000a0320000a2320000ac320000ba320000c0320000d0320000d6320000da320000e6320000f2320000fa320000fe3200000e3300001233000020330000283300002a3300002c330000323300003c3300003e330000403300004233000048330000583300005e330000663300006a3300006e330000723300007c3300007e330000a8330000bc330000c0330000c2330000cc330000d0330000da330000de330000f03300000234000010340000203400002e3400006a3400007c34000092360000d0360000f8370000fa370000fc370000fe37000000380000023800000438000006380000083800000a380000
+    m_ExpandedIDs: 00000000260a0000342a0000902a0000ac2a0000082d0000122d00001e2d0000242d00002a2d00002e2d00003c2d0000402d0000422d00004c2d0000502d00005a2d0000782d0000862d00008a2d0000942d0000b02d0000b22d0000b82d0000c22d0000ce2d0000de2d00003631000044310000623100006431000068310000763100009e310000e2310000e4310000ea310000f0310000163200001c320000223200003232000034320000483200004c32000054320000583200005c320000683200006a3200006c3200007832000086320000a0320000a2320000ac320000ba320000c0320000d0320000d6320000da320000e6320000f2320000fa320000fe3200000e3300001233000020330000283300002a3300002c330000323300003c3300003e330000403300004233000048330000583300005e330000663300006a3300006e330000723300007c3300007e3300008c330000a8330000bc330000c0330000cc330000d0330000da330000de330000f03300000234000010340000203400002e3400006a34000092360000d0360000f8370000fa370000fc370000fe37000000380000023800000438000006380000083800000a38000082380000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1084,9 +1084,9 @@ MonoBehaviour:
   m_PersistentViewDataDictionary: {fileID: 0}
   m_TreeViewState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: b8060000
+    m_SelectedIDs: d82c0000
     m_LastClickedID: 0
-    m_ExpandedIDs: 9efbffff00000000
+    m_ExpandedIDs: 985cffffb470ffff2a77fffff879ffff0680ffffd482ffff7e8cffff9efbffff00000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1105,7 +1105,7 @@ MonoBehaviour:
       m_ClientGUIView: {fileID: 5}
     m_SearchString: 
   m_ExpandedScenes:
-  - NotInvaders_MainMenu
+  - NotSpaceInvaders
   m_CurrenRootInstanceID: 0
   m_Locked: 0
   m_CurrentSortingName: TransformSorting
@@ -1282,7 +1282,7 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 0
     m_Folders:
-    - Assets/_ATE/Scripts/Scripts_ScenePersistentSingletons
+    - Assets/_ATE/Scripts/Scripts_Player
   m_ViewMode: 0
   m_StartGridSize: 16
   m_LastFolders: []
