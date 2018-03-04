@@ -1,1 +1,4 @@
-sceneSetups: []
+sceneSetups:
+- path: Assets/_ATE/Resources/Resources_Scenes/Scenes_NotSpaceInvaders/NotInvaders_MainMenu.unity
+  isLoaded: 1
+  isActive: 1
