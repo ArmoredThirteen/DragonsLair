@@ -34,7 +34,7 @@ namespace Ate.GameSystems
 			_collisionEventSystem = new EventSystem<EventType_Collision, EventData_Collision> ();
 		}
 
-		public override void SceneInitialize (){}
+		public override void SceneLoaded (){}
 		public override void SystemUpdate (){}
 		public override void SystemLateUpdate (){}
 

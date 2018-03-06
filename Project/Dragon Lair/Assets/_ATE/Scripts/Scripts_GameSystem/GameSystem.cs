@@ -23,7 +23,7 @@ namespace Ate.GameSystems
 		/// <summary>
 		/// Called by the GameManager at the start of each scene.
 		/// </summary>
-		public abstract void SceneInitialize ();
+		public abstract void SceneLoaded ();
 
 		/// <summary>
 		/// Called by the GameManager when it updates.

@@ -27,12 +27,11 @@ namespace Ate.GameSystems
 		{
 			GameManager.Events.Register<EventType_Collision, EventData_Collision> ((int)EventType_Collision.RegisterCollider,   OnRegisterCollider);
 			GameManager.Events.Register<EventType_Collision, EventData_Collision> ((int)EventType_Collision.UnregisterCollider, OnUnregisterCollider);
-		}
 
-		public override void SceneInitialize ()
-		{
 			_lastDetails.Clear ();
 		}
+
+		public override void SceneLoaded (){}
 
 		public override void SystemUpdate ()
 		{

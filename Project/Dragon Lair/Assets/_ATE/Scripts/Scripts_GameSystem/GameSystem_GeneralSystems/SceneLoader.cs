@@ -11,13 +11,13 @@ namespace Ate.GameSystems
 	{
 		#region GameSystem
 
-		public override void Initialize (){}
-
-		public override void SceneInitialize ()
+		public override void Initialize ()
 		{
 			GameManager.Events.Register<EventType_Gameplay, EventData_Gameplay> ((int)EventType_Gameplay.SceneLoad,   OnLoadScene);
 			GameManager.Events.Register<EventType_Gameplay, EventData_Gameplay> ((int)EventType_Gameplay.SceneReload, OnReloadCurrentScene);
 		}
+
+		public override void SceneLoaded (){}
 
 		public override void SystemUpdate (){}
 		public override void SystemLateUpdate (){}

@@ -21,7 +21,7 @@ namespace Ate.GameSystems
 		#region GameSystem
 
 		public override void Initialize (){}
-		public override void SceneInitialize (){}
+		public override void SceneLoaded (){}
 
 
 		public override void SystemUpdate ()

@@ -26,7 +26,7 @@ namespace Ate.GameSystems
 			}
 		}
 
-		public override void SceneInitialize (){}
+		public override void SceneLoaded (){}
 		public override void SystemUpdate (){}
 		public override void SystemLateUpdate (){}
 

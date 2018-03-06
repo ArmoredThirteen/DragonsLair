@@ -50,11 +50,6 @@ namespace Ate.GameSystems
 
 		public override void Initialize ()
 		{
-			
-		}
-
-		public override void SceneInitialize ()
-		{
 			thePools.Clear ();
 
 			for (int i = 0; i < poolDatas.Count; i++)
@@ -77,6 +72,8 @@ namespace Ate.GameSystems
 				thePools.Add (poolDatas[i].theID, poolDatas[i]);
 			}
 		}
+
+		public override void SceneLoaded (){}
 
 
 		public override void SystemUpdate (){}

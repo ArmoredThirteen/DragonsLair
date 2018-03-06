@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿//#define DebugLoadState
+
+
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using Ate.FSM;
@@ -37,11 +40,26 @@ namespace Ate.GameSystems
 
 		private BasicFSM<LoadState> _fsm_loadState;
 
-		private bool requestedLoad = false;
-		private bool requestedUnload = false;
+		private bool _requestedLoad   = false;
+		private bool _requestedUnload = false;
 
-		private bool completedLoad = false;
-		private bool completedUnload = false;
+		private bool _completedLoad   = false;
+		private bool _completedUnload = false;
+
+		#endregion
+
+
+		#region Properties
+
+		public bool IsLoaded
+		{
+			get { return _completedLoad; }
+		}
+
+		public bool IsUnloaded
+		{
+			get { return _completedUnload; }
+		}
 
 		#endregion
 
@@ -115,34 +133,102 @@ namespace Ate.GameSystems
 		/// </summary>
 		void Awake ()
 		{
-			//	Keep the original instance
-			if (Instance != null)
-			{
-				Destroy (gameObject);
+			HandleSingleton ();
+			if (Instance != this)
 				return;
-			}
 
-			//	Initialize the original instance
-			Instance = this;
-			//DontDestroyOnLoad (this);
+			//	Put before InitializeSystems() so systems can safely refer to the properties
+			SetGameSystemProperties ();
 
 			BuildLoadStateFSM ();
+			InitializeSystems ();
 
-			//TODO NEEDS TO BE CALLED BY SEPERATE SYSTEM
-			//TODO
-			LoadSystems ();
-			_fsm_loadState.Update (false);
-			//TODO NEEDS TO BE CALLED BY SEPERATE SYSTEM
-			//TODO
+			#if DebugLoadState
+			Debug.LogError ("Awake(): Initial Request Loading");
+			#endif
+			RequestLoadSystems ();
+			//	Unloaded to Loading
+			UpdateFSM ();
 		}
 
+		private void HandleSingleton ()
+		{
+			if (Instance == null)
+			{
+				Instance = this;
+				DontDestroyOnLoad (gameObject);
+			}
+			else if (Instance != this)
+			{
+				DestroyImmediate (gameObject);
+			}
+		}
+
+		private void SetGameSystemProperties ()
+		{
+			Events         = GetGameSystem<EventManager> ();
+			DelayedInvoker = GetGameSystem<DelayedInvoker> ();
+			ObjectTracker  = GetGameSystem<GameObjectTracker> ();
+			HudText        = GetGameSystem<HudText> ();
+			Stats          = GetGameSystem<StatTracker> ();
+			Pooling        = GetGameSystem<PoolManager> ();
+		}
+
+
 		/// <summary>
-		/// Calls all the GameSystem.SystemUpdate() methods.
-		/// Eventually might house logic for pausing too.
+		/// Unity's built-in update.
+		/// Will maybe eventually house logic for scene changing or pausing
 		/// </summary>
 		void Update ()
 		{
-			_fsm_loadState.Update (false);
+			UpdateFSM ();
+		}
+
+
+		/// <summary>
+		/// Unity's build-in event for scene changes
+		/// </summary>
+		void OnLevelWasLoaded ()
+		{
+			//TODO: Should instead have another script/method handle scene loading and unloading
+			//		It would properly order how things get loaded and unloaded during scene changes
+			// ChangeScene()
+			//    GameManager.UnloadSystems ();
+			//    when systems unloaded ->
+			//        Unity.SceneChange ();
+			// OnLevelLoaded()
+			//    GameManager.LoadSystems ();
+			//    when systems loaded ->
+			//        SendEvent (GameSystemsLoaded);
+
+			#if DebugLoadState
+			Debug.LogError ("OnLevelWasLoaded(): Request Unloading");
+			#endif
+			//	Force a system unload
+			RequestUnloadSystems ();
+			//	Loaded to Unloading, update Unloading, Unloading to Unloaded
+			UpdateFSM ();
+			UpdateFSM ();
+
+			//	In an actual scene-change management solution, the scene change would go here
+
+			#if DebugLoadState
+			Debug.LogError ("OnLevelWasLoaded(): Request Loading");
+			#endif
+			//	Now load the systems again
+			RequestLoadSystems ();
+			//	Unloaded to Loading, update Loading
+			UpdateFSM ();
+			//	Should be able to stay at Loading and they'll automatically go to Loaded this frame or next
+		}
+
+
+		/// <summary>
+		/// Updates _fsm_loadState once.
+		/// </summary>
+		void UpdateFSM (bool updateThenSwitch = false)
+		{
+			_fsm_loadState.Update (updateThenSwitch);
 		}
 
 		/// <summary>
@@ -152,7 +238,7 @@ namespace Ate.GameSystems
 		/// </summary>
 		void LateUpdate ()
 		{
-			if (!Instance.completedLoad)
+			if (!Instance._completedLoad)
 				return;
 			
 			for (int i = 0; i < Instance.gameSystems.Count; i++)
@@ -194,24 +280,24 @@ namespace Ate.GameSystems
 		/// Requests loading the GameSystems.
 		/// Only works if LoadState is currently Unloaded.
 		/// </summary>
-		public void LoadSystems ()
+		public void RequestLoadSystems ()
 		{
 			if (!_fsm_loadState.IsCurrentState (LoadState.Unloaded))
 				return;
 
-			requestedLoad = true;
+			_requestedLoad = true;
 		}
 
 		/// <summary>
 		/// Requests unloading the GameSystems.
 		/// Only works if LoadState is currently Loaded.
 		/// </summary>
-		public void UnloadSystems ()
+		public void RequestUnloadSystems ()
 		{
 			if (!_fsm_loadState.IsCurrentState (LoadState.Loaded))
 				return;
 
-			requestedUnload = true;
+			_requestedUnload = true;
 		}
 
 		#endregion
@@ -246,7 +332,7 @@ namespace Ate.GameSystems
 		{
 			for (int i = 0; i < gameSystems.Count; i++)
 			{
-				gameSystems[i].SceneInitialize ();
+				gameSystems[i].SceneLoaded ();
 			}
 		}
 
@@ -275,7 +361,7 @@ namespace Ate.GameSystems
 
 		private bool FSM_Switch_UnloadedToLoading ()
 		{
-			return requestedLoad;
+			return _requestedLoad;
 		}
 
 		#endregion
@@ -284,32 +370,20 @@ namespace Ate.GameSystems
 
 		private void FSM_Enter_Loading (LoadState previousState)
 		{
-			completedUnload = false;
+			_completedUnload = false;
 
-			requestedLoad = false;
-			completedLoad = false;
+			_requestedLoad = false;
+			_completedLoad = false;
 		}
 
 		private void FSM_Update_Loading ()
 		{
-			//	Put before GameSystem initialization so they're safer
-			Events         = GetGameSystem<EventManager> ();
-			DelayedInvoker = GetGameSystem<DelayedInvoker> ();
-			ObjectTracker  = GetGameSystem<GameObjectTracker> ();
-			HudText        = GetGameSystem<HudText> ();
-			Stats          = GetGameSystem<StatTracker> ();
-			Pooling        = GetGameSystem<PoolManager> ();
-
-			//TODO: Seperate InitializeSystems and SceneInitializeSystems
-			InitializeSystems ();
-			SceneInitializeSystems ();
-
-			completedLoad = true;
+			_completedLoad = true;
 		}
 
 		private bool FSM_Switch_LoadingToLoaded ()
 		{
-			return completedLoad;
+			return IsLoaded;
 		}
 
 		#endregion
@@ -329,7 +403,7 @@ namespace Ate.GameSystems
 
 		private bool FSM_Switch_LoadedToUnloading ()
 		{
-			return requestedUnload;
+			return _requestedUnload;
 		}
 
 		#endregion
@@ -338,22 +412,22 @@ namespace Ate.GameSystems
 
 		private void FSM_Enter_Unloading (LoadState previousState)
 		{
-			completedLoad = false;
+			_completedLoad = false;
 
-			requestedUnload = false;
-			completedUnload = false;
+			_requestedUnload = false;
+			_completedUnload = false;
 		}
 
 		private void FSM_Update_Unloading ()
 		{
 			//TODO: Unload systems
 
-			completedUnload = true;
+			_completedUnload = true;
 		}
 
 		private bool FSM_Switch_UnloadingToUnloaded ()
 		{
-			return completedUnload;
+			return IsUnloaded;
 		}
 
 		#endregion

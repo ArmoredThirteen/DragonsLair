@@ -67,12 +67,11 @@ namespace Ate.GameSystems
 			{
 				_inputs[i].Initialize ();
 			}
-		}
 
-		public override void SceneInitialize ()
-		{
 			InitializeMouseStateFSM ();
 		}
+
+		public override void SceneLoaded (){}
 
 
 		public override void SystemUpdate ()

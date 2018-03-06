@@ -18,13 +18,13 @@ namespace Ate.GameSystems
 
 		#region GameSystem
 
-		public override void Initialize (){}
-
-		public override void SceneInitialize ()
+		public override void Initialize ()
 		{
 			//TODO: Something more official, this seems bug-prone
 			_registeredAteObjects = new Dictionary<GOType, List<AteObject>> ();
 		}
+
+		public override void SceneLoaded (){}
 
 
 		public override void SystemUpdate ()
