@@ -65,13 +65,23 @@ namespace Ate.GameSystems
 
 			for (int i = 0; i < _inputs.Count; i++)
 			{
+				//	Mainly initializes the ClickStateFSM
 				_inputs[i].Initialize ();
 			}
 
 			InitializeMouseStateFSM ();
 		}
 
-		public override void SceneLoaded (){}
+		public override void SceneLoaded ()
+		{
+			for (int i = 0; i < _inputs.Count; i++)
+			{
+				//	Mainly initializes the ClickStateFSM
+				_inputs[i].Initialize ();
+			}
+
+			InitializeMouseStateFSM ();
+		}
 
 
 		public override void SystemUpdate ()
@@ -219,6 +229,11 @@ namespace Ate.GameSystems
 
 			private bool FSM_Switch_UpToDown ()
 			{
+				#if DebugClickstates && UNITY_EDITOR
+				if (Input.GetKeyDown (theKey))
+					Debug.Log ("Keyis DOWN");
+				#endif
+
 				return Input.GetKeyDown (theKey);
 			}
 
@@ -240,6 +255,11 @@ namespace Ate.GameSystems
 
 			private bool FSM_Switch_DownToUp ()
 			{
+				#if DebugClickstates && UNITY_EDITOR
+				if (Input.GetKeyUp (theKey))
+					Debug.Log ("Keyis UP");
+				#endif
+
 				return Input.GetKeyUp (theKey);
 			}
 

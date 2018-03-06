@@ -28,7 +28,8 @@ namespace Ate.GameSystems
 			public int maxSize   = 50;
 
 
-			public List<PoolableObject> pooledObjects = new List<PoolableObject> ();
+			public List<PoolableObject> pooledObjects   = new List<PoolableObject> ();
+			public List<PoolableObject> unpooledObjects = new List<PoolableObject> ();
 		}
 
 
@@ -73,7 +74,10 @@ namespace Ate.GameSystems
 			}
 		}
 
-		public override void SceneLoaded (){}
+		public override void SceneLoaded ()
+		{
+			PoolAllObjects ();
+		}
 
 
 		public override void SystemUpdate (){}
@@ -104,18 +108,42 @@ namespace Ate.GameSystems
 
 		#region Public Methods
 
+		/// <summary>
+		/// Takes all active poolable objects and pools them.
+		/// Useful for scene changes.
+		/// </summary>
+		public void PoolAllObjects ()
+		{
+			for (int i = 0; i < poolDatas.Count; i++)
+			{
+				//	Iterate backwards since pooling will reduce list size each time
+				for (int k = poolDatas[i].unpooledObjects.Count-1; k >= 0; k--)
+				{
+					PoolObject (poolDatas[i].unpooledObjects[k]);
+				}
+			}
+		}
+
 		public void PoolObject (PoolableObject theObject)
 		{
 			PoolData thePool = GetPoolByID (theObject.theID);
 
+			//	Remove from Unpooled list
+			if (thePool.unpooledObjects.Contains (theObject))
+				thePool.unpooledObjects.Remove (theObject);
+
+			//	Pool is too large, destroy the object
+			//	TODO: Check if pool is getting too large during update and destroy several at once
 			if (thePool.pooledObjects.Count > thePool.maxSize)
 			{
 				GameObject.Destroy (theObject.gameObject);
 				return;
 			}
 
-			theObject.Pool ();
+			//	Add to Pooled list
 			thePool.pooledObjects.Add (theObject);
+			//	Call the object's specific Pooling functionality
+			theObject.Pool ();
 		}
 
 		public PoolableObject UnpoolObject (PoolID theID)
@@ -124,6 +152,8 @@ namespace Ate.GameSystems
 
 			PoolableObject theObject = null;
 
+			//	Pool has nothing available, create new default object
+			//	TODO: Check if pool is getting too small during update and create several at once
 			if (thePool.pooledObjects.Count == 0)
 			{
 				theObject = InstantiateDefaultObject (thePool);
@@ -134,7 +164,11 @@ namespace Ate.GameSystems
 				thePool.pooledObjects.RemoveAt (0);
 			}
 
+			//	Add to Unpooled list
+			thePool.unpooledObjects.Add (theObject);
+			//	Call the object's specific Unpooling functionality
 			theObject.Unpool ();
+
 			return theObject;
 		}
 

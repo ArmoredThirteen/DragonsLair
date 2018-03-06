@@ -132,16 +132,20 @@ namespace Ate
 		private void OnKeyReleased (EventData_UI eventData)
 		{
 			if (fireKeys.Contains (eventData.TheKey))
+			{
 				FireKeyReleased ();
+			}
 		}
 
 		private void FireKeyClicked ()
 		{
+			//Debug.Log ("Key Clicked");
 			_keysClickedCount++;
 		}
 
 		private void FireKeyReleased ()
 		{
+			//Debug.Log ("Key Released");
 			_keysClickedCount--;
 		}
 

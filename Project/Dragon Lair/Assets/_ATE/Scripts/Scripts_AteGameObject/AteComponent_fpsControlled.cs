@@ -40,6 +40,12 @@ namespace Ate
 		/// </summary>
 		public bool localUpdate = false;
 
+		/// <summary>
+		/// If true, object will call its baseFPS and Framelength updates
+		/// even if the gameObject or component is inactive.
+		/// </summary>
+		public bool updateWhileInactive = false;
+
 		public FrameLengthSetting frameLengthFrom = FrameLengthSetting.Universal;
 		public int frameLength_custom = 4;
 
@@ -73,6 +79,7 @@ namespace Ate
 				return;
 
 			localUpdate = EditorGUILayout.Toggle ("Local Update", localUpdate);
+			updateWhileInactive = EditorGUILayout.Toggle ("Update While Inactive", updateWhileInactive);
 
 			frameLengthFrom = (FrameLengthSetting)EditorGUILayout.EnumPopup ("Frame Length From", frameLengthFrom);
 
@@ -175,6 +182,9 @@ namespace Ate
 
 		private void OnFpsUpdate24 (EventData_Updates eventData)
 		{
+			if (!updateWhileInactive && !isActiveAndEnabled)
+				return;
+			
 			UpdateBaseFps ();
 
 			//	No framelength setting, just update at max fps

@@ -84,7 +84,6 @@ GameObject:
   - component: {fileID: 4585083593122546}
   - component: {fileID: 82795277510318368}
   - component: {fileID: 82424936457483462}
-  - component: {fileID: 170556036485498558}
   m_Layer: 0
   m_Name: BackgroundMusic
   m_TagString: Untagged
@@ -1174,6 +1173,7 @@ MonoBehaviour:
     startSize: 5
     maxSize: 50
     pooledObjects: []
+    unpooledObjects: []
 --- !u!114 &114882058549012858
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1579,11 +1579,3 @@ Behaviour:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1956882556809502}
   m_Enabled: 1
---- !u!170 &170556036485498558
-AudioDistortionFilter:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1180049884569584}
-  m_Enabled: 1
-  m_DistortionLevel: 0.5

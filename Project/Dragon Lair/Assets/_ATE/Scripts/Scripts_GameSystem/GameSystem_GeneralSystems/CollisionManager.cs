@@ -31,7 +31,10 @@ namespace Ate.GameSystems
 			_lastDetails.Clear ();
 		}
 
-		public override void SceneLoaded (){}
+		public override void SceneLoaded ()
+		{
+			_lastDetails.Clear ();
+		}
 
 		public override void SystemUpdate ()
 		{

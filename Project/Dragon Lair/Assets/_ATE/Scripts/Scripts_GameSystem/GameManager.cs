@@ -220,6 +220,11 @@ namespace Ate.GameSystems
 			//	Unloaded to Loading, update Loading
 			UpdateFSM ();
 			//	Should be able to stay at Loading and they'll automatically go to Loaded this frame or next
+
+			//	Now that the systems are properly loaded, do initialization stuff.
+			//	As the loading/unloading/scene changing gets better segmented
+			//	this should be seperated from the GameManager.
+			SceneInitializeSystems ();
 		}
 
 
