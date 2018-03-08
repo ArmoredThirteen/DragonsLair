@@ -938,15 +938,23 @@ MonoBehaviour:
       enumID: 200
     - enumName: EnemyShotsMissed
       enumID: 250
-  stats:
+  sceneStats:
   - id: 0
-    value: 0
+    startValue: 0
+    currentValue: 0
+    persistentValue: 0
   - id: 100
-    value: 0
+    startValue: 0
+    currentValue: 0
+    persistentValue: 0
   - id: 200
-    value: 0
+    startValue: 0
+    currentValue: 0
+    persistentValue: 0
   - id: 250
-    value: 0
+    startValue: 0
+    currentValue: 0
+    persistentValue: 0
 --- !u!114 &114042741151265042
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1153,6 +1161,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _myObject: {fileID: 114095163312741472}
   localUpdate: 0
+  updateWhileInactive: 0
   frameLengthFrom: 100
   frameLength_custom: 4
 --- !u!114 &114827970636084652

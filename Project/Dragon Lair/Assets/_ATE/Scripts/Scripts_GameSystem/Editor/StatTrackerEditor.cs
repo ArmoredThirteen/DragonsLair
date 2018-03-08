@@ -41,15 +41,25 @@ namespace Ate.GameSystems
 				EditorHelper.UnfocusControl ();
 			}
 
-			EditorHelper.DrawResizableList ("Used Stats", ref _target.stats, DrawEntry_StatData);
+			EditorHelper.DrawResizableList ("Used Stats", ref _target.sceneStats, DrawEntry_StatData);
 		}
 
 		private void DrawEntry_StatData (int index)
 		{
-			StatTracker.StatData curStat = _target.stats[index];
+			StatTracker.StatData curStat = _target.sceneStats[index];
 
-			curStat.id    = (TrackedStatType)EditorGUILayout.EnumPopup ("ID", curStat.id);
-			curStat.value = EditorGUILayout.FloatField ("Start Amount", curStat.value);
+			curStat.id = (TrackedStatType)EditorGUILayout.EnumPopup ("ID", curStat.id);
+
+			curStat.startValue   = EditorGUILayout.FloatField ("Start Value", curStat.startValue);
+			//	Only change if not playing. Otherwise if watching values the current
+			//	value constantly gets overwritten by the default value.
+			if (!EditorApplication.isPlaying)
+				curStat.currentValue = curStat.startValue;
+
+			EditorGUILayout.BeginHorizontal ();
+			EditorGUILayout.LabelField ("Current: " + curStat.currentValue, GUILayout.Width (100));
+			EditorGUILayout.LabelField ("Persistent: " + curStat.persistentValue, GUILayout.Width (100));
+			EditorGUILayout.EndHorizontal ();
 		}
 
 
@@ -65,12 +75,12 @@ namespace Ate.GameSystems
 				if (GetStatDataOfType (newStats, curEnumVals[i]) != null)
 					continue;
 
-				StatTracker.StatData existingStat = GetStatDataOfType (_target.stats, curEnumVals[i]);
+				StatTracker.StatData existingStat = GetStatDataOfType (_target.sceneStats, curEnumVals[i]);
 				newStats.Add (existingStat != null ? existingStat : new StatTracker.StatData (curEnumVals[i], 0));
 			}
 
-			_target.stats.Clear ();
-			_target.stats = newStats;
+			_target.sceneStats.Clear ();
+			_target.sceneStats = newStats;
 		}
 
 		private StatTracker.StatData GetStatDataOfType (List<StatTracker.StatData> datas, TrackedStatType statType)

@@ -10,7 +10,6 @@ namespace Ate.GameSystems
 
 	public class StatTracker : GameSystem
 	{
-		//TODO: Make it enum based not string based
 		//TODO: Make it abstract with custom inspectors and things
 		//		So the value can be an int, float, or whatever
 		[System.Serializable]
@@ -18,21 +17,26 @@ namespace Ate.GameSystems
 		{
 			public TrackedStatType id = TrackedStatType.None;
 
-			public float value = 0;
+			public float startValue      = 0;
+			public float currentValue    = 0;
+			public float persistentValue = 0;
 
 
 			public StatData ()
 			{
-				this.id = TrackedStatType.None;
-				this.value = 0;
+				this.id           = TrackedStatType.None;
+				this.startValue   = 0;
+				this.currentValue = 0;
 			}
 
 			public StatData (TrackedStatType id, float value)
 			{
-				this.id = id;
-				this.value = value;
+				this.id           = id;
+				this.startValue   = value;
+				this.currentValue = value;
 			}
 		}
+
 
 		public enum ModType
 		{
@@ -44,13 +48,28 @@ namespace Ate.GameSystems
 
 		public GenerateEnum_Data enumData = new GenerateEnum_Data ();
 
-		public List<StatData> stats = new List<StatData> ();
+		/// <summary> This scene's various stat totals. </summary>
+		public List<StatData> sceneStats      = new List<StatData> ();
 
 
 		#region GameSystem
 
-		public override void Initialize (){}
-		public override void SceneLoaded (){}
+		public override void Initialize ()
+		{
+			
+		}
+
+		public override void SceneLoaded ()
+		{
+			//	Reset all of the scene stat values
+			for (int i = 0; i < sceneStats.Count; i++)
+			{
+				sceneStats[i].persistentValue += sceneStats[i].currentValue;
+				sceneStats[i].currentValue     = sceneStats[i].startValue;
+			}
+		}
+
+
 		public override void SystemUpdate (){}
 		public override void SystemLateUpdate (){}
 
@@ -67,7 +86,7 @@ namespace Ate.GameSystems
 			if (theStat == null)
 				return float.MinValue;
 			
-			return theStat.value;
+			return theStat.currentValue;
 		}
 
 		/// <summary>
@@ -76,10 +95,10 @@ namespace Ate.GameSystems
 		/// </summary>
 		public StatData GetStat (TrackedStatType statType)
 		{
-			for (int i = 0; i < stats.Count; i++)
+			for (int i = 0; i < sceneStats.Count; i++)
 			{
-				if (stats[i].id.Equals (statType))
-					return stats[i];
+				if (sceneStats[i].id.Equals (statType))
+					return sceneStats[i];
 			}
 
 			return null;
@@ -101,22 +120,22 @@ namespace Ate.GameSystems
 				return;
 			}
 
-			float oldStat = theStat.value;
+			float oldStat = theStat.currentValue;
 
 			switch (modType)
 			{
 				case ModType.Set :
-					theStat.value = value;
+					theStat.currentValue = value;
 					break;
 				case ModType.Add :
-					theStat.value += value;
+					theStat.currentValue += value;
 					break;
 				case ModType.Mult :
-					theStat.value *= value;
+					theStat.currentValue *= value;
 					break;
 			}
 
-			float newStat = theStat.value;
+			float newStat = theStat.currentValue;
 
 			EventData_Gameplay eventData = new EventData_Gameplay ();
 			eventData.TheStatType  = statType;
