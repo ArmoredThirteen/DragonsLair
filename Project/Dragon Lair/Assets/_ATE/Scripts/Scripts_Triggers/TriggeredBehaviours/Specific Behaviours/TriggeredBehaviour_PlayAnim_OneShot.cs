@@ -32,7 +32,9 @@ namespace Ate
 		/// </summary>
 		protected override void DrawChildInspector ()
 		{
-			EditorHelper.DrawResizableList<AnimControl_OneShot> ("OneShot Animation Controllers", ref theAnimControls, DrawEntry_AnimControl);
+			bool drawList = true;
+			EditorHelper.DrawResizableList<AnimControl_OneShot>
+				("OneShot Animation Controllers", ref drawList, ref theAnimControls, DrawEntry_AnimControl);
 		}
 
 		private void DrawEntry_AnimControl (int index)

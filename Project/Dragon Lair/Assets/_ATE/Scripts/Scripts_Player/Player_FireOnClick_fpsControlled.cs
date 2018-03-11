@@ -49,7 +49,8 @@ namespace Ate
 		{
 			base.DrawInspector ();
 
-			EditorHelper.DrawResizableList<KeyCode> ("Firing Keys", ref fireKeys, DrawEntry_KeyCode);
+			bool drawList = true;
+			EditorHelper.DrawResizableList<KeyCode> ("Firing Keys", ref drawList, ref fireKeys, DrawEntry_KeyCode);
 
 			framesPerFire = EditorGUILayout.IntField ("Frames per Fire", framesPerFire);
 

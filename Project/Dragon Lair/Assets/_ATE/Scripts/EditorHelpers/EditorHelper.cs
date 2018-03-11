@@ -225,12 +225,13 @@ namespace Ate.EditorHelpers
 		/// The callback passes the entry index.
 		/// </summary>
 		public static bool DrawResizableList<T> (
-			string title,
-			ref List<T> theList,
+			string        title,
+			ref bool      drawEntries,
+			ref List<T>   theList,
 			Callback<int> DrawEntryCallback,
-			bool horizontalButtons = true)
+			bool          horizontalButtons = true)
 		{
-			return DrawResizableList<T> (title, ref theList, DrawEntryCallback, null, null, null, null, horizontalButtons);
+			return DrawResizableList<T> (title, ref drawEntries, ref theList, DrawEntryCallback, null, null, null, null, horizontalButtons);
 		}
 
 		/// <summary>
@@ -252,25 +253,41 @@ namespace Ate.EditorHelpers
 		/// Default swap functionality: theList.Swap (index, index +/- 1);
 		/// </summary>
 		public static bool DrawResizableList<T> (
-			string title,
-			ref List<T> theList,
+			string        title,
+			ref bool      drawEntries,
+			ref List<T>   theList,
 			Callback<int> DrawEntryCallback,
 			Callback<int> AddCallback,
 			Callback<int> DelCallback,
 			Callback<int> MoveUpCallback,
 			Callback<int> MoveDownCallback,
-			bool horizontalButtons = true)
+			bool          horizontalButtons = true)
 		{
 			EditorGUILayout.Space ();
+			EditorGUILayout.BeginVertical ();
+
+			//	If not drawing the list at all, just return
+			bool shouldDrawList = DrawListTitle (title, ref drawEntries);
+			if (!shouldDrawList)
+			{
+				EditorGUILayout.EndVertical ();
+				return false;
+			}
 
 			//	If list changed from 0 to 1, don't draw list stuff until next time
-			bool modButtonPressed = DrawListHeader (title, ref theList, AddCallback);
+			bool modButtonPressed = DrawListHeader (ref theList, AddCallback);
 			if (modButtonPressed)
+			{
+				EditorGUILayout.EndVertical ();
 				return true;
+			}
+
+			EditorGUILayout.EndVertical ();
 			EditorGUILayout.Space ();
 
 			EditorGUI.indentLevel++;
 			EditorGUILayout.BeginVertical ();
+
 			for (int i = 0; i < theList.Count; i++)
 			{
 				//	Begin 'indent' spacing for buttons
@@ -321,19 +338,22 @@ namespace Ate.EditorHelpers
 			return modButtonPressed;
 		}
 
+		private static bool DrawListTitle (string title, ref bool drawEntries)
+		{
+			GUIStyle myStyle = new GUIStyle ();
+			myStyle.fontSize = 15;
+			EditorGUILayout.LabelField (title, myStyle);
+
+			drawEntries = EditorGUILayout.Toggle ("Draw Entries", drawEntries);
+			return drawEntries;
+		}
 
 		/// <summary>
 		/// Draws the list header. Returns true if list was 0 and an entry was added.
 		/// </summary>
-		private static bool DrawListHeader<T> (string title, ref List<T> theList, Callback<int> AddCallback)
+		private static bool DrawListHeader<T> (ref List<T> theList, Callback<int> AddCallback)
 		{
 			bool pressed = false;
-			EditorGUILayout.BeginVertical ();
-
-			GUIStyle myStyle = new GUIStyle ();
-			myStyle.fontSize = 15;
-
-			EditorGUILayout.LabelField (title, myStyle);
 
 			if (theList.Count == 0)
 			{
@@ -351,7 +371,6 @@ namespace Ate.EditorHelpers
 				GUI.color = DefaultGUIColor;
 			}
 
-			EditorGUILayout.EndVertical ();
 			return pressed;
 		}
 

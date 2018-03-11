@@ -37,7 +37,10 @@ namespace Ate
 
 			requireMouseOver = EditorGUILayout.Toggle ("Require Mouse-over", requireMouseOver);
 
-			EditorHelper.DrawResizableList<TriggeredBehaviour> ("Behaviours on Interact", ref behavioursOnInteract, DrawEntry_BehaviourOnInteract);
+			EditorGUILayout.Space ();
+
+			bool drawList = true;
+			EditorHelper.DrawResizableList<TriggeredBehaviour> ("Behaviours on Interact", ref drawList, ref behavioursOnInteract, DrawEntry_BehaviourOnInteract);
 		}
 
 		private void DrawEntry_BehaviourOnInteract (int index)

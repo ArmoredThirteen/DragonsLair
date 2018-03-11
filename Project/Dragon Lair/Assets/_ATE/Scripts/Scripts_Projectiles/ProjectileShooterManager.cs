@@ -28,7 +28,11 @@ namespace Ate.Projectiles
 			base.DrawInspector ();
 
 			chooserProjectileShooters.DrawIndexChooser ();
-			EditorHelper.DrawResizableList<ProjectileShooter> ("Projectile Shooters", ref projectileShooters, DrawProjectileShooter);
+
+			EditorGUILayout.Space ();
+
+			bool drawList = true;
+			EditorHelper.DrawResizableList<ProjectileShooter> ("Projectile Shooters", ref drawList, ref projectileShooters, DrawProjectileShooter);
 		}
 
 		private void DrawProjectileShooter (int index)

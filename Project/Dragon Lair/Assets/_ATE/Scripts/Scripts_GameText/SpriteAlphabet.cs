@@ -83,7 +83,8 @@ namespace Ate.GameText
 			EditorGUILayout.Space ();
 			EditorGUILayout.Space ();
 
-			EditorHelper.DrawResizableList<char> ("Characters", ref characters,
+			bool drawList = true;
+			EditorHelper.DrawResizableList<char> ("Characters", ref drawList, ref characters,
 				OnDrawEntry, OnAddEntry, OnDelEntry, OnMoveUpEntry, OnMoveDownEntry);
 
 			EditorHelper.SetObjectDirtyIfChanged (this);

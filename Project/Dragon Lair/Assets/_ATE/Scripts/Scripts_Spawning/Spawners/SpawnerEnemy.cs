@@ -123,7 +123,8 @@ namespace Ate.Spawning
 			targetVariance    = EditorGUILayout.FloatField ("Target Variance",     targetVariance);
 			autoFireDelay     = EditorGUILayout.FloatField ("Autofire Delay",      autoFireDelay);
 
-			EditorHelper.DrawResizableList<Vector3> ("Barrel Offsets", ref barrelOffsets, DrawEntry_BarrelOffset);
+			bool drawList = true;
+			EditorHelper.DrawResizableList<Vector3> ("Barrel Offsets", ref drawList, ref barrelOffsets, DrawEntry_BarrelOffset);
 		}
 
 

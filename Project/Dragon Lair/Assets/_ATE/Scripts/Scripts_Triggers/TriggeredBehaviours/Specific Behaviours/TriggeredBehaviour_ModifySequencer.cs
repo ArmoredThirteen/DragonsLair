@@ -42,8 +42,10 @@ namespace Ate
 		protected override void DrawChildInspector ()
 		{
 			setActivity = (SetActivity)EditorGUILayout.EnumPopup ("Set Activity", setActivity);
+
+			bool drawList = true;
 			EditorHelper.DrawResizableList<TriggeredBehaviour_Sequencer>
-			("Sequencers", ref sequencers, DrawEntry_ActionBundle);
+				("Sequencers", ref drawList, ref sequencers, DrawEntry_ActionBundle);
 		}
 
 		private void DrawEntry_ActionBundle (int index)

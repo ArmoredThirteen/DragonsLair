@@ -137,7 +137,8 @@ namespace Ate.ScriptGeneration
 				_generateNextDraw = false;
 			}
 
-			bool modded = EditorHelper.DrawResizableList<SingleEnum_Data> ("Enum Values", ref enumValues, actualDrawCallback, addCallback, delCallback, moveUpCallback, moveDownCallback);
+			bool drawList = true;
+			bool modded = EditorHelper.DrawResizableList<SingleEnum_Data> ("Enum Values", ref drawList, ref enumValues, actualDrawCallback, addCallback, delCallback, moveUpCallback, moveDownCallback);
 			if (modded && automaticGeneration)
 			{
 				_generateNextDraw = true;

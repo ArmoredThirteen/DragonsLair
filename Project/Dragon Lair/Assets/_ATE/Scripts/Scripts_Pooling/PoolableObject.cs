@@ -17,13 +17,13 @@ namespace Ate.Pooling
 	public abstract class PoolableObject : AteComponent
 	{
 
-		[System.Serializable]
+		/*[System.Serializable]
 		public abstract class PO_Data
 		{
 			#if UNITY_EDITOR
 			public abstract void DrawInspector ();
 			#endif
-		}
+		}*/
 
 
 		#region Public Variables

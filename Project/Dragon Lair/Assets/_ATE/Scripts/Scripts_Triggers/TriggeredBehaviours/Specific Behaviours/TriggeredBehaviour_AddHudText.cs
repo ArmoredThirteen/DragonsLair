@@ -50,9 +50,12 @@ namespace Ate
 			boxType = (TextBoxType)EditorGUILayout.EnumPopup ("Box Type", boxType);
 			textOrder = (TextOrder)EditorGUILayout.EnumPopup ("Text Order", textOrder);
 
-			EditorHelper.DrawResizableList<string> ("Texts", ref texts, DrawEntry_Text);
+			bool drawList_texts             = true;
+			bool drawList_sendIDsForRemoval = true;
+
+			EditorHelper.DrawResizableList<string> ("Texts", ref drawList_texts, ref texts, DrawEntry_Text);
 			EditorHelper.DrawResizableList<TriggeredBehaviour_RemoveHudText>
-			("Send Removal IDs", ref sendTextIDsForRemoval, DrawEntry_SendForRemoval);
+				("Send Removal IDs", ref drawList_sendIDsForRemoval, ref sendTextIDsForRemoval, DrawEntry_SendForRemoval);
 		}
 
 		private void DrawEntry_Text (int index)

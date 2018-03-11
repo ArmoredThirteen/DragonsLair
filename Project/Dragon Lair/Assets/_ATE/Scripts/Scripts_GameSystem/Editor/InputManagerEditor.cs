@@ -23,7 +23,8 @@ namespace Ate.GameSystems
 			_target.moveCheckTime   = EditorGUILayout.FloatField ("Move Check Time",  _target.moveCheckTime);
 			_target.satStillTime    = EditorGUILayout.FloatField ("Sat Still Time",   _target.satStillTime);
 
-			EditorHelper.DrawResizableList<KeyCode> ("Key Codes to Track", ref _target.keysToTrack, DrawEntry_KeyCode);
+			bool drawList = true;
+			EditorHelper.DrawResizableList<KeyCode> ("Key Codes to Track", ref drawList, ref _target.keysToTrack, DrawEntry_KeyCode);
 
 			EditorHelper.SetDirtyIfChanged (_target);
 		}

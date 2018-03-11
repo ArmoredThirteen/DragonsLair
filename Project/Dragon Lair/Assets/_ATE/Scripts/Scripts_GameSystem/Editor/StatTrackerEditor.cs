@@ -41,7 +41,8 @@ namespace Ate.GameSystems
 				EditorHelper.UnfocusControl ();
 			}
 
-			EditorHelper.DrawResizableList ("Used Stats", ref _target.sceneStats, DrawEntry_StatData);
+			bool drawList = true;
+			EditorHelper.DrawResizableList ("Used Stats", ref drawList, ref _target.sceneStats, DrawEntry_StatData);
 		}
 
 		private void DrawEntry_StatData (int index)

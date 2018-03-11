@@ -34,7 +34,7 @@ namespace Ate.Collision
 
 		#region Private Variables
 
-		private bool _showIgnoreAreas = false;
+		private bool _drawIgnoreAreasList = false;
 
 		private CollisionArea _myArea = null;
 
@@ -47,9 +47,9 @@ namespace Ate.Collision
 		{
 			base.DrawInspector ();
 
-			_showIgnoreAreas = EditorGUILayout.Toggle ("Show Ignore Areas", _showIgnoreAreas);
-			if (_showIgnoreAreas)
-				EditorHelper.DrawResizableList<CollisionArea> ("Ignore Collisions With", ref ignoreAreas, OnDrawIgnoreArea);
+			_drawIgnoreAreasList = EditorGUILayout.Toggle ("Show Ignore Areas", _drawIgnoreAreasList);
+			if (_drawIgnoreAreasList)
+				EditorHelper.DrawResizableList<CollisionArea> ("Ignore Collisions With", ref _drawIgnoreAreasList, ref ignoreAreas, OnDrawIgnoreArea);
 		}
 
 		private void OnDrawIgnoreArea (int index)

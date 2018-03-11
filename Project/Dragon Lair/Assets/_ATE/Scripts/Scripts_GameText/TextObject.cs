@@ -32,7 +32,7 @@ namespace Ate.GameText
 		#region Private Variables
 
 		#if UNITY_EDITOR
-		private bool _displayRenderers = false;
+		private bool _drawRenderersList = false;
 		#endif
 
 		#endregion
@@ -63,8 +63,8 @@ namespace Ate.GameText
 			if (stringChanged)
 				UpdateText ();
 
-			_displayRenderers = EditorGUILayout.Toggle ("Display Renderers", _displayRenderers);
-			if (_displayRenderers)
+			_drawRenderersList = EditorGUILayout.Toggle ("Display Renderers", _drawRenderersList);
+			if (_drawRenderersList)
 				OnDrawRenderers ();
 		}
 
@@ -90,7 +90,7 @@ namespace Ate.GameText
 			if (GUILayout.Button ("Add Renderers From Children"))
 				OnFillWithChildren ();
 
-			EditorHelper.DrawResizableList<SpriteRenderer> ("Sprite Renderers", ref renderers, OnDrawRenderer);
+			EditorHelper.DrawResizableList<SpriteRenderer> ("Sprite Renderers", ref _drawRenderersList, ref renderers, OnDrawRenderer);
 		}
 
 		private void OnFillWithChildren ()

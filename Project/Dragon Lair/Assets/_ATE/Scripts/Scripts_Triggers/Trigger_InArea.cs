@@ -65,7 +65,10 @@ namespace Ate
 		{
 			base.DrawInspector ();
 
-			EditorHelper.DrawResizableList<GOType> ("Triggered by Specific Types", ref triggeredByTypes, DrawEntry_TriggeredByType);
+			bool drawList_triggeredByTypes = true;
+			EditorHelper.DrawResizableList<GOType>
+				("Triggered by Specific Types", ref drawList_triggeredByTypes, ref triggeredByTypes, DrawEntry_TriggeredByType);
+
 			if (triggeredByTypes.Count <= 0)
 				EditorGUILayout.LabelField ("Leave empty to be triggered by all types.");
 			
@@ -84,9 +87,16 @@ namespace Ate
 			eventsToInteract = (EventType_UI)EditorGUILayout.EnumPopup ("Event to Interact", eventsToInteract);
 			interactKey = (KeyCode)EditorGUILayout.EnumPopup ("Interact Key", interactKey);
 
-			EditorHelper.DrawResizableList<TriggeredBehaviour> ("Behaviours on Entry",    ref behavioursOnEnter,    DrawEntry_BehaviourOnEnter);
-			EditorHelper.DrawResizableList<TriggeredBehaviour> ("Behaviours on Interact", ref behavioursOnInteract, DrawEntry_BehaviourOnInteract);
-			EditorHelper.DrawResizableList<TriggeredBehaviour> ("Behaviours on Exit",     ref behavioursOnExit,     DrawEntry_BehaviourOnExit);
+			bool drawList_behavioursOnEnter    = true;
+			bool drawList_behavioursOnInteract = true;
+			bool drawList_behavioursOnExit     = true;
+
+			EditorHelper.DrawResizableList<TriggeredBehaviour>
+				("Behaviours on Entry",    ref drawList_behavioursOnEnter,    ref behavioursOnEnter,    DrawEntry_BehaviourOnEnter);
+			EditorHelper.DrawResizableList<TriggeredBehaviour>
+				("Behaviours on Interact", ref drawList_behavioursOnInteract, ref behavioursOnInteract, DrawEntry_BehaviourOnInteract);
+			EditorHelper.DrawResizableList<TriggeredBehaviour>
+				("Behaviours on Exit",     ref drawList_behavioursOnExit,     ref behavioursOnExit,     DrawEntry_BehaviourOnExit);
 		}
 
 		private void DrawEntry_TriggeredByType (int index)

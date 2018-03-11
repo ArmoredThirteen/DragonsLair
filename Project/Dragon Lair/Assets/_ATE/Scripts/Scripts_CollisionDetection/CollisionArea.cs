@@ -77,7 +77,8 @@ namespace Ate.Collision
 			if (areaIncludesOthers)
 			{
 				EditorGUI.indentLevel++;
-				EditorHelper.DrawResizableList ("Other Colliders", ref otherColliders, DrawEntry_OtherCollider);
+				bool drawList = true;
+				EditorHelper.DrawResizableList ("Other Colliders", ref drawList, ref otherColliders, DrawEntry_OtherCollider);
 				EditorGUI.indentLevel--;
 			}
 

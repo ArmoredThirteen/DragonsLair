@@ -183,10 +183,10 @@ namespace Ate.GameSystems
 				GameObject.Instantiate (thePool.defaultPrefab, transform.position, transform.rotation)
 				as PoolableObject;
 
-			Transform newParent = transform;
+			Transform objectParent = transform;
 			if (thePool.poolContainer != null)
-				newParent = thePool.poolContainer;
-			theObject.transform.parent = newParent;
+				objectParent = thePool.poolContainer;
+			theObject.transform.parent = objectParent;
 
 			theObject.Pool ();
 

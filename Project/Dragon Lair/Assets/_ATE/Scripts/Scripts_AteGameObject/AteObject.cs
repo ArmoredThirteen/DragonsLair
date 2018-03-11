@@ -36,7 +36,7 @@ namespace Ate
 		private string _filter = "";
 		private int _index_addChoice = 0;
 
-		private bool _showComponentList = false;
+		private bool _drawComponentList = false;
 		#endif
 
 		#endregion
@@ -101,11 +101,11 @@ namespace Ate
 
 		private void DrawComponentList ()
 		{
-			_showComponentList = EditorGUILayout.Toggle ("Show Component List", _showComponentList);
-			if (!_showComponentList)
+			_drawComponentList = EditorGUILayout.Toggle ("Show Component List", _drawComponentList);
+			if (!_drawComponentList)
 				return;
 
-			EditorHelper.DrawResizableList ("Components", ref components, OnDrawComponent);
+			EditorHelper.DrawResizableList ("Components", ref _drawComponentList, ref components, OnDrawComponent);
 		}
 
 		private List<string> GetFilteredChoices ()

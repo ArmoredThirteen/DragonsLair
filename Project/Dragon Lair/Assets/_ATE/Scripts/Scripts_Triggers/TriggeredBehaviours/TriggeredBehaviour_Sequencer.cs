@@ -89,7 +89,10 @@ namespace Ate
 		protected override void DrawChildInspector ()
 		{
 			sequenceType = (SequenceType)EditorGUILayout.EnumPopup ("Sequence Type", sequenceType);
-			EditorHelper.DrawResizableList<Transform> ("Triggered Behaviours", ref behaviourTransforms, DrawTriggeredBehaviourEntry, null, null, null, null, false);
+
+			bool drawList = true;
+			EditorHelper.DrawResizableList<Transform>
+				("Triggered Behaviours", ref drawList, ref behaviourTransforms, DrawTriggeredBehaviourEntry, null, null, null, null, false);
 		}
 
 		private void DrawTriggeredBehaviourEntry (int index)

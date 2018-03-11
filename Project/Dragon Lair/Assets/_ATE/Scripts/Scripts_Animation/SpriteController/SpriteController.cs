@@ -71,7 +71,7 @@ namespace Ate.SpriteAnimation
 		{
 			_drawSpriteList = EditorGUILayout.Toggle ("Draw Sprite List", _drawSpriteList);
 			if (_drawSpriteList)
-				EditorHelper.DrawResizableList ("Sprites", ref sprites, OnDrawSprite);
+				EditorHelper.DrawResizableList ("Sprites", ref _drawSpriteList, ref sprites, OnDrawSprite);
 		}
 
 		private void OnDrawSprite (int index)

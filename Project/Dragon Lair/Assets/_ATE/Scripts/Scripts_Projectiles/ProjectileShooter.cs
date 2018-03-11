@@ -82,7 +82,8 @@ namespace Ate.Projectiles
 
 			autoFireDelay = EditorGUILayout.FloatField ("Autofire Delay", autoFireDelay);
 
-			EditorHelper.DrawResizableList<Transform> ("Barrels", ref barrels, OnDrawBarrel);
+			bool drawList = true;
+			EditorHelper.DrawResizableList<Transform> ("Barrels", ref drawList, ref barrels, OnDrawBarrel);
 		}
 
 		private void DrawTargetType ()

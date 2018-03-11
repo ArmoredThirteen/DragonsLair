@@ -5,6 +5,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using Ate.FSM;
+using UnityEngine.SceneManagement;
 
 
 namespace Ate.GameSystems
@@ -53,12 +54,12 @@ namespace Ate.GameSystems
 
 		public bool IsLoaded
 		{
-			get { return _completedLoad; }
+			get { return _fsm_loadState.IsCurrentState (LoadState.Loaded); }
 		}
 
 		public bool IsUnloaded
 		{
-			get { return _completedUnload; }
+			get { return _fsm_loadState.IsCurrentState (LoadState.Unloaded); }
 		}
 
 		#endregion
@@ -137,6 +138,9 @@ namespace Ate.GameSystems
 			if (Instance != this)
 				return;
 
+			//	Add to the scene loaded delegate
+			SceneManager.sceneLoaded += OnSceneLoaded;
+
 			//	Put before InitializeSystems() so systems can safely refer to the properties
 			SetGameSystemProperties ();
 
@@ -184,11 +188,59 @@ namespace Ate.GameSystems
 			UpdateFSM ();
 		}
 
+		/// <summary>
+		/// Like Update(), calls all the GameSystem.SystemLateUpdate()
+		/// methods. Does not go through any fsms, though, and instead
+		/// calls on each system directly.
+		/// </summary>
+		void LateUpdate ()
+		{
+			if (!Instance._completedLoad)
+				return;
+			
+			for (int i = 0; i < Instance.gameSystems.Count; i++)
+			{
+				Instance.gameSystems[i].SystemLateUpdate ();
+			}
+		}
+
 
 		/// <summary>
-		/// Unity's build-in event for scene changes
+		/// Added to Unity's SceneManger.sceneLoaded delegates.
 		/// </summary>
-		void OnLevelWasLoaded ()
+		private void OnSceneLoaded (Scene theScene, LoadSceneMode loadSceneMode)
+		{
+			//	Uses a touch of voodoo, see description. Don't use anywhere else.
+			FullyReloadSystems ();
+		}
+
+
+		//	Called by Unity when game is terminated
+		void OnDisable ()
+		{
+			SceneManager.sceneLoaded -= OnSceneLoaded;
+		}
+
+		#endregion
+
+
+		#region Private Methods
+
+		/// <summary>
+		/// Updates _fsm_loadState once.
+		/// </summary>
+		private void UpdateFSM (bool updateThenSwitch = false)
+		{
+			_fsm_loadState.Update (updateThenSwitch);
+		}
+
+
+		/// <summary>
+		/// Does a bit of voodoo to unload then load the systems. Meant for scene changes.
+		/// Voodoo has to do with manually calling UpdateFSM () several times to force
+		/// the fsm to unload and load in a single frame.
+		/// </summary>
+		private void FullyReloadSystems ()
 		{
 			//TODO: Should instead have another script/method handle scene loading and unloading
 			//		It would properly order how things get loaded and unloaded during scene changes
@@ -227,31 +279,6 @@ namespace Ate.GameSystems
 			SceneInitializeSystems ();
 		}
 
-
-		/// <summary>
-		/// Updates _fsm_loadState once.
-		/// </summary>
-		void UpdateFSM (bool updateThenSwitch = false)
-		{
-			_fsm_loadState.Update (updateThenSwitch);
-		}
-
-		/// <summary>
-		/// Like Update(), calls all the GameSystem.SystemLateUpdate()
-		/// methods. Does not go through any fsms, though, and instead
-		/// calls on each system directly.
-		/// </summary>
-		void LateUpdate ()
-		{
-			if (!Instance._completedLoad)
-				return;
-			
-			for (int i = 0; i < Instance.gameSystems.Count; i++)
-			{
-				Instance.gameSystems[i].SystemLateUpdate ();
-			}
-		}
-
 		#endregion
 
 
@@ -287,7 +314,7 @@ namespace Ate.GameSystems
 		/// </summary>
 		public void RequestLoadSystems ()
 		{
-			if (!_fsm_loadState.IsCurrentState (LoadState.Unloaded))
+			if (!IsUnloaded)
 				return;
 
 			_requestedLoad = true;
@@ -299,7 +326,7 @@ namespace Ate.GameSystems
 		/// </summary>
 		public void RequestUnloadSystems ()
 		{
-			if (!_fsm_loadState.IsCurrentState (LoadState.Loaded))
+			if (!IsLoaded)
 				return;
 
 			_requestedUnload = true;
@@ -383,12 +410,13 @@ namespace Ate.GameSystems
 
 		private void FSM_Update_Loading ()
 		{
+			//TODO: If loading things over several frames, logic for when to be completed goes here
 			_completedLoad = true;
 		}
 
 		private bool FSM_Switch_LoadingToLoaded ()
 		{
-			return IsLoaded;
+			return _completedLoad;
 		}
 
 		#endregion
@@ -432,7 +460,7 @@ namespace Ate.GameSystems
 
 		private bool FSM_Switch_UnloadingToUnloaded ()
 		{
-			return IsUnloaded;
+			return _completedUnload;
 		}
 
 		#endregion
