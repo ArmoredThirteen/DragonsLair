@@ -69,13 +69,13 @@ namespace Ate.ScenePersistance
 		}
 
 
-		// Updates 24 times per second (may be different if UpdateBroadcaster gets rewritten)
-		protected override void UpdateBaseFps ()
+		// Updates 24 times per second
+		protected override void FpsUpdate24 ()
 		{
 			
 		}
 
-		// Updates once per framelength, which is one or more AteUpdateBaseFps
+		// Updates once per framelength, which is one or more FpsUpdate## calls
 		protected override void UpdateFrameLength ()
 		{
 			

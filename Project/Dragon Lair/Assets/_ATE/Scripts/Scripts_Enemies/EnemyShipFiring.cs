@@ -83,6 +83,8 @@ namespace Ate.Enemies
 			ResetFireTimer ();
 		}
 
+
+		// Updates every game frame
 		protected override void AteUpdate ()
 		{
 			/*_timer_fireTime = _timer_fireTime - Time.deltaTime;
@@ -93,11 +95,13 @@ namespace Ate.Enemies
 			}*/
 		}
 
-		protected override void UpdateBaseFps ()
+		// Updates 24 times per second
+		protected override void FpsUpdate24 ()
 		{
 			
 		}
 
+		// Updates once per framelength, which is one or more FpsUpdate## calls
 		protected override void UpdateFrameLength ()
 		{
 			_timer_fireFrames = _timer_fireFrames - 1;

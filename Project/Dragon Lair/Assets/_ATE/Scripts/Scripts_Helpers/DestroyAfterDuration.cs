@@ -44,16 +44,19 @@ namespace Ate
 
 		#region AteComponent
 
+		// Updates every game frame
 		protected override void AteUpdate ()
 		{
 			
 		}
 
-		protected override void UpdateBaseFps ()
+		// Updates 24 times per second
+		protected override void FpsUpdate24 ()
 		{
 			
 		}
 
+		// Updates once per framelength, which is one or more FpsUpdate## calls
 		protected override void UpdateFrameLength ()
 		{
 			_framesSinceStart = _framesSinceStart + 1;

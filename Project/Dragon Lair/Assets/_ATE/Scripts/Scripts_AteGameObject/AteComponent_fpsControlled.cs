@@ -140,7 +140,7 @@ namespace Ate
 		}
 
 
-		protected abstract void UpdateBaseFps ();
+		protected abstract void FpsUpdate24 ();
 		protected abstract void UpdateFrameLength ();
 
 		#endregion
@@ -185,7 +185,7 @@ namespace Ate
 			if (!updateWhileInactive && !isActiveAndEnabled)
 				return;
 			
-			UpdateBaseFps ();
+			FpsUpdate24 ();
 
 			//	No framelength setting, just update at max fps
 			if (frameLengthFrom == FrameLengthSetting.None)
