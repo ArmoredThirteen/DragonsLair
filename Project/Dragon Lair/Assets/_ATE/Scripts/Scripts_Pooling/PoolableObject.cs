@@ -14,7 +14,7 @@ namespace Ate.Pooling
 	/// <summary>
 	/// Description
 	/// </summary>
-	public abstract class PoolableObject : AteComponent
+	public abstract class PoolableObject : AteComponent_fpsControlled
 	{
 
 		/*[System.Serializable]
@@ -63,7 +63,7 @@ namespace Ate.Pooling
 
 		protected override void AteAwake ()
 		{
-			//_poolManager = GameManager.GetGameSystem<PoolManager> ();
+			
 		}
 
 		protected override void AteStart ()

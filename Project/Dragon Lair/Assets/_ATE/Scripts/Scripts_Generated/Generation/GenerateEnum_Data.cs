@@ -118,6 +118,9 @@ namespace Ate.ScriptGeneration
 
 			EditorGUILayout.EndHorizontal ();
 
+			// Make the draw callback act like the enumName and enumID are one unit.
+			// Makes drawing a list of Enum_Datas a lot smoother than having a list of
+			// enum names followed by another list with enum IDs.
 			Callback<int> defaultDrawCallback = DrawEnumName;
 			if (!automaticGeneration)
 				defaultDrawCallback += DrawEnumID;

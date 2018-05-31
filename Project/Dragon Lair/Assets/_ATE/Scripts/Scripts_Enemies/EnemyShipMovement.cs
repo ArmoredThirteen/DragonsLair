@@ -99,7 +99,7 @@ namespace Ate.Enemies
 		{
 			base.AteStart ();
 
-			_startLocation = Position;
+			SetStartLocation (Position);
 		}
 
 
@@ -137,6 +137,15 @@ namespace Ate.Enemies
 		public void BuildRandomFromSeed ()
 		{
 			_random = new System.Random (seed);
+		}
+
+		/// <summary>
+		/// Sets the starting location to given Vector3.
+		/// Used to instantly move where the ship's hover 'center' is.
+		/// </summary>
+		public void SetStartLocation (Vector3 theLocation)
+		{
+			_startLocation = theLocation;
 		}
 
 		#endregion

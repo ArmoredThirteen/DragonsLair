@@ -58,8 +58,6 @@ namespace Ate
 		private bool _showUpdateSettings = false;
 		#endif
 
-		private UpdateBroadcaster _updateSystem = null;
-
 		private int _framesPlayed = 0;
 
 		#endregion
@@ -106,23 +104,6 @@ namespace Ate
 
 		#region AteComponent
 
-		protected override void AteStart ()
-		{
-			base.AteStart ();
-
-			_updateSystem = GameManager.GetGameSystem<UpdateBroadcaster> ();
-			if (_updateSystem == null)
-			{
-				#if UNITY_EDITOR
-				Debug.LogError ("FPS controlled component could not find an UpdateBroadcaster system\r\n" +
-					"Component has been automatically removed!");
-				#endif
-				_myObject.DestroyComponent (this);
-				return;
-			}
-		}
-
-
 		protected override void RegisterEvents ()
 		{
 			base.RegisterEvents();
@@ -151,7 +132,7 @@ namespace Ate
 		/// <summary>
 		/// Slow method for getting a frame length based on current settings.
 		/// </summary>
-		public int GetFrameLength ()
+		public int GetFrameLength (EventData_Updates eventData)
 		{
 			//TODO: Hard-coded goodness
 			int value = 24;
@@ -164,7 +145,7 @@ namespace Ate
 					break;
 
 				case FrameLengthSetting.Universal:
-					value = _updateSystem.controlledFPS_universalFrameLength;
+					value = eventData.universalFrameLength;
 					break;
 
 				case FrameLengthSetting.Custom:
@@ -196,7 +177,7 @@ namespace Ate
 				return;
 			}
 
-			int frameLength = GetFrameLength ();
+			int frameLength = GetFrameLength (eventData);
 			bool shouldUpdate = false;
 
 			if (localUpdate)

@@ -90,6 +90,7 @@ namespace Ate.ScriptGeneration
 					int id = forceIDtoInOrder ? i : theData.enumValues[i].enumID;
 					string name = theData.enumValues[i].enumName;
 
+					// Check for duplicate IDs
 					if (usedIDs.Contains (id))
 					{
 						Debug.LogError ("Enum generation has duplicate ID!" +
@@ -107,6 +108,10 @@ namespace Ate.ScriptGeneration
 			Recompile ();
 		}
 
+		/// <summary>
+		/// Writes the header. Contains a warning that it is
+		/// script controlled and declares the enum name.
+		/// </summary>
 		private static void WriteHeader (StreamWriter writer, GenerateEnum_Data theData)
 		{
 			writer.WriteLine ("//SCRIPT GENERATED, do not modify manually!");
@@ -115,11 +120,17 @@ namespace Ate.ScriptGeneration
 			writer.WriteLine ("{");
 		}
 
+		/// <summary>
+		/// Closes the enum.
+		/// </summary>
 		private static void WriteFooter (StreamWriter writer, GenerateEnum_Data theData)
 		{
 			writer.WriteLine ("}");
 		}
 
+		/// <summary>
+		/// Writes a single enum value. Should automatically move to next line.
+		/// </summary>
 		private static void WriteEnumValue (StreamWriter writer, string enumName, int enumID)
 		{
 			string enumLine = "\t" + enumName + " = " + enumID + ",";

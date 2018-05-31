@@ -32,7 +32,7 @@ namespace Ate
 		public Transform parentTransform   = null;
 		public Transform locationTransform = null;
 
-		public string parentName   = "DefaultContainer";
+		public string parentName   = "Container_Default";
 		public string locationName = "DefaultLocation";
 
 		#endregion

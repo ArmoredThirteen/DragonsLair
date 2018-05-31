@@ -10,12 +10,14 @@ namespace Ate
 
 	public class EventData_Gameplay : EventData
 	{
-		private int _ateObjectID;
+		private int _ateGoInstanceID;
 
 		private int _intArgOne;
 
 		private float _floatArgOne;
 		private float _floatArgTwo;
+
+		private bool _boolArgOne;
 
 		private TrackedStatType _trackedStatTypeOne;
 
@@ -23,12 +25,12 @@ namespace Ate
 		#region General
 
 		/// <summary>
-		/// For object ID for any object-specific event. Uses _ateObjectID.
+		/// For object ID for any object-specific event. Uses _ateGoInstanceID.
 		/// </summary>
-		public int AteObjectID
+		public int AteGOInstanceID
 		{
-			get {return _ateObjectID;}
-			set {_ateObjectID = value;}
+			get {return _ateGoInstanceID;}
+			set {_ateGoInstanceID = value;}
 		}
 
 		#endregion
@@ -57,6 +59,21 @@ namespace Ate
 		{
 			get {return (PoolID)_intArgOne;}
 			set {_intArgOne = (int)value;}
+		}
+
+		#endregion
+
+
+		#region Pooling and Killing
+
+		/// <summary>
+		/// For object pooling or killing. If true, transition stages
+		/// are entered and resolved the same frame as the calll.
+		/// </summary>
+		public bool IsImmediate
+		{
+			get {return _boolArgOne;}
+			set {_boolArgOne = value;}
 		}
 
 		#endregion

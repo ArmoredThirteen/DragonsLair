@@ -129,16 +129,30 @@ namespace Ate.GameSystems
 			PoolData thePool = GetPoolByID (theObject.theID);
 
 			//	Remove from Unpooled list
-			if (thePool.unpooledObjects.Contains (theObject))
-				thePool.unpooledObjects.Remove (theObject);
+			/*if (thePool.unpooledObjects.Contains (theObject))
+				thePool.unpooledObjects.Remove (theObject);*/
+			for (int i = 0; i < thePool.unpooledObjects.Count; i++)
+			{
+				if (thePool.unpooledObjects[i].GOInstanceID == theObject.GOInstanceID)
+				{
+					thePool.unpooledObjects.RemoveAt (i);
+					break;
+				}
+			}
 
-			//	Pool is too large, destroy the object
-			//	TODO: Check if pool is getting too large during update and destroy several at once
-			if (thePool.pooledObjects.Count > thePool.maxSize)
+			//	Pool is already at max size, destroy the object
+			//	TODO: Maybe check if pool is getting too large during update and destroy several at once
+			if (thePool.pooledObjects.Count >= thePool.maxSize)
 			{
 				GameObject.Destroy (theObject.gameObject);
 				return;
 			}
+
+			//	Set the parent to be the pool container
+			Transform objectParent = transform;
+			if (thePool.poolContainer != null)
+				objectParent = thePool.poolContainer;
+			theObject.transform.parent = objectParent;
 
 			//	Add to Pooled list
 			thePool.pooledObjects.Add (theObject);
@@ -204,7 +218,7 @@ namespace Ate.GameSystems
 			}
 
 			#if UNITY_EDITOR
-			Debug.LogError ("PoolManager attempted to GetPoolByID using an ID that is not in the poolDatas.");
+			Debug.LogError ("PoolManager attempted to GetPoolByID using an ID that is not in the poolDatas: " + theID.ToString ());
 			#endif
 			return null;
 		}

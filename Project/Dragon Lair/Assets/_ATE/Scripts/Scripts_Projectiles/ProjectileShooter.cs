@@ -52,7 +52,7 @@ namespace Ate.Projectiles
 		private float _timer_autoFire = 0;
 
 		//TODO: Hacky, having a GameSystem.ProjectileManager would be better.
-		private string projectileParentName = "ProjectileContainer";
+		private string projectileParentName = "Container_Projectile";
 
 		private int _barrelIndex = 0;
 

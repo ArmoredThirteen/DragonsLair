@@ -144,7 +144,7 @@ namespace Ate.FSM
 		/// <summary>
 		/// Calls the current state's callback method, and then attempts to switch into a new state.
 		/// Continues doing this until it fails to switch states or reaches endAtState.
-		/// The state it ends at does not have its Update() called.
+		/// If updateThenSwitch is true, the state it ends at does not have its Update() called.
 		/// </summary>
 		public void MultipleUpdate (T endAtState, bool updateThenSwitch = true)
 		{
@@ -162,8 +162,8 @@ namespace Ate.FSM
 				#if UNITY_EDITOR
 				attempts++;
 				if ((attempts % 100) == 0)
-					Debug.LogError ("A single BasicFSM is attempting hundreds of switches per frame.\r\n" +
-						"There could be an infinite loop in the FSM's logic!");
+					Debug.LogError ("A single BasicFSM is attempting hundreds of switches per frame!\r\n" +
+						"There is probably an infinite loop in the FSM's logic!");
 				#endif
 			}
 			while (!_curStateID.Equals (lastStateID) && !_curStateID.Equals (endAtState));

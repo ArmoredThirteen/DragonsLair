@@ -196,8 +196,9 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 456968}
-  - component: {fileID: 11403024}
   - component: {fileID: 11428958}
+  - component: {fileID: 11403024}
+  - component: {fileID: 114053667374343924}
   m_Layer: 0
   m_Name: Enemy_01_Killable
   m_TagString: Untagged
@@ -662,7 +663,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _myObject: {fileID: 11428958}
+  localUpdate: 0
+  updateWhileInactive: 1
+  frameLengthFrom: 100
+  frameLength_custom: 4
   theID: 200
+  killableObject: {fileID: 114053667374343924}
   enemyShipMovement: {fileID: 11423054}
   enemyShipFiring: {fileID: 11402394}
   projectileShooter: {fileID: 11418240}
@@ -916,6 +922,7 @@ MonoBehaviour:
   type: 200
   components:
   - {fileID: 11403024}
+  - {fileID: 114053667374343924}
 --- !u!114 &11430370
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1324,3 +1331,58 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 151198}
   m_IsPrefabParent: 1
+--- !u!114 &114053667374343924
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 151198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91654762a12a11b4890826924f34e47f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _myObject: {fileID: 11428958}
+  localUpdate: 0
+  updateWhileInactive: 1
+  frameLengthFrom: 100
+  frameLength_custom: 4
+  theID: 200
+  beginAlive: 1
+  dyingTrigger: 200
+  onKilledAction: 200
+  duration_dying: 5
+  duration_reviving: 5
+  stateDataToDraw: 1
+  stateData_alive:
+    FXspawners: []
+    objectsToEnable:
+    - {fileID: 114802}
+    objectsToDisable: []
+    drawList_FXspawners: 0
+    drawList_objectsToEnable: 1
+    drawList_objectsToDisable: 0
+  stateData_dying:
+    FXspawners: []
+    objectsToEnable: []
+    objectsToDisable:
+    - {fileID: 114802}
+    drawList_FXspawners: 0
+    drawList_objectsToEnable: 0
+    drawList_objectsToDisable: 1
+  stateData_killed:
+    FXspawners: []
+    objectsToEnable: []
+    objectsToDisable:
+    - {fileID: 132832}
+    drawList_FXspawners: 0
+    drawList_objectsToEnable: 0
+    drawList_objectsToDisable: 1
+  stateData_reviving:
+    FXspawners: []
+    objectsToEnable:
+    - {fileID: 132832}
+    objectsToDisable: []
+    drawList_FXspawners: 0
+    drawList_objectsToEnable: 1
+    drawList_objectsToDisable: 0

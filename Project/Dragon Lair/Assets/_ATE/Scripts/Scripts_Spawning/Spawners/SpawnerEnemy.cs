@@ -150,6 +150,22 @@ namespace Ate.Spawning
 			barrelOffsets[index] = new Vector3 (xVal, yVal, zVal);
 		}
 
+
+		[MenuItem("CONTEXT/SpawnerEnemy/Spawn")]
+		private static void Menu_SpawnEnemy (MenuCommand command)
+		{
+			if (!Application.isPlaying)
+				return;
+
+			SpawnerEnemy component = command.context as SpawnerEnemy;
+			if (component == null)
+				return;
+
+			Debug.Log ("<color=orange>Menu requested SPAWN ENEMY</color>");
+
+			component.Spawn ();
+		}
+
 		#endif
 
 
@@ -157,7 +173,7 @@ namespace Ate.Spawning
 
 		protected override void AteStart ()
 		{
-			Spawn ();
+			
 		}
 
 		protected override void AteUpdate ()
@@ -172,12 +188,19 @@ namespace Ate.Spawning
 
 		public override void Spawn ()
 		{
-			PoolableEnemy spawnedObject = GameManager.Pooling.UnpoolObject (PoolID.Enemy_01) as PoolableEnemy;
-			spawnedObject.transform.position = transform.position;
+			PoolableObject theObj = GameManager.Pooling.UnpoolObject (theID);
+			PoolableEnemy objAsEnemy = theObj.GetComponent<PoolableEnemy> () as PoolableEnemy;
+			//TODO: Why doesn't this line work???
+			//objAsEnemy = theObj as PoolableEnemy;
 
-			SetData_EnemyShipMovement (spawnedObject);
-			SetData_EnemyShipFiring   (spawnedObject);
-			SetData_ProjectileShooter (spawnedObject);
+			if (objAsEnemy.killableObject != null)
+				objAsEnemy.killableObject.RequestRevive ();
+
+			objAsEnemy.transform.position = transform.position;
+
+			SetData_EnemyShipMovement (objAsEnemy);
+			SetData_EnemyShipFiring   (objAsEnemy);
+			SetData_ProjectileShooter (objAsEnemy);
 		}
 
 		#endregion
@@ -188,6 +211,8 @@ namespace Ate.Spawning
 		private void SetData_EnemyShipMovement (PoolableEnemy spawnedObject)
 		{
 			EnemyShipMovement theComponent = spawnedObject.enemyShipMovement;
+
+			theComponent.SetStartLocation (spawnedObject.Position);
 
 			theComponent.moveDistance  = moveDistance;
 			theComponent.maxMoveSteps  = maxMoveSteps;

@@ -14,8 +14,9 @@ namespace Ate
 		UnpoolObject = 210,
 
 		//DestroyObject = 300,
-		//KillPlayer    = 350,
-		//KillEnemy     = 355,
+
+		KillObject   = 400,
+		ReviveObject = 410,
 
 		ResetPlayerWalkSpeed = 500,
 		SetPlayerWalkSpeed   = 510,
